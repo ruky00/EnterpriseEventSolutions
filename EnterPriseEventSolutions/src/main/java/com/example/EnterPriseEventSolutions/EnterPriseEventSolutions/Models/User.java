@@ -3,14 +3,14 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
+@Entity(name = "_user")
 public class User {
 
     public interface BasicInfo{}
@@ -47,14 +47,14 @@ public class User {
     private List<Event> events;
 
     @JsonView(ClientInfo.class)
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
 
     @CreationTimestamp
     private LocalDateTime createDateTime;
 
-    private MultipartFile image;
+    private Blob image;
 
 
     public Long getId() {
@@ -113,12 +113,28 @@ public class User {
         this.createDateTime = createDateTime;
     }
 
-    public MultipartFile getImage() {
+    public Blob getImage() {
         return image;
     }
 
-    public void setImage(MultipartFile image) {
+    public void setImage(Blob image) {
         this.image = image;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     public User(String username, String email, String encodedPassword, UserTipeEnum role, LocalDateTime createDateTime){
