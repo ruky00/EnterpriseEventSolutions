@@ -20,9 +20,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.springframework.web.servlet.support.ServletUriComponentsBuilder.fromCurrentRequest;
@@ -69,27 +72,59 @@ public class UserRestController {
     @PostMapping("/users/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> createMember(@RequestBody User user) {
-        if (user.getRole() == UserTipeEnum.CLIENT ) {
+        try {
             LocalDateTime currentDate = LocalDateTime.now();
             user.setCreateDateTime(currentDate);
             user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
             userService.saveUser(user);
             String token = UUID.randomUUID().toString();
-            ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(),LocalDateTime.now().plusMinutes(15),user);
+            ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
             confirmationTokenService.saveConfirmationToken(confirmationToken);
-            String link = "http://localhost:8080/api/users/confirm?token="+token;
-            emailService.send(user.getEmail(), registerService.buildEmail(user.getUsername(),link));
+            String link = "http://localhost:8080/api/users/confirm?token=" + token;
+            emailService.send(user.getEmail(), registerService.buildEmail(user.getUsername(), link));
             URI location = fromCurrentRequest().path("/users/{id}")
                     .buildAndExpand(user.getId()).toUri();
             return ResponseEntity.created(location).body(user);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        }catch (Exception e){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
     }
-
     @GetMapping("/users/confirm")
     public String confirm(@RequestParam("token") String token){
         return registerService.confirmToken(token);
+    }
+
+
+
+    //GET PERSONAL INFORMATION
+    @Operation(summary = "Get user logged in app")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Source Found",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description = "Not Found",
+                content = @Content
+            )
+
+
+    })
+    @GetMapping("/users/me")
+    public ResponseEntity<Optional<User>> getPersonalInfo(HttpServletRequest request){
+        Principal principal = request.getUserPrincipal();
+        if (principal!=null){
+            return ResponseEntity.ok(userService.findByEmail(principal.getName()));
+        }else
+            return ResponseEntity.notFound().build();
     }
 
 
