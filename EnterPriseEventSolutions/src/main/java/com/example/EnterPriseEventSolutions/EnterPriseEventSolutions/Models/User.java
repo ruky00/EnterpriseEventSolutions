@@ -1,6 +1,8 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity(name = "_user")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
     public interface BasicInfo{}
@@ -35,12 +38,24 @@ public class User {
     @JsonView(BasicInfo.class)
     private long phone;
 
-    @JsonView(BasicInfo.class)
+    @JsonView(ClientInfo.class)
     private String encodedPassword;
 
     @JsonView(BasicInfo.class)
     private UserTipeEnum role;
 
+
+    @JsonView(OrgInfo.class)
+    private String description;
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @JsonView(OrgInfo.class)
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
@@ -50,8 +65,19 @@ public class User {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
+    private boolean isEnable;
+
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
+    }
+
 
     @CreationTimestamp
+    @JsonIgnore
     private LocalDateTime createDateTime;
 
     private Blob image;
@@ -137,12 +163,18 @@ public class User {
         this.tickets = tickets;
     }
 
-    public User(String username, String email, String encodedPassword, UserTipeEnum role, LocalDateTime createDateTime){
+    public User(String username, String email, String encodedPassword){
         this.username=username;
         this.email=email;
         this.encodedPassword=encodedPassword;
-        this.role=role;
-        this.createDateTime=createDateTime;
+        this.role=UserTipeEnum.CLIENT;
+    }
+    public User(String username, String email, String encodedPassword,String description){
+        this.username=username;
+        this.email=email;
+        this.encodedPassword=encodedPassword;
+        this.description = description;
+        this.role=UserTipeEnum.ORGANIZATION;
     }
 
 
