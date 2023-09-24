@@ -35,5 +35,12 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    public void enableUser(User user){
+        user.setEnable(true);
+        userRepository.save(user);
+    }
 
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
 }
