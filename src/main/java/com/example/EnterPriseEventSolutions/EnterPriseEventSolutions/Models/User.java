@@ -38,7 +38,7 @@ public class User {
     @JsonView(BasicInfo.class)
     private long phone;
 
-    @JsonView(ClientInfo.class)
+    @JsonView(BasicInfo.class)
     private String encodedPassword;
 
     @JsonView(BasicInfo.class)
@@ -65,6 +65,7 @@ public class User {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
+    @JsonIgnore
     private boolean isEnable;
 
     public boolean isEnable() {

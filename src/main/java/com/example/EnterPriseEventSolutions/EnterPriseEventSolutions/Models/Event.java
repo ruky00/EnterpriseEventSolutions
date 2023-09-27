@@ -2,6 +2,7 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,7 +29,7 @@ public class Event {
 
     private double price;
 
-    @UpdateTimestamp
+    @DateTimeFormat
     private Date updateDateTime;
 
     @ManyToOne

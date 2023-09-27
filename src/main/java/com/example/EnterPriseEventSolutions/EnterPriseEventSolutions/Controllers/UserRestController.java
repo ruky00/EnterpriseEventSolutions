@@ -4,6 +4,7 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Controller
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.ConfirmationToken;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.User;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.UserTipeEnum;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Repositories.ConfirmationTokenRepository;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Services.EmailService.ConfirmationTokenService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Services.EmailService.EmailService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Services.EmailService.RegisterService;
@@ -25,6 +26,7 @@ import java.net.URI;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -49,6 +51,9 @@ public class UserRestController {
     @Autowired
     private RegisterService registerService;
 
+
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
     //POST members
     @Operation(summary = "Post a new member")
@@ -76,6 +81,9 @@ public class UserRestController {
             LocalDateTime currentDate = LocalDateTime.now();
             user.setCreateDateTime(currentDate);
             user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+            if(user.getDescription()!=null){
+                user.setRole(UserTipeEnum.ORGANIZATION);
+            }else{user.setRole(UserTipeEnum.CLIENT);}
             userService.saveUser(user);
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
@@ -125,6 +133,82 @@ public class UserRestController {
             return ResponseEntity.ok(userService.findByEmail(principal.getName()));
         }else
             return ResponseEntity.notFound().build();
+    }
+
+    //UPDATE USER
+    @Operation(summary = "Update User")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Source Found",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No content",
+                    content = @Content
+            )
+
+
+    })
+    @PutMapping("/users/me/")
+    public ResponseEntity<Optional<User>> updateUser(HttpServletRequest request,@RequestBody User updated){
+        Principal principal = request.getUserPrincipal();
+        User user = userService.findByEmail(principal.getName()).orElseThrow();
+        if (!updated.getUsername().equals("")){
+            user.setUsername(updated.getUsername());
+        }if (!updated.getEmail().equals("")){
+            user.setEmail(updated.getEmail());
+        }if (!updated.getEncodedPassword().equals("")){
+            String pass= passwordEncoder.encode(updated.getEncodedPassword());
+            user.setEncodedPassword(pass);
+        }
+
+        if (user.getRole()==UserTipeEnum.ORGANIZATION){
+            if (!updated.getDescription().equals("")){
+                user.setDescription(updated.getDescription());
+            }
+        }
+
+        userService.saveUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    //DELETE USER
+    @Operation(summary = "Delete my user")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Deleted Complete",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "No Content",
+                    content = @Content
+            )
+
+
+
+    })
+    @DeleteMapping("/users/me")
+    public ResponseEntity<Optional<User>> deleteUser(HttpServletRequest request){
+        Principal principal = request.getUserPrincipal();
+        User user = userService.findByEmail(principal.getName()).orElseThrow();
+        List<ConfirmationToken> tokensToDelete = confirmationTokenRepository.findByUser(user);
+        for (ConfirmationToken token : tokensToDelete) {
+            
+            confirmationTokenRepository.delete(token);
+        }
+        userService.deleteUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

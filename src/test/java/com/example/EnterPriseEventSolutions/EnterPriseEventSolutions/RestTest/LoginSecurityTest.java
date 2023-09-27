@@ -23,18 +23,16 @@ public class LoginSecurityTest extends ControllerRestTest {
     }
 
     @ParameterizedTest(name = "{index} {0}")
-    @ValueSource(strings = {"Client" })
+    @ValueSource(strings = {"Client"})
     @DisplayName("Check that a non-register user can create an Organizer/Client User")
     public void createUserTest(String type) throws Exception {
+
         // CREATE NEW USER
-
-
-
         ObjectNode user = objectMapper.createObjectNode()
                 .put("username", "NewUser_"+ type)
                 .put("email", type+"@urjc.es")
                 .put("encodedPassword", "pass")
-                .put("role",type.toUpperCase(Locale.ROOT));
+                .put("isEnabled",true);
         given()
                 .request()
                 .body(user)
@@ -44,18 +42,5 @@ public class LoginSecurityTest extends ControllerRestTest {
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
                 .body("username", equalTo(user.get("username").asText()));
-
-        // CHECK THAT NEW USER EXIST (AS ME)
-
-       /* given()
-                .auth()
-                .basic(user.get("name").asText(), user.get("password").asText())
-                .when()
-                .get("/api/users/"+type.toLowerCase()+"s/me")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .body("name", equalTo(user.get("name").asText()));*/
-
     }
 }

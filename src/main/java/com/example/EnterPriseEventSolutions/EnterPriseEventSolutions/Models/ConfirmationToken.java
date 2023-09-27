@@ -19,7 +19,7 @@ public class ConfirmationToken {
     private LocalDateTime expireAt;
     private LocalDateTime comfirmTime;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
     public long getTokenid() {
