@@ -91,7 +91,7 @@ public class OrganizerRestController {
             )
     })
     @PostMapping("/events/")
-    public ResponseEntity<Event> postEvents(HttpServletRequest request,Event event) {
+    public ResponseEntity<Event> postEvents(HttpServletRequest request,@RequestBody Event event) {
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
         event.setOrganization(user);
@@ -126,11 +126,12 @@ public class OrganizerRestController {
             )
     })
     @DeleteMapping("/events/{id}")
-    public ResponseEntity<HttpStatus> deleteEvents(HttpServletRequest request,@RequestParam long id){
+    public ResponseEntity<HttpStatus> deleteEvents(HttpServletRequest request,@PathVariable Long id){
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
         Event event = eventService.findById(id).orElseThrow();
         if(event.getOrganization().getUsername().equals(user.getUsername())){
+            eventService.deleteEvent(event);
             return new ResponseEntity<>(HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -158,11 +159,11 @@ public class OrganizerRestController {
                     content = @Content
             )
     })
-    @PutMapping("/events/{id}/")
-    public ResponseEntity<Event> updateEvent(HttpServletRequest request,@PathVariable    long id, @RequestBody Event updateEvent) {
+    @PutMapping("/events/{id}")
+    public ResponseEntity<Event> updateEvent(HttpServletRequest request,@PathVariable Long id, @RequestBody Event updateEvent) {
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
-        Event event = eventService.updateEvent(updateEvent);
+        Event event = eventService.updateEvent(id,updateEvent);
         return  new ResponseEntity<>(event,HttpStatus.CREATED);
 
     }

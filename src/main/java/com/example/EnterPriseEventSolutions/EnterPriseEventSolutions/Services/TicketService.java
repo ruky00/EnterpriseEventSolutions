@@ -42,15 +42,14 @@ public class TicketService {
         ticketRepository.delete(ticket);
     }
 
-    public Ticket createTicket(HttpServletRequest request,long id){
-        Principal principal = request.getUserPrincipal();
-        User user = userService.findByEmail(principal.getName()).orElseThrow();
+    public Ticket createTicket(User user,Long id){
+
         Event event = eventService.findById(id).orElseThrow();
 
         eventService.checkIfFull(id);
 
-        Ticket ticket = new Ticket(user,event,event.getPrice());
-
+        Ticket ticket = new Ticket(user,event);
+        ticket.setPrice(event.getPrice());
         saveTicket(ticket);
 
         return ticket ;

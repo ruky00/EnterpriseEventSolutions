@@ -77,6 +77,11 @@ public class UserRestController {
     @PostMapping("/users/")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> createMember(@RequestBody User user) {
+
+        if(userService.findByEmail(user.getEmail()).isPresent()){
+            return new ResponseEntity("User already Exists",HttpStatus.BAD_REQUEST);
+        }
+
         try {
             LocalDateTime currentDate = LocalDateTime.now();
             user.setCreateDateTime(currentDate);

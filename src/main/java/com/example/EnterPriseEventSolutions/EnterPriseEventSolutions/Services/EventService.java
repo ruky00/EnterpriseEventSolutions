@@ -31,7 +31,7 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public List<Event> findByUser(User user){return  eventRepository.findByUser(user);}
+    public List<Event> findByUser(User user){return  eventRepository.findByOrganization(user);}
 
 
     public void saveEvent(Event event){
@@ -39,8 +39,8 @@ public class EventService {
         eventRepository.save(event);
     }
 
-    public Event updateEvent(Event event){
-        Event oldEvent = eventExists(event.getId());
+    public Event updateEvent(Long id,Event event){
+        Event oldEvent = eventExists(id);
         if(event.getMax_capacity() < oldEvent.getMax_capacity()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't reduce max capacity of the event");
         }
@@ -72,7 +72,7 @@ public class EventService {
     }
 
 
-    private Event eventExists(long eventId){
+    private Event eventExists(Long eventId){
         Optional<Event> opEvent = eventRepository.findById(eventId);
         if (opEvent.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event not longer exist");

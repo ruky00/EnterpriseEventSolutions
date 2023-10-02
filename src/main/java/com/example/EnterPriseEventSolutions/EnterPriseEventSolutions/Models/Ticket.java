@@ -1,7 +1,7 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models;
 
 
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 
@@ -16,8 +16,10 @@ public class Ticket {
 
     private double price;
 
+    @JsonBackReference
     @ManyToOne
     private User client;
+
 
     @ManyToOne
     private Event event;
@@ -54,10 +56,9 @@ public class Ticket {
         this.event = event;
     }
 
-    public Ticket(User client, Event event, double price){
+    public Ticket(User client, Event event){
         this.client=client;
         this.event=event;
-        this.price=price;
     }
 
 }
