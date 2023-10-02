@@ -17,11 +17,11 @@ public interface EventRepository extends JpaRepository<Event,Long> {
 
     public Optional<Event> findByName(String name);
 
-    public List<Event> findByUser(User user);
+    public List<Event> findByOrganization(User user);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Event e SET e.current_capacity = e.current_capacity + 1 WHERE e.id = :eventId AND e.current_capacity + 1  <= e.max_capacity")
-    public int incrementCurrentCapacity(@Param("id") long eventId);
+    @Query("UPDATE Event e SET e.current_capacity = e.current_capacity + 1 WHERE e.id = :id AND e.current_capacity + 1  <= e.max_capacity")
+    public int incrementCurrentCapacity(@Param("id") Long id);
 
 }

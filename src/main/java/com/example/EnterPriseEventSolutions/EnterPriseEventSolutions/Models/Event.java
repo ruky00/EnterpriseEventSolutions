@@ -1,5 +1,7 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,9 +34,11 @@ public class Event {
     @DateTimeFormat
     private Date updateDateTime;
 
+    @JsonIgnore
     @ManyToOne
     private User organization;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 

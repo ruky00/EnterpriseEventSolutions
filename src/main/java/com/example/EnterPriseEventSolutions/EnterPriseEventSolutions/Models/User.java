@@ -3,6 +3,7 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -61,11 +62,11 @@ public class User {
     @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL)
     private List<Event> events;
 
-    @JsonView(ClientInfo.class)
+    @JsonManagedReference
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
-    @JsonIgnore
+
     private boolean isEnable;
 
     public boolean isEnable() {
