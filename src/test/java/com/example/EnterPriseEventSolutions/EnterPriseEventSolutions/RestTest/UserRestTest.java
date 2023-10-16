@@ -31,29 +31,27 @@ public class UserRestTest extends ControllerRestTest{
         ObjectNode user = objectMapper.createObjectNode()
                 .put("username", "ToDeleteUser_" + type)
                 .put("email", type + "_delete@urjc.es")
-                .put("encodedPassword", "pass");
-        User createdUser =
-                given()
-                        .request()
-                        .body(user)
-                        .contentType(ContentType.JSON)
-                        .when()
-                        .post("/api/users/")
-                        .then()
-                        .assertThat()
-                        .statusCode(HttpStatus.SC_CREATED)
-                        .body("username", equalTo(user.get("username").asText()))
-                        .extract().as(User.class);
-
-                createdUser.setEnable(true);
+                .put("encodedPassword", "pass")
+                .put("isEnabled",true);
+        given()
+                .request()
+                .body(user)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/users/")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_CREATED)
+                .body("username", equalTo(user.get("username").asText()))
+                .extract().as(User.class);
 
         given()
             .auth()
-                .basic(createdUser.getEmail(),"pass")
+                .basic(User.class.getName(),"pass")
                 .delete("/api/users/me")
                 .then()
                     .assertThat()
-                        .statusCode(HttpStatus.SC_OK);
+                          .statusCode(HttpStatus.SC_OK);
 
     }
 }

@@ -51,7 +51,7 @@ public class ControllerRestTest {
         client = new User("admin", "admin@urjc.es", "pass");
         userService.saveUser(client);
         // CREATE ORGANIZER
-        organizer = new User("Patxi", "francisco.gortazar@urjc.es", "pass", "Zara and Associates");
+        organizer = new User("Jose", "francisco.gortazar@urjc.es", "pass", "Zara and Associates");
         userService.saveUser(organizer);
     }
 

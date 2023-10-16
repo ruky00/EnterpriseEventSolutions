@@ -32,7 +32,7 @@ public class LoginSecurityTest extends ControllerRestTest {
                 .put("username", "NewUser_"+ type)
                 .put("email", type+"@urjc.es")
                 .put("encodedPassword", "pass")
-                .put("isEnabled",true);
+                .put("description","");
         given()
                 .request()
                 .body(user)
@@ -41,6 +41,7 @@ public class LoginSecurityTest extends ControllerRestTest {
                 .post("/api/users/")
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
-                .body("username", equalTo(user.get("username").asText()));
+                .body("username", equalTo(user.get("username").asText()))
+                .log().ifError();
     }
 }
