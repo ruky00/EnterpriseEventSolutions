@@ -84,6 +84,7 @@ router-link:focus {
 
 .nav-item{
   margin-left: 30px;
+  color: var(--main-bg-ultra);
 }
 
 .bi{

@@ -6,7 +6,7 @@
     <div class="row main-content0" id="main-text">
       <h1>Your space to organize or attend your Company events</h1>
     </div>
-    <div class="row main-content1" id="get-started-button"><button class="btn btn-primary" type="button">Get started</button></div>
+    <div class="row main-content1" id="get-started-button"><router-link to="/login"><button class="btn btn-primary" type="button">Get started</button></router-link></div>
   </div>
   <div class="container-fluid presentation">
     <div class="row presentation">
@@ -27,11 +27,19 @@ tickets hassle-free. <b>Experience the simplicity of event coordination with us!
     <div class="row">
       <div class="col-6"><p><b>Created By</b><br>Carlos Fernandez Lopez c.fernandezl.2019@alumnos.urjc.es</p></div>
       <div class="col-6">
-        <ul>
-          <li>Home</li>
-          <li>About us</li>
-          <li>Get started</li>
-          <li>Log in</li>
+        <ul class="nav">
+          <li>
+            <router-link style="text-decoration: none; color: inherit;" to="/">Home</router-link>
+          </li>
+          <li>
+            <router-link style="text-decoration: none; color: inherit;" to="/">About us</router-link>
+          </li>
+          <li>
+            <router-link style="text-decoration: none; color: inherit;" to="/">Get started</router-link>
+          </li>
+          <li>
+            <router-link style="text-decoration: none; color: inherit;" to="/login">Log in</router-link>
+          </li>
         </ul>
       </div>
     </div>
@@ -98,6 +106,7 @@ h1{
 }
 
 .presentation{
+  background-color: #fff;
   min-height: 600px;
 }
 
@@ -166,14 +175,21 @@ img{
   color: var(--main-bg-ultra);
 }
 
-ul{
+.nav{
   list-style: none;
   color: var(--main-bg-ultra);
+  display: block;
+}
+
+.nav :hover{
+  color: var(--main-bg-org);
 }
 
 li{
   margin-top: 10px;
 }
+
+
 
 @media screen and (max-width: 1050px) {
   .col-4 {
