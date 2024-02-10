@@ -1,12 +1,10 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.RestTest;
 
 
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.User;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.UserTipeEnum;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Services.UserService;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -44,7 +42,7 @@ public class ControllerRestTest {
     protected void setUp() {
         RestAssured.port = port;
         RestAssured.useRelaxedHTTPSValidation();
-        RestAssured.baseURI = "http://localhost:" + port;
+        RestAssured.baseURI = "https://localhost:" + port;
 
 
         // CREATE CLIENT

@@ -1,11 +1,10 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions;
 
 
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.Event;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.User;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.UserTipeEnum;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Repositories.EventRepository;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Repositories.UserRepository;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Event;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.EventRepository;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
