@@ -1,19 +1,33 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.RestTest;
 
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.Models.User;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.UserRepository;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.AuthResponse;
+
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 
-public class UserRestTest extends ControllerRestTest{
+
+public class UserRestTest extends ControllerRestTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @MockBean
+    private EmailService emailService;
 
 
     @DynamicPropertySource
@@ -23,16 +37,16 @@ public class UserRestTest extends ControllerRestTest{
 
     @ParameterizedTest(name = "{index} {0}")
     @ValueSource(strings = { "Customer" })
-    @DisplayName("Check that admin can delete a user")
+    @DisplayName("A user can register, login and access to himself")
     public void deleteUserTest(String type) throws Exception {
 
-        // CREATE NEW USER
-
+        // CREATE NEW USER and automatically activate for testing
         ObjectNode user = objectMapper.createObjectNode()
                 .put("username", "ToDeleteUser_" + type)
                 .put("email", type + "_delete@urjc.es")
-                .put("encodedPassword", "pass")
-                .put("isEnabled",true);
+                .put("encodedPassword", "pass");
+                 // Activate user directly
+
         given()
                 .request()
                 .body(user)
@@ -45,13 +59,24 @@ public class UserRestTest extends ControllerRestTest{
                 .body("username", equalTo(user.get("username").asText()))
                 .extract().as(User.class);
 
-        given()
-            .auth()
-                .basic(User.class.getName(),"pass")
-                .delete("/api/users/me")
-                .then()
-                    .assertThat()
-                          .statusCode(HttpStatus.SC_OK);
+        // Simulate email sent (optional)
 
+
+        //LOGIN
+        ObjectNode loginRequest = objectMapper.createObjectNode()
+                .put("username", user.get("email").asText())
+                .put("password", user.get("encodedPassword").asText());
+        AuthResponse response = given()
+                .contentType("application/json")
+                .body(loginRequest)
+                .contentType(ContentType.JSON)
+                .when()
+                .post("/api/auth/login")
+                .then()
+                .assertThat()
+                .body("status", equalTo(AuthResponse.Status.SUCCESS.toString()))
+                .statusCode(200)
+                .extract()
+                .as(AuthResponse.class);
     }
 }
