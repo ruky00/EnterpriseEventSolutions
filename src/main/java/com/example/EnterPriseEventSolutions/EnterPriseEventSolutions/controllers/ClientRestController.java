@@ -3,6 +3,7 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.controller
 
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Ticket;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.TicketService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -95,9 +96,10 @@ public class ClientRestController {
     }
 
 
-
-
-
-
+    @GetMapping("/companies")
+    public ResponseEntity<List<User>> getCompanies(){
+        List<User> companies = userService.findAllByRole(UserTipeEnum.ORGANIZATION);
+        return new ResponseEntity<>(companies,HttpStatus.OK);
+    }
 
 }

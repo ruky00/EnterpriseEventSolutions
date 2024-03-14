@@ -55,8 +55,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/api/users").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/users/me").permitAll()
                 .antMatchers(HttpMethod.PUT,"/api/users/me/").permitAll()
-                .antMatchers(HttpMethod.DELETE,"/api/users/me").hasAnyRole(UserTipeEnum.ORGANIZATION.toString(),UserTipeEnum.CLIENT.toString());
-
+                .antMatchers(HttpMethod.DELETE,"/api/users/me").hasAnyRole(UserTipeEnum.ORGANIZATION.toString(),UserTipeEnum.CLIENT.toString(),UserTipeEnum.ADMIN.toString())
+                .antMatchers(HttpMethod.GET,"/api/events").hasAnyRole(UserTipeEnum.CLIENT.toString(),UserTipeEnum.ADMIN.toString())
+                .antMatchers(HttpMethod.GET,"/api/admin/**").hasRole(UserTipeEnum.ADMIN.toString());
 
 
         http.csrf().disable();

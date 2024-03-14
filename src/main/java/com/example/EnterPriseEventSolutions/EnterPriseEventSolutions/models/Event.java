@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,8 +29,11 @@ public class Event {
 
     private double price;
 
+    private LocalDateTime creationTime;
+
     @DateTimeFormat
     private Date updateDateTime;
+
 
     @JsonIgnore
     @ManyToOne
@@ -114,6 +118,15 @@ public class Event {
         this.tickets = tickets;
     }
 
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+
     public Event(String name, String description, Date date, Double price, int max_capacity) {
         this.name = name;
         this.description = description;
@@ -121,7 +134,6 @@ public class Event {
         this.price = price;
         this.max_capacity = max_capacity;
         this.current_capacity = 0;
-
-
+        this.creationTime = LocalDateTime.now();
     }
 }

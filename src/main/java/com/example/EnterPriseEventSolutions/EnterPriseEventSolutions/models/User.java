@@ -83,7 +83,7 @@ public class User {
     @JsonIgnore
     private LocalDateTime createDateTime;
 
-    private Blob image;
+    private String image;
 
 
     public Long getId() {
@@ -142,11 +142,11 @@ public class User {
         this.createDateTime = createDateTime;
     }
 
-    public Blob getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Blob image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -171,6 +171,7 @@ public class User {
         this.email=email;
         this.encodedPassword=encodedPassword;
         this.role=UserTipeEnum.CLIENT;
+
     }
     public User(String username, String email, String encodedPassword,String description){
         this.username=username;
@@ -178,6 +179,7 @@ public class User {
         this.encodedPassword=encodedPassword;
         this.description = description;
         this.role=UserTipeEnum.ORGANIZATION;
+
     }
 
 

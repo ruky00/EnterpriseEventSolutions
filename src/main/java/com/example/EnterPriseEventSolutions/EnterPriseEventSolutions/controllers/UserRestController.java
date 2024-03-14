@@ -2,12 +2,15 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.controller
 
 
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.ConfirmationToken;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Event;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.ConfirmationTokenRepository;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.ConfirmationTokenService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.RegisterService;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EventService;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.ImageService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.*;
@@ -15,17 +18,23 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.*;
 
+import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,10 +61,16 @@ public class UserRestController {
     private RegisterService registerService;
 
     @Autowired
+    private EventService eventService;
+
+    @Autowired
     private boolean isTestEnvironment;
 
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    private ImageService imageService;
 
     //POST members
     @Operation(summary = "Post a new member")
@@ -93,6 +108,11 @@ public class UserRestController {
             if(user.getDescription()!=null){
                 user.setRole(UserTipeEnum.ORGANIZATION);
             }else{user.setRole(UserTipeEnum.CLIENT);}
+
+            Resource resource = new ClassPathResource("static/images/mujer2.jpg");
+            File file = resource.getFile();
+            imageService.uploadImage(file,"profileImage",user.getUsername());
+            user.setImage(getUserProfileImageUrl(user.getUsername()));
             userService.saveUser(user);
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
@@ -102,8 +122,16 @@ public class UserRestController {
             URI location = fromCurrentRequest().path("/users/{id}")
                     .buildAndExpand(user.getId()).toUri();
             return ResponseEntity.created(location).body(user);
-        }catch (Exception e){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
+        }catch (Exception e){
+            System.out.println(e);  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
     }
+
+    private String getUserProfileImageUrl(String username) {
+        // Construyes la URL de la imagen para el usuario
+        return "https://" + "enterpriseeventsolutions" + ".s3.eu-west-2.amazonaws.com/" + username + "/profileImage";
+    }
+
+
     @GetMapping("/users/confirm")
     public String confirm(@RequestParam("token") String token){
         return registerService.confirmToken(token);
@@ -143,6 +171,43 @@ public class UserRestController {
         }else
             return ResponseEntity.notFound().build();
     }
+
+    //GET PERSONAL INFORMATION
+    @Operation(summary = "Get events  in app")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Source Found",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content
+            )
+
+
+    })
+    @GetMapping("/events")
+    public ResponseEntity<List<Event>> getEventsFromOrg(@RequestParam String org){
+        Optional<User> userOrg = userService.findByUsername(org);
+        if (userOrg.isPresent() && userOrg.get().getRole()==UserTipeEnum.ORGANIZATION){
+            List<Event> event = eventService.findByUser(userOrg.orElseThrow());
+            return new ResponseEntity<>(event, HttpStatus.OK);
+        }else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
+
 
     //UPDATE USER
     @Operation(summary = "Update User")
