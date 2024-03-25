@@ -1,8 +1,8 @@
 <template>
-<nav class="navbar fixed-top navbar-expand-lg">
+<nav :class="{ 'navbar-transparent': isTransparent }" class=" navbar fixed-top navbar-expand-lg">
   <div class="container-fluid">
     <!--LOGO-->
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#"><img src="https://enterpriseeventsolutions.s3.eu-west-2.amazonaws.com/localImages/Logo+naranja.png" alt="" height="90px"></a>
      <!--LOGO-->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-
+import { ref, onMounted } from 'vue';
 export default({
     name: 'NavigationBar',
     props:{
@@ -46,50 +46,73 @@ export default({
             type:String,
             required: true
         }
-    } 
+    },
+    setup() {
+    const isTransparent = ref(true);
+
+    onMounted(() => {
+      const handleScroll = () => {
+        isTransparent.value = window.scrollY === 0; // Transparente en scroll Y = 0
+      };
+
+      window.addEventListener('scroll', handleScroll);
+
+      // Limpiar el detector de eventos al desmontar el componente
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    });
+
+    return {
+      isTransparent,
+    };
+  },
 })
 
 
 
 </script>
 
-<style>
+<style scoped>
 
 @import '../assets/styles.css';
 
-.navbar-brand{
-    margin-left: 20px;
-    color: var(--main-bg-ultra);
+.navbar-brand {
+  margin-left: 20px;
+  color: var(--main-bg-ultra);
 }
 
-.navbar{
-    background: var(--main-bg-dark);
+.navbar {
+  background: var(--main-bg-dark);
+  transition: background-color 0.1s ease-in-out;
 }
 
-#navbarNavDropdown{
-    justify-content: flex-end;
+#navbarNavDropdown {
+  justify-content: flex-end;
 }
 
 .navbar-nav :hover {
-    color: var(--main-bg-org);
+  color: var(--main-bg-org);
 }
-
 
 router-link:focus {
-    color: var(--main-bg-org);
-}
-.navbar-nav router-link.show{
-    color: var(--main-bg-org);
+  color: var(--main-bg-org);
 }
 
-.nav-item{
+.navbar-nav router-link.show {
+  color: var(--main-bg-org);
+}
+
+.nav-item {
   margin-left: 30px;
   color: var(--main-bg-ultra);
 }
 
-.bi{
-    font-size: 1.4em;
+.bi {
+  font-size: 1.4em;
 }
 
-
+.navbar-transparent {
+  background-color: transparent !important; /* Garantiza la transparencia absoluta */
+}
 </style>

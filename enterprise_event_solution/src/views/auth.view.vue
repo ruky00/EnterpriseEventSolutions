@@ -1,8 +1,16 @@
 <template>
-    <router-link to="/"><button>Go Home</button></router-link>
+  
+    
     <article>
       <div class="container" :class="{'sign-up-active' : signUp}">
+        <div class="arrow-container">
+      <router-link to="/" >
+        <div width="24" height="24" fill="currentColor" class="bi bi-arrow-left">
+        </div>
+      </router-link>
+    </div>
         <div class="overlay-container">
+          
           <div class="overlay">
             <div class="overlay-left">
               <h2>Welcome Back!</h2>
@@ -16,44 +24,101 @@
             </div>
           </div>
         </div>
-        <form class="sign-up" action="#">
+        <form class="sign-up"  @submit.prevent="registerUser">
           <h2>Create login</h2>
           <div>Use your email for registration</div>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
+          <input v-model="user.username" type="text" placeholder="Name" />
+          <input v-model="user.email" type="email" placeholder="Email" />
+          <input v-model="user.encodedPassword" type="password" placeholder="Password" />
+          <button type="submit">Sign Up</button>
         </form>
-        <form class="sign-in" action="#">
+        <form class="sign-in"  @submit.prevent="loginUser">
           <h2>Sign In</h2>
           <div>Use your account</div>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input v-model="user.email" type="email" placeholder="Email" :class="{ 'error-border': loginError !== '' }"/>
+          <input v-model="user.encodedPassword" type="password" placeholder="Password" :class="{ 'error-border': loginError !== '' }" />
           <a href="#">Forgot your password?</a>
-          <button>Sign Up</button>
+          <div v-if="loginError !== ''" class="error-mensaje">
+          {{ loginError }}
+          </div>
+          <button>Sign In</button>
         </form>
       </div>
+
     </article>
   </template>
   
-  <script>
-    export default {
-      name:"AuthView",
-      data: () => {
-        return {
-          signUp: false
+  <script lang="ts">
+  import { User } from "../models/User";
+  import { authService } from "../services/auth.service";
+  import { ref } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { useStore } from 'vuex';
+
+  export default {
+    name: "AuthView",
+    setup() {
+      const user = ref({} as User);
+      const signUp = ref(false);
+      const loginError = ref("");
+      const router = useRouter();
+      const store = useStore();
+      let userType = String
+      
+      const loginUser = async () => {
+        try {
+          await store.dispatch('login', user.value);
+          loginError.value = "";
+          userType = store.state.userRoles;
+          router.push('/user/' + userType.toString().toLowerCase() );
+          
+        } catch (error) {
+          console.log(error)
+          if (error instanceof Error) {
+          loginError.value = "Usuario o contraseña incorrectos";
+        } else {
+          loginError.value = "Fallo en otro sitio";
+        } 
         }
-      }
-    }
+      };
+  
+      const registerUser = async () => {
+        await authService.prototype.register(user.value);
+        location.reload();
+      };
+  
+      return {
+        user,
+        signUp,
+        loginError,
+        loginUser,
+        registerUser,
+        store
+      };
+    },
+  };
   </script>
   
-  <style>
+  <style scoped>
   @import "../assets/styles.css";
 
-    body{
-        background-color: var(--main-bg-dark);
+      .arrow-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 999; /* Asegúrate de que la flecha esté encima del contenido */
     }
 
+
+   
+      article {
+        padding-bottom: 20%;
+        padding-top: 10%;
+        margin-top: px;
+        background: var(--main-bg-dark);
+       /* o el valor que prefieras, como 'contain' */
+         /* ajusta la altura según tus necesidades */
+      }
     .container {
         margin-top: 100px;
         position: relative;
@@ -166,20 +231,29 @@
         font-size: 1rem;
     }
     form input {
-        background-color: #eee;
-        border: none;
-        padding: 8px 15px;
-        margin: 6px 0;
-        width: calc(100% - 30px);
-        border-radius: 15px;
-        border-bottom: 1px solid #ddd;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4), 0 -1px 1px #fff, 0 1px 0 #fff;
-        overflow: hidden;
-    }
-    form input:focus {
-        outline: none;
-        background-color: #fff;
-    }
+      background-color: #eee;
+      border: 1px solid #ddd; /* Cambiado para resaltar el borde */
+      padding: 8px 15px;
+      margin: 6px 0;
+      width: calc(100% - 30px);
+      border-radius: 15px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, .4), 0 -1px 1px #fff, 0 1px 0 #fff;
+      overflow: hidden;
+      transition: border-color 0.3s ease-in-out; /* Transición para resaltar el cambio de color del borde */
+  }
+  form input:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: var(--main-bg-org-hover); 
+  }
+  form input.error-border {
+    border-color: #ff0000;
+  }
+
+  form .error-mensaje {
+    color: #ff7300; 
+    margin-top: 10px; 
+  }
     .sign-in {
         left: 0;
         z-index: 2;
