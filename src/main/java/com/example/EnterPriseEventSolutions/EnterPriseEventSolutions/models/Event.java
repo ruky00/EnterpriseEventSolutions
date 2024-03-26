@@ -2,6 +2,8 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -11,22 +13,27 @@ import java.util.List;
 
 @Entity
 public class Event {
+    public interface BasicInfo{}
+    public interface OrgInfo extends BasicInfo {}
+    public interface ClientInfo extends BasicInfo {}
+
 
     public Event() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(BasicInfo.class)
     private Long id;
-
+    @JsonView(BasicInfo.class)
     private String name;
-
+    @JsonView(BasicInfo.class)
     private String description;
-
+    @JsonView(BasicInfo.class)
     private int max_capacity;
-
+    @JsonView(BasicInfo.class)
     private int current_capacity;
-
+    @JsonView(BasicInfo.class)
     private double price;
 
     private LocalDateTime creationTime;
@@ -35,7 +42,7 @@ public class Event {
     private Date updateDateTime;
 
 
-    @JsonIgnore
+    @JsonSerialize(using = UserSerializer.class)
     @ManyToOne
     private User organization;
 

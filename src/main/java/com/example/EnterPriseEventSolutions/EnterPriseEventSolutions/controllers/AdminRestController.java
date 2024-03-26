@@ -5,22 +5,31 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Conf
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Event;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.AmazonS3Service;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.ConfirmationTokenService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.RegisterService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EventService;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.ImageService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.aspectj.apache.bcel.util.ClassPath;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -48,6 +57,12 @@ public class AdminRestController {
 
     @Autowired
     private RegisterService registerService;
+
+    @Autowired
+    private AmazonS3Service amazonS3Service;
+
+    @Autowired
+    private ImageService imageService;
 
 //GET ALL USERS
     @Operation(summary = "Get Users")
@@ -145,13 +160,36 @@ public class AdminRestController {
         }catch (Exception e){return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
     }
 
+
+
+    @PostMapping("/organizers/{id}/images")
+    public ResponseEntity setOrganizerImage(@RequestBody MultipartFile file,@PathVariable Long id){
+        try {
+            User user = userService.findById(id).orElseThrow();
+            File fileSource = convertMultipartFileToFile(file);
+            imageService.uploadImage(fileSource,"orgImage",user.getUsername());
+            user.setImage(getUserProfileImageUrl(user.getUsername()));
+            return ResponseEntity.ok("Image uploaded successfully!");
+
+        } catch(Exception e){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
+        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        multipartFile.transferTo(file);
+        return file;
+    }
+
     private String getUserProfileImageUrl(String username) {
         // Construyes la URL de la imagen para el usuario
-        return "https://" + "enterpriseeventsolutions" + ".s3.eu-west-2.amazonaws.com/" + username + "/profileImage";
+        return "https://" + "enterpriseeventsolutions" + ".s3.eu-west-2.amazonaws.com/" + username + "/orgImage";
     }
 
 
-//DELETE ORGANIZERS
+
+    //DELETE ORGANIZERS
     @Operation(summary = "DELETE Organizers")
     @ApiResponses(value = {
             @ApiResponse(
@@ -246,8 +284,6 @@ public class AdminRestController {
             return new ResponseEntity<>(userCount, HttpStatus.OK);
         }catch (Exception e){return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
     }
-
-
 
 
 }

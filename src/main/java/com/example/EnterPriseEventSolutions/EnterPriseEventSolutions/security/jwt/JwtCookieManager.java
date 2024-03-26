@@ -4,6 +4,8 @@ import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 @Component
 public class JwtCookieManager {
 
@@ -12,12 +14,12 @@ public class JwtCookieManager {
 
 	public HttpCookie createAccessTokenCookie(String token, Long duration) {
 		String encryptedToken = SecurityCipher.encrypt(token);
-		return ResponseCookie.from(ACCESS_TOKEN_COOKIE_NAME, encryptedToken).maxAge(-1).httpOnly(false).path("/").secure(true).sameSite("NONE").build();
+		return ResponseCookie.from(ACCESS_TOKEN_COOKIE_NAME, encryptedToken).maxAge(Duration.ofDays(1)).httpOnly(false).path("/").secure(true).sameSite("NONE").build();
 	}
 
 	public HttpCookie createRefreshTokenCookie(String token, Long duration) {
 		String encryptedToken = SecurityCipher.encrypt(token);
-		return ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, encryptedToken).maxAge(-1).httpOnly(false).path("/").secure(true).sameSite("NONE").build();
+		return ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, encryptedToken).maxAge(Duration.ofDays(3)).httpOnly(false).path("/").secure(true).sameSite("NONE").build();
 	}
 
 	public HttpCookie deleteAccessTokenCookie() {

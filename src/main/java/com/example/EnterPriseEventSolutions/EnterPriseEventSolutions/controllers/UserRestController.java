@@ -197,7 +197,7 @@ public class UserRestController {
 
     })
     @GetMapping("/events")
-    public ResponseEntity<List<Event>> getEventsFromOrg(@RequestParam String org){
+    public ResponseEntity<List<Event>> getEventsFromOrg(@RequestParam(name = "org") String org){
         Optional<User> userOrg = userService.findByUsername(org);
         if (userOrg.isPresent() && userOrg.get().getRole()==UserTipeEnum.ORGANIZATION){
             List<Event> event = eventService.findByUser(userOrg.orElseThrow());
@@ -206,8 +206,74 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Operation(summary = "Get event")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Source Found",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content
+            )
 
 
+    })
+    @GetMapping("events/{id}")
+    public ResponseEntity<Event> getEventById(@PathVariable Long id){
+        Optional<Event> event = eventService.findById(id);
+        if (event.isPresent()){
+            return new ResponseEntity(event,HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+    @Operation(summary = "Get organizer")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Source Found",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation= User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content
+            )
+
+
+    })
+    @GetMapping("/organizers/{id}")
+    @JsonView(User.OrgInfo.class)
+    public ResponseEntity<User> getOrgById(@PathVariable Long id){
+        Optional<User> user = userService.findById(id);
+        if(user.isPresent()){
+            return new ResponseEntity(user,HttpStatus.OK);
+        }else {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     //UPDATE USER
     @Operation(summary = "Update User")

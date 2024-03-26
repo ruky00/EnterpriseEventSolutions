@@ -59,7 +59,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/api/events").hasAnyRole(UserTipeEnum.CLIENT.toString(),UserTipeEnum.ADMIN.toString())
                 .antMatchers(HttpMethod.GET,"/api/admin/**").hasRole(UserTipeEnum.ADMIN.toString());
 
-
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

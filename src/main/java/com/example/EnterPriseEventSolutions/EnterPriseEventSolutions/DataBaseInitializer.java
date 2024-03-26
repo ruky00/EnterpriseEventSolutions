@@ -42,7 +42,7 @@ public class DataBaseInitializer {
             userRepository.save(admin);
 
             // Crear organizadores
-            User organizer1 = new User("URJC", "patxi@example.com", passwordEncoder.encode("pass"), "URJC eventos ETSI");
+                                    User organizer1 = new User("URJC", "patxi@example.com", passwordEncoder.encode("pass"), "URJC eventos ETSI");
             organizer1.setEnable(true);
             userRepository.save(organizer1);
 

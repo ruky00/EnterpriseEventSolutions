@@ -91,6 +91,7 @@ public class OrganizerRestController {
                     content = @Content
             )
     })
+
     @PostMapping("/events/")
     public ResponseEntity<Event> postEvents(HttpServletRequest request,@RequestBody Event event) {
         Principal principal = request.getUserPrincipal();
@@ -103,6 +104,8 @@ public class OrganizerRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
     //DELETE EVENT
     @Operation(summary = "delete event")
