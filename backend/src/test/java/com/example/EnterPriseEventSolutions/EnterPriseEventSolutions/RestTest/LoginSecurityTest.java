@@ -10,8 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
-import java.util.Locale;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 

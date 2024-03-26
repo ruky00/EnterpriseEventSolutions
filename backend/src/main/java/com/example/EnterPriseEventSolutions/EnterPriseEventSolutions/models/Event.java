@@ -1,7 +1,6 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.format.annotation.DateTimeFormat;

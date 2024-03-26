@@ -7,7 +7,6 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositorie
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;

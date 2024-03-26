@@ -1,12 +1,9 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services;
 
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 @Service
 public class ImageService {

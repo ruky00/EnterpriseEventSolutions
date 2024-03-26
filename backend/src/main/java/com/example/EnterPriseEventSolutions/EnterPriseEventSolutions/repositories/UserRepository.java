@@ -3,7 +3,6 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositori
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
