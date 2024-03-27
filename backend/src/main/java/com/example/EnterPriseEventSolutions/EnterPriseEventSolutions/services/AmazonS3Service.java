@@ -25,13 +25,15 @@ public class AmazonS3Service {
         this.s3Client = s3Client;
     }
 
-    public void uploadFile(String keyName, File file) {
+    public String uploadFile(String keyName, File file) {
         PutObjectRequest request = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(keyName)
                 .build();
 
         s3Client.putObject(request, file.toPath());
+
+        return "https://" + bucketName + ".s3.eu-west-2.amazonaws.com/"+ keyName;
     }
     public byte[] downloadFile(String keyName) throws IOException {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()

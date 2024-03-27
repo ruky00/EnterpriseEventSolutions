@@ -10,7 +10,8 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Em
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.RegisterService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EventService;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.ImageService;
+
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Image.ImageService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.*;
@@ -23,13 +24,19 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 
+import java.nio.file.Files;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -106,9 +113,9 @@ public class UserRestController {
                 user.setRole(UserTipeEnum.ORGANIZATION);
             }else{user.setRole(UserTipeEnum.CLIENT);}
 
-            Resource resource = new ClassPathResource("static/images/mujer2.jpg");
-            File file = resource.getFile();
-            imageService.uploadImage(file,"profileImage",user.getUsername());
+            String filePath = "static/images/mujer2.jpg";
+            MultipartFile multipartFile = convert(filePath);
+            imageService.createImage(multipartFile,"profileImage",user.getUsername());
             user.setImage(getUserProfileImageUrl(user.getUsername()));
             userService.saveUser(user);
             String token = UUID.randomUUID().toString();
@@ -121,6 +128,19 @@ public class UserRestController {
             return ResponseEntity.created(location).body(user);
         }catch (Exception e){
             System.out.println(e);  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
+    }
+
+
+    private MultipartFile convert(String filePath) throws IOException {
+        // Obtiene el archivo de la ruta especificada
+        File file = ResourceUtils.getFile("classpath:" + filePath);
+
+        // Lee el contenido del archivo en un array de bytes
+        byte[] bytes = Files.readAllBytes(file.toPath());
+
+        // Crea una instancia de MultipartFile utilizando MockMultipartFile
+        return new MockMultipartFile(file.getName(), file.getName(),
+                Files.probeContentType(file.toPath()), bytes);
     }
 
     private String getUserProfileImageUrl(String username) {

@@ -3,13 +3,16 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.I
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.AmazonS3Service;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 @Service("storageService")
 @Profile("production")
-public class S3ImageService {
+public class S3ImageService implements ImageService {
 
 
     private final AmazonS3Service amazonS3Service;
@@ -18,18 +21,20 @@ public class S3ImageService {
         this.amazonS3Service = amazonS3Service;
     }
 
-    public void uploadImage(File imageFile, String imageName, String userName) throws IOException {
+    @Override
+    public String createImage(MultipartFile multipartFile, String imageName, String userName) throws IOException {
+        File imageFile = convertMultipartFileToFile(multipartFile);
         String key = userName + "/" + imageName;
         amazonS3Service.uploadFile(key, imageFile);
         // Eliminar el archivo temporal después de cargarlo a S3
-
+        return "created in S3";
     }
 
-    //  private static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
-    //     File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-    //     FileCopyUtils.copy(multipartFile.getBytes(), file);
-    //      return file;
-    //   }
+      private static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
+        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+         FileCopyUtils.copy(multipartFile.getBytes(), file);
+         return file;
+       }
 
     public byte[] downloadImage(String imageName) throws IOException {
         return amazonS3Service.downloadFile(imageName);
