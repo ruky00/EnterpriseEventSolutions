@@ -6,6 +6,7 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.TicketService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -95,8 +96,8 @@ public class ClientRestController {
 
     }
 
-
-    @GetMapping("/companies")
+    @JsonView(User.OrgInfo.class)
+    @GetMapping("/organizers")
     public ResponseEntity<List<User>> getCompanies(){
         List<User> companies = userService.findAllByRole(UserTipeEnum.ORGANIZATION);
         return new ResponseEntity<>(companies,HttpStatus.OK);

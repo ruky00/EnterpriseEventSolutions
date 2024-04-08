@@ -19,11 +19,13 @@ public class User {
     public interface BasicInfo{}
     public interface OrgInfo extends BasicInfo{}
     public interface ClientInfo extends  BasicInfo{}
+    public interface PrivateInfo extends  BasicInfo{}
 
     public User() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(BasicInfo.class)
     private Long id;
 
     @Column(unique = true)
@@ -35,10 +37,8 @@ public class User {
     @JsonView(BasicInfo.class)
     private String email;
 
-    @JsonView(BasicInfo.class)
-    private long phone;
 
-    @JsonView(BasicInfo.class)
+    @JsonView(PrivateInfo.class)
     private String encodedPassword;
 
     @JsonView(BasicInfo.class)
@@ -46,8 +46,19 @@ public class User {
 
 
     @JsonView(OrgInfo.class)
+    @Column(length = 1000)
     private String description;
 
+    @JsonView(OrgInfo.class)
+    private String logo;
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
 
     public String getDescription() {
         return description;
@@ -65,7 +76,7 @@ public class User {
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
-
+    @JsonIgnore
     private boolean isEnable;
 
     @JsonView(BasicInfo.class)
@@ -82,6 +93,7 @@ public class User {
     @JsonIgnore
     private LocalDateTime createDateTime;
 
+    @JsonView(BasicInfo.class)
     private String image;
 
 
@@ -107,14 +119,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(long phone) {
-        this.phone = phone;
     }
 
     public String getEncodedPassword() {
@@ -183,7 +187,7 @@ public class User {
 
     @Override
     public String toString(){
-        return "User [, name=" + this.getUsername() + ", email=" + this.getEmail() + "encodedPassword="+ this.getEncodedPassword()+"]";
+        return "User [, name=" + this.getUsername() + ", email=" + this.getEmail() + ", encodedPassword="+ this.getEncodedPassword()+"]";
     }
 
 

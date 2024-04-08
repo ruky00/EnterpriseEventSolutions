@@ -35,6 +35,9 @@ public class Event {
     @JsonView(BasicInfo.class)
     private double price;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
+
     private LocalDateTime creationTime;
 
     @DateTimeFormat
@@ -136,7 +139,7 @@ public class Event {
     public Event(String name, String description, Date date, Double price, int max_capacity) {
         this.name = name;
         this.description = description;
-        this.updateDateTime = date;
+        this.date = date;
         this.price = price;
         this.max_capacity = max_capacity;
         this.current_capacity = 0;

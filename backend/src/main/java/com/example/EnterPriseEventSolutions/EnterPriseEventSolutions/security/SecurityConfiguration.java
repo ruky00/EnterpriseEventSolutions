@@ -57,8 +57,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT,"/api/users/me/").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/api/users/me").hasAnyRole(UserTipeEnum.ORGANIZATION.toString(),UserTipeEnum.CLIENT.toString(),UserTipeEnum.ADMIN.toString())
                 .antMatchers(HttpMethod.GET,"/api/events").hasAnyRole(UserTipeEnum.CLIENT.toString(),UserTipeEnum.ADMIN.toString())
-                .antMatchers(HttpMethod.GET,"/api/admin/**").hasRole(UserTipeEnum.ADMIN.toString());
-
+                .antMatchers(HttpMethod.GET,"/api/admin/**").hasRole(UserTipeEnum.ADMIN.toString())
+                .antMatchers(HttpMethod.GET,"/api/clients/**").hasRole(UserTipeEnum.CLIENT.toString());
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }
