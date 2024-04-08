@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+
 public interface ImageService {
 
     public String createImage(MultipartFile imageFile, String imageName, String userName) throws IOException;

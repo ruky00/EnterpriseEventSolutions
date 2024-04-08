@@ -10,8 +10,9 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Em
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.RegisterService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EventService;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.ImageService;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Image.ImageService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -77,6 +78,7 @@ public class AdminRestController {
                     content = @Content
             )
     })
+    @JsonView(User.BasicInfo.class)
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> userList = userService.findAll();
@@ -142,14 +144,12 @@ public class AdminRestController {
             user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
             user.setRole(UserTipeEnum.ORGANIZATION);
             userService.saveUser(user);
-            user.setImage(getUserProfileImageUrl(user.getUsername()));
-            userService.saveUser(user);
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             String link = "https://localhost:8443/api/users/confirm?token=" + token;
             emailService.send(user.getEmail(), registerService.buildEmail(user.getUsername(), link));
-            URI location = fromCurrentRequest().path("/users/{id}")
+            URI location = fromCurrentRequest().path("/organizers/{id}")
                     .buildAndExpand(user.getId()).toUri();
             return ResponseEntity.created(location).body(user);
 
@@ -159,12 +159,15 @@ public class AdminRestController {
 
 
     @PostMapping("/organizers/{id}/images")
-    public ResponseEntity setOrganizerImage(@RequestBody MultipartFile file,@PathVariable Long id){
+    public ResponseEntity setOrganizerImage(@RequestParam("image")MultipartFile file,@RequestParam("logo") MultipartFile logo,
+                                            @PathVariable Long id){
         try {
             User user = userService.findById(id).orElseThrow();
-            File fileSource = convertMultipartFileToFile(file);
-            imageService.uploadImage(fileSource,"orgImage",user.getUsername());
-            user.setImage(getUserProfileImageUrl(user.getUsername()));
+            String logoName= imageService.createImage(logo,"orgLogo",user.getUsername());
+            String imageName = imageService.createImage(file,"orgImage",user.getUsername());
+            user.setImage(imageName);
+            user.setLogo(logoName);
+            userService.saveUser(user);
             return ResponseEntity.ok("Image uploaded successfully!");
 
         } catch(Exception e){

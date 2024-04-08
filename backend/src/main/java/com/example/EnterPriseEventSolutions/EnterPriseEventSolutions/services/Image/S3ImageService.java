@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Service("storageService")
-@Profile("production")
+@Profile("prod")
 public class S3ImageService implements ImageService {
 
 
@@ -25,9 +25,9 @@ public class S3ImageService implements ImageService {
     public String createImage(MultipartFile multipartFile, String imageName, String userName) throws IOException {
         File imageFile = convertMultipartFileToFile(multipartFile);
         String key = userName + "/" + imageName;
-        amazonS3Service.uploadFile(key, imageFile);
+        String url = amazonS3Service.uploadFile(key, imageFile);
         // Eliminar el archivo temporal después de cargarlo a S3
-        return "created in S3";
+        return url;
     }
 
       private static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {

@@ -39,6 +39,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -115,8 +116,8 @@ public class UserRestController {
 
             String filePath = "static/images/mujer2.jpg";
             MultipartFile multipartFile = convert(filePath);
-            imageService.createImage(multipartFile,"profileImage",user.getUsername());
-            user.setImage(getUserProfileImageUrl(user.getUsername()));
+            String imageName = imageService.createImage(multipartFile,"profileImage",user.getUsername());
+            user.setImage(imageName);
             userService.saveUser(user);
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
@@ -180,6 +181,7 @@ public class UserRestController {
 
 
     })
+    @JsonView(User.PrivateInfo.class)
     @GetMapping("/users/me")
     public ResponseEntity<Optional<User>> getPersonalInfo(HttpServletRequest request){
         Principal principal = request.getUserPrincipal();
@@ -213,6 +215,7 @@ public class UserRestController {
 
 
     })
+
     @GetMapping("/events")
     public ResponseEntity<List<Event>> getEventsFromOrg(@RequestParam(name = "org") String org){
         Optional<User> userOrg = userService.findByUsername(org);
@@ -332,6 +335,25 @@ public class UserRestController {
 
         userService.saveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    //POST NEW IMAGE FOR THE USER
+    @PostMapping("/users/me/image")
+    public ResponseEntity postNewImage(@RequestParam("image") MultipartFile file, HttpServletRequest request) throws IOException {
+        try {
+            if (file == null){
+                return new ResponseEntity(HttpStatus.OK);
+            }
+            Principal principal =  request.getUserPrincipal();
+            User user = userService.findByEmail(principal.getName()).orElseThrow();
+            String imageName = imageService.createImage(file,"profileImage",user.getUsername());
+            user.setImage(imageName);
+            userService.saveUser(user);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
     }
 
 
