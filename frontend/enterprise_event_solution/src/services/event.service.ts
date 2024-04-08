@@ -8,7 +8,7 @@ export class EventService{
 
     public async getMyEvents(){
         try {
-            const response = await fetch('https://localhost:8443/api/organizers/events', {
+            const response = await fetch('/api/organizers/events', {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -20,6 +20,7 @@ export class EventService{
                 throw new Error(`Error al obtener la información del usuario: ${response.status} - ${response.statusText}`);
               }
             const datos = await response.json();  
+            console.log(datos);
             return datos;
             } catch (err) {
                 console.error('Error al obtener los eventos', err);
@@ -32,7 +33,7 @@ export class EventService{
 
     public async getEventById(id: number){
         try{
-            const response = await fetch('https://localhost:8443/api/events/'+id, {
+            const response = await fetch('/api/events/'+id, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -54,7 +55,7 @@ export class EventService{
 
     public async updateEvent(event: Event){
         try{
-            const response = await fetch('https://localhost:8443/api/organizers/events/'+event.id, {
+            const response = await fetch('/api/organizers/events/'+event.id, {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
@@ -71,7 +72,7 @@ export class EventService{
 
     public async deleteEvent(id: number){
         try{
-            const response = await fetch('https://localhost:8443/api/organizers/events/'+id, {
+            const response = await fetch('/api/organizers/events/'+id, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -87,7 +88,7 @@ export class EventService{
 
    public async createEvent(event: Event){
         try{
-            const response =  await fetch('https://localhost:8443/api/organizers/events/',{
+            const response =  await fetch('/api/organizers/events/',{
                 method: 'POST',
                 credentials: 'include',
                 headers: {

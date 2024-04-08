@@ -1,8 +1,9 @@
 import {User} from '../models/User'
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
+import {EventService} from '../services/event.service'
 
-const BASE_URL = "https://localhost:8443/api/auth"
+const BASE_URL = "/api/auth"
 
 export class authService{
 
@@ -30,6 +31,10 @@ export class authService{
         }
 
         const data = await response.json();
+
+        // AQUÍ PUEDES VER QUE SE PIDEN TUS EVENTOS Y FUNCIONA (SALE VACÍO PORQUE NO HAY NINGUNO)
+        const eventData = await EventService.prototype.getMyEvents();
+
         return data;
     } catch (error) {
         throw new Error();
@@ -41,7 +46,7 @@ export class authService{
     public  async getUserInfoFromServer(): Promise<User | null> {
        
         try {
-          const respuesta = await fetch('https://localhost:8443/api/users/me', {
+          const respuesta = await fetch('/api/users/me', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
