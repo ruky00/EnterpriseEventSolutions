@@ -56,9 +56,6 @@ public class AdminRestController {
     private RegisterService registerService;
 
     @Autowired
-    private AmazonS3Service amazonS3Service;
-
-    @Autowired
     private ImageService imageService;
 
 //GET ALL USERS
