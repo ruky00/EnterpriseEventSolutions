@@ -1,4 +1,4 @@
-name: CI Tests
+name: Pruebas de IC
 
 on:
   push:
@@ -20,8 +20,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION }}
+          distribution: adopt  # Elige tu distribución deseada (adopt por defecto)
 
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: mvn install
 
       - name: Run tests
