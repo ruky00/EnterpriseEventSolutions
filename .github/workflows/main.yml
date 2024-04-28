@@ -21,11 +21,6 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: Configure Maven settings
-        uses: maven/maven-settings-plugin@v3
-        with:
-          settings-file: settings.xml
-
       - name: Install dependencies
         run: mvn install
 
