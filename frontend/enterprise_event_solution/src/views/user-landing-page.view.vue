@@ -2,12 +2,12 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Barra de navegación lateral -->
-      <div class="col-2">
+      <div class="col-1">
         <user_navbar />
       </div>
 
       <!-- Contenido principal -->
-      <div class="col-10">
+      <div class="col-11">
         <router-view />
       </div>
     </div>
