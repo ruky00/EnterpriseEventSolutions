@@ -1,0 +1,35 @@
+<template>
+  <event_component></event_component>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Otros Eventos</h2>
+    </div>
+  </div>
+
+
+</template>
+  
+  <script lang="ts">
+  
+  import event_component from '../components/event.component.vue'
+  
+  export default {
+    name: 'event-view',
+    components:{
+      event_component
+    }
+  }
+
+  </script>
+  
+  <style scoped>
+  .row{
+    padding-top: 1%;
+  }
+  h2{
+    text-align: left;
+    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  </style>
+  

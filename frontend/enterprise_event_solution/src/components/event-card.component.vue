@@ -1,10 +1,10 @@
 <template>
    
     <div class="row">
-        
+     <router-link :to="{ name: 'event-view', params: { id: evento?.id }}"> 
       <div class="col-12">
         <div class="card">
-          <img class="card-img"  alt="Card image">
+          <img class="card-img">
           <div class="card-img-overlay">
             <h5 class="card-title">{{ evento?.name }}</h5>
             <p class="card-text">{{ evento?.description }}</p>
@@ -22,8 +22,9 @@
           </div>
         </div>
       </div>
+    </router-link>  
     </div>
-    <div class="row">
+    <div v-if="isOrg" class="row">
         <div class="col-12">
             <div class="d-flex justify-content-end mb-3">
                <router-link :to="`event/create`"> <i class="bi bi-plus"></i> Crear Nuevo Evento</router-link> 
@@ -43,14 +44,13 @@ import { ref } from 'vue';
 export  default {
     name: 'event_cards',
     props:{
-      evento: Object as () => Event,
+      evento: Object as ()=> Event,
       isOrg: Boolean,
     },
     setup(){
       const router = useRouter();
-      const eventos = ref([] as Array<Event>);
-
-  
+      const eventos = ref ({} as Event)
+      
         const deleteEvent = async(id: number)=>{
             await EventService.prototype.deleteEvent(id)
         }
@@ -69,10 +69,18 @@ export  default {
 
 
 <style scoped>
-  .card{
-        height: 105px;
-        margin-top: 40px;
-        margin-right: 30px;
+    .card{
+      height: 105px;
+      margin-top: 40px;
+      margin-right: 30px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+      }
+
+    .card:hover{
+      transform: scale(1.06);
+      transition: all 0.7s ease;
     }
 
     p{

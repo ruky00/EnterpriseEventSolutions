@@ -18,7 +18,7 @@ import { onMounted, ref } from 'vue';
     
 
      const getOrganizers = async()=>{
-        const response =  await UserService.prototype.getOrganizerById();
+        const response =  await UserService.prototype.getOrganizers();
         organizers.value = response;
      }
 

@@ -1,4 +1,6 @@
+import { User } from "@/models/User";
 import {Event} from "../models/Event"
+import { h } from "vue";
 const BASE_URL = "/api/users"
 
 export class EventService{
@@ -103,5 +105,22 @@ export class EventService{
         }catch(error){ console.error('Error al crear el evento:', error)}
 
    }
+   public async getEventsByOrg(name:string){
+        try{
+            const response =  await fetch('/api/events?org='+name,{
+                method: 'GET',
+                credentials: 'include',
+                headers: {  
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`Error al crear el evento: ${response.status} - ${response.statusText}`);
+            }
+            return data;
+        }catch(error){ console.error('Error al crear el evento:', error)}
+    }
 
 }

@@ -27,6 +27,10 @@ export default createStore({
     setUser(state: State, user: User | null) {
       state.user = user;
     },
+    updateUser(state: State, newUser:User) {
+      console.log('Mutation: updateUser', newUser);
+      state.user = newUser;
+    }
   },
   getters: {
     // Esta getter verifica si el usuario tiene los roles requeridos
@@ -63,5 +67,8 @@ export default createStore({
       // Limpiar el token JWT si lo estás utilizando
       // localStorage.removeItem('jwtToken');
     },
+    updateUser({ commit }, newUser) {
+      commit('updateUser', newUser);
+    }
   },
 });

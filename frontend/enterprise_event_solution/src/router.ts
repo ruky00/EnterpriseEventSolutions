@@ -35,7 +35,7 @@ const routes =createRouter({
         {
           path: 'client',
           name: 'client-home',
-          component: ()=>import('../src/views/user-landing-page.view.vue'),
+          component: ()=>import('../src/views/client/client-home.view.vue'),
           meta: { requiresAuth: true, roles: ['CLIENT'] }
         },
         {
@@ -54,6 +54,13 @@ const routes =createRouter({
           }
         },
         {
+          path:'event/:id',
+          name: 'event-view',
+          component: ()=>import('../src/views/event.view.vue'),
+          meta: { requiresAuth: true, roles: ['CLIENT','ORGANIZATION','ADMIN'],
+          beforeEnter: authGuard,
+        }},
+        {
           path:'event/create',
             name: 'create-event',
             component: ()=>import('../src/views/organizer/organizer-create.view.vue'),
@@ -61,6 +68,14 @@ const routes =createRouter({
             beforeEnter: authGuard,
           
         }
+      },
+      {
+        path:':id',
+        name:'user-info',
+        component:()=>import('../src/views/user-info.view.vue'),
+        meta: { requiresAuth: true, roles:['CLIENT','ORGANIZATION','ADMIN'],
+        beforeEnter: authGuard,
+      }
       }
       ]
     },
