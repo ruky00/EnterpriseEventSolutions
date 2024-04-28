@@ -1,25 +1,39 @@
-name: Continuous integration 
+name: CI Tests
 
-on: 
+on:
   push:
+    branches: [ main ]
+
+env:
+  JAVA_VERSION: 11
 
 jobs:
-
   test:
     runs-on: ubuntu-latest
-    environment:
-      name: CI
+    needs: []
+
     steps:
-      - name: Uses Variables
-        env:
-          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ env.AWS_REGION }}
-        run: echo "Setting up environment variables"
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Java JDK 11
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
-      - run: mvn test --file backend/pom.xml
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Configure Maven settings
+        uses: maven/maven-settings-plugin@v3
+        with:
+          settings-file: settings.xml
+
+      - name: Install dependencies
+        run: mvn install
+
+      - name: Run tests
+        run: mvn test
+
+      - name: Upload test coverage
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: target/site/cobertura/coverage.xml
