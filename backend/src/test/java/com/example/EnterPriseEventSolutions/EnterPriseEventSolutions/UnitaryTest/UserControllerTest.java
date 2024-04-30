@@ -7,7 +7,6 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.ConfirmationTokenRepository;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.UserRepository;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Image.ImageService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -69,9 +68,7 @@ public class UserControllerTest {
     @MockBean
     private ConfirmationTokenRepository confirmationTokenRepository;
 
-    @MockBean
-    private ImageService imageService;
-
+    private User user1;
     private User user2;
     private User user3;
 

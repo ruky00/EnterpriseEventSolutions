@@ -8,7 +8,6 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.EventRepository;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.UserRepository;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EventService;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Image.ImageService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -62,9 +60,6 @@ public class EventTest {
     @MockBean
     private EventRepository eventRepository;
 
-    @MockBean
-    private ImageService imageService;
-
 
     private Event event1;
     private Event event2;
@@ -75,8 +70,8 @@ public class EventTest {
     public void setUp() {
         Calendar c1 = Calendar.getInstance();
         c1.set(2023, Calendar.MAY, 2, 18, 30);
-        event1 = new Event("Concierto municipal de Móstoles", "Concierto ofrecido por ...",  c1.getTime(), 19.99, 50);
-        event2 = new Event("Concierto municipal de Fuenlabrada", "Concierto ofrecido por ...",  c1.getTime(), 29.99, 70);
+        event1 = new Event("Concierto municipal de Móstoles", "Concierto ofrecido por ...", c1.getTime(), 19.99, 50);
+        event2 = new Event("Concierto municipal de Fuenlabrada", "Concierto ofrecido por ...", c1.getTime(), 29.99, 70);
 
         organizer = new User("URJC", "patxi@example.com", "pass", "Universidad Rey Juan Carlos");
         client = new User("Carlos","calos@gmail.es","pass");

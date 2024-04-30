@@ -27,7 +27,6 @@ public class Event {
     @JsonView(BasicInfo.class)
     private String name;
     @JsonView(BasicInfo.class)
-    @Column(length = 1000)
     private String description;
     @JsonView(BasicInfo.class)
     private int max_capacity;
@@ -35,7 +34,7 @@ public class Event {
     private int current_capacity;
     @JsonView(BasicInfo.class)
     private double price;
-    @JsonView(BasicInfo.class)
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
