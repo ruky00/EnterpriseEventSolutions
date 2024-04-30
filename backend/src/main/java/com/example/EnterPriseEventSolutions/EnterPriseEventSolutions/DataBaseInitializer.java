@@ -56,7 +56,7 @@ public class DataBaseInitializer {
             userRepository.save(organizer2);
 
             // Crear clientes
-                User client1 = new User("Michel", "michel@example.com", passwordEncoder.encode("pass"));
+                    User client1 = new User("Michel", "michel@example.com", passwordEncoder.encode("pass"));
             client1.setEnable(true);
             userRepository.save(client1);
 
@@ -71,7 +71,8 @@ public class DataBaseInitializer {
             // Crear eventos
             Calendar calendar1 = Calendar.getInstance();
             calendar1.set(2024, Calendar.JULY, 15, 19, 0);
-            Event event1 = new Event("Concierto de Verano", "Concierto al aire libre", calendar1.getTime(), 25.99, 100);
+            Event event1 = new Event("Concierto de Verano", "Únete a nosotros para una noche inolvidable llena de música y diversión en nuestro Concierto de Verano. Este evento te llevará en un viaje a través de los éxitos más memorables de la temporada, interpretados por talentosos músicos locales y artistas invitados."
+            , calendar1.getTime(), 25.99, 100);
             event1.setOrganization(organizer1);
             eventRepository.save(event1);
 
