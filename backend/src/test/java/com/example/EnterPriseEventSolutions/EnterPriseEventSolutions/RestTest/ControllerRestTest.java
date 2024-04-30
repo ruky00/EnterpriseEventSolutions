@@ -2,11 +2,9 @@ package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.RestTest;
 
 
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Image.ImageService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,9 +21,6 @@ public class ControllerRestTest {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ImageService imageService;
 
     @LocalServerPort
     int port;

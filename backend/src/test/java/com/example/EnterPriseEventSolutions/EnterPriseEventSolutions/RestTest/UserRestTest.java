@@ -34,10 +34,6 @@ public class UserRestTest extends ControllerRestTest {
     @DynamicPropertySource
     public static void overrideProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
-        registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
-        registry.add("spring.datasource.username", mySQLContainer::getUsername);
-        registry.add("spring.datasource.password", mySQLContainer::getPassword);
-        registry.add("spring.datasource.driver-class-name", mySQLContainer::getDriverClassName);
     }
 
     @ParameterizedTest(name = "{index} {0}")
