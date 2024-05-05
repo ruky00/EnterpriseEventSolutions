@@ -33,5 +33,25 @@ public class EmailService{
             throw new IllegalStateException("Fail to send email");
         }
 
+
+
+    }
+    @Async
+    public void sendOrg(String to, String email){
+        try{
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setText(email, true);
+            helper.setTo(to);
+            helper.setSubject("Confirm your Account");
+            helper.setFrom("enterpriseeventsolutioninfo@gmail.com");
+            javaMailSender.send(mimeMessage);
+        }catch (MessagingException e){
+            LOGGER.error("Failed to send email", e);
+            throw new IllegalStateException("Fail to send email");
+        }
+
+
+
     }
 }

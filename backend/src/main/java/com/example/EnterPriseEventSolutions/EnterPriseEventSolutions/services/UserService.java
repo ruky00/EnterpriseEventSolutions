@@ -58,50 +58,36 @@ public class UserService {
 
 
     //Admin services
-    public Map<String, Integer> getUsersCountByMonth(List<User> userList) {
-        Map<String, Integer> userCountByMonth = new HashMap<>();
+    public int[] getUsersCountByMonth(List<User> userList) {
+        int[] userCountByMonth = new int[12]; // Initialize array with 12 positions
 
         for (User user : userList) {
             LocalDateTime registrationDate = user.getCreateDateTime();
-            Month month = registrationDate.getMonth();
-            String monthName = month.toString();
+            int monthIndex = registrationDate.getMonthValue() - 1; // Convert month to index (0-11)
 
-            // Verificar si el mes ya está en el mapa
-            if (userCountByMonth.containsKey(monthName)) {
-                // Si el mes ya está en el mapa, aumentar el conteo de usuarios para ese mes
-                userCountByMonth.put(monthName, userCountByMonth.get(monthName) + 1);
-            } else {
-                // Si el mes no está en el mapa, agregarlo con un conteo inicial de 1
-                userCountByMonth.put(monthName, 1);
-            }
+            // Increment count for the corresponding month
+            userCountByMonth[monthIndex]++;
         }
+
         return userCountByMonth;
     }
 
-    public Map<String, Integer> getEventsCountByMonth(List<Event> eventList) {
-        Map<String, Integer> EventCountByMonth = new HashMap<>();
+    public int[] getEventsCountByMonth(List<Event> eventList) {
+        int[] eventCountByMonth = new int[12];
 
         for (Event event : eventList) {
             LocalDateTime registrationDate = event.getCreationTime();
-            Month month = registrationDate.getMonth();
-            String monthName = month.toString();
+            int monthIndex = registrationDate.getMonthValue() - 1; // Convert month to index (0-11)
 
-            // Verificar si el mes ya está en el mapa
-            if (EventCountByMonth.containsKey(monthName)) {
-                // Si el mes ya está en el mapa, aumentar el conteo de eventos para ese mes
-                EventCountByMonth.put(monthName, EventCountByMonth.get(monthName) + 1);
-            } else {
-                // Si el mes no está en el mapa, agregarlo con un conteo inicial de 1
-                EventCountByMonth.put(monthName, 1);
-            }
+            // Increment count for the corresponding month
+            eventCountByMonth[monthIndex]++;
         }
-        return EventCountByMonth;
+
+        return eventCountByMonth;
+    }
     }
 
 
-
-
-}
 
 
 
