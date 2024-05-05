@@ -57,7 +57,8 @@
               <input type="file" id="newProfileImage" @change="handleFileChange" class="form-control-file">
             </div>
             <div class="form-group">
-              <img :src=user.image alt="Imagen de perfil" class="profile-image">
+              <img v-if="newImage!=null" :src=user.image alt="Imagen de perfil" class="profile-image">
+              <img v-else :src="newImage" alt="Imagen de perfil" class="profile-image">
             </div>
           </div>
         </div>
@@ -122,10 +123,10 @@ import { authService } from '@/services/auth.service';
       };
       
       const handleFileChange = (event: Event) => {
-      const files = (event.target as HTMLInputElement).files; // Obtener los archivos seleccionados
+        const files = (event.target as HTMLInputElement).files; // Obtener los archivos seleccionados
       if (files && files.length > 0) {
         // Hacer algo con los archivos, como guardarlos en una variable de datos o procesarlos
-        newImage.append('image', files[0]); // Puedes ver la información del archivo seleccionado en la consola
+        newImage.append('image',files[files.length-1] ); // Puedes ver la información del archivo seleccionado en la consola
         // Aquí puedes enviar el archivo al servidor o realizar cualquier otra acción necesaria
       }
     };
@@ -163,7 +164,8 @@ import { authService } from '@/services/auth.service';
         getLogo,
         newPassword,
         handleFileChange,
-        eventos
+        eventos,
+        newImage
       };
     }
   };

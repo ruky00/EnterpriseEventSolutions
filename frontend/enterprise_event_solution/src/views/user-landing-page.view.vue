@@ -47,6 +47,11 @@ export default {
   padding-right: 0px ;
 }
 
+.col-1{
+  padding-right: -100px;
+}
+
+
 
 
 </style>
