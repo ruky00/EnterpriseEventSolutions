@@ -4,7 +4,7 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.UserRepository;
 
 
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.jwt.AuthResponse;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.AuthResponse;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.restassured.http.ContentType;

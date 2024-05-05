@@ -145,7 +145,7 @@ public class AdminRestController {
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
             confirmationTokenService.saveConfirmationToken(confirmationToken);
             String link = "https://localhost:8443/api/users/confirm?token=" + token;
-            emailService.send(user.getEmail(), registerService.buildEmail(user.getUsername(), link));
+            emailService.sendOrg(user.getEmail(), registerService.buildEmailOrg(user.getUsername(), link, user.getEmail()));
             URI location = fromCurrentRequest().path("/organizers/{id}")
                     .buildAndExpand(user.getId()).toUri();
             return ResponseEntity.created(location).body(user);
@@ -156,16 +156,28 @@ public class AdminRestController {
 
 
     @PostMapping("/organizers/{id}/images")
-    public ResponseEntity setOrganizerImage(@RequestParam("image")MultipartFile file,@RequestParam("logo") MultipartFile logo,
+    public ResponseEntity setOrganizerImage(@RequestParam("image")MultipartFile file,
                                             @PathVariable Long id){
         try {
             User user = userService.findById(id).orElseThrow();
-            String logoName= imageService.createImage(logo,"orgLogo",user.getUsername());
+
             String imageName = imageService.createImage(file,"orgImage",user.getUsername());
             user.setImage(imageName);
-            user.setLogo(logoName);
             userService.saveUser(user);
             return ResponseEntity.ok("Image uploaded successfully!");
+
+        } catch(Exception e){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PostMapping("/organizers/{id}/images/logo")
+    public ResponseEntity setOrganizerLogo(@RequestParam("image") MultipartFile logo,@PathVariable Long id){
+        try {
+            User user = userService.findById(id).orElseThrow();
+            String logoName= imageService.createImage(logo,"orgLogo",user.getUsername());
+            user.setLogo(logoName);
+            userService.saveUser(user);
+            return ResponseEntity.ok("Logo uploaded successfully!");
 
         } catch(Exception e){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -214,7 +226,7 @@ public class AdminRestController {
     }
 
 //GET USERS GRAPHICS
-    @Operation(summary = "Get Events per month")
+    @Operation(summary = "Get Users per month")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -231,28 +243,28 @@ public class AdminRestController {
             )
     })
     @GetMapping("/users/graphics/users")
-    public ResponseEntity<Map<String,Integer>> usersPerMonth(){
+    public ResponseEntity<int[]> usersPerMonth(){
         try {
             List<User> userList = userService.findAll();
-            Map<String,Integer> usersByMonth =  userService.getUsersCountByMonth(userList);
-            return new ResponseEntity<>(usersByMonth,HttpStatus.OK);
+           int[] usersByMonth =  userService.getUsersCountByMonth(userList);
+            return new ResponseEntity(usersByMonth,HttpStatus.OK);
         }catch (Exception e)
             {return  new ResponseEntity<>(HttpStatus.NOT_FOUND);}
 
     }
 
     @GetMapping("/users/graphics/events")
-    public ResponseEntity<Map<String,Integer>> eventsPerMonth(){
+    public ResponseEntity<int[]> eventsPerMonth(){
         try {
             List<Event> eventList = eventService.findAll();
-            Map<String,Integer> eventsByMonth =  userService.getEventsCountByMonth(eventList);
-            return new ResponseEntity<>(eventsByMonth,HttpStatus.OK);
+          int[] eventsByMonth =  userService.getEventsCountByMonth(eventList);
+            return new ResponseEntity(eventsByMonth,HttpStatus.OK);
         }catch (Exception e)
         {return  new ResponseEntity<>(HttpStatus.NOT_FOUND);}
 
     }
 
-    //GET COUNT GRAPHICS
+    //GET USERS PER ROLE
     @Operation(summary = "Get Users per Type")
     @ApiResponses(value = {
             @ApiResponse(
@@ -269,7 +281,7 @@ public class AdminRestController {
                     content = @Content
             )
     })
-    @GetMapping("/users/roles")
+        @GetMapping("/users/roles")
     public ResponseEntity<Map<String,Integer>> countForType(){
         try{
             Map<String,Integer> userCount = new HashMap<>();

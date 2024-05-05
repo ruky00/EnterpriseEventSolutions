@@ -46,7 +46,7 @@ public class DataBaseInitializer {
                     "una institución académica de renombre en España, reconocida por su excelencia en la educación superior y la investigación. Fundada en 1996, la URJC se ha destacado " +
                     "por su enfoque innovador en la enseñanza, su compromiso con la investigación ç" +
                     "multidisciplinaria y su contribución al desarrollo social y económico del país.");
-            organizer1.setImage("https://localhost:8443/image_83456a65-80b0-4409-8448-dc1f43a32afa_urjc.jpg");
+            organizer1.setImage("https://localhost:8443/urjc.jpg");
             organizer1.setEnable(true);
             userRepository.save(organizer1);
 

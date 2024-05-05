@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.jwt.AuthResponse;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.jwt.LoginRequest;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.jwt.UserLoginService;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.AuthResponse;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.LoginRequest;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.security.jwt.UserLoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

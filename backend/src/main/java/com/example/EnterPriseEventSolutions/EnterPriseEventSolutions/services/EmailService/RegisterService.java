@@ -71,4 +71,23 @@ public class RegisterService {
             return ""; // Return an empty string or a default email template as a fallback
         }
     }
+
+    public String buildEmailOrg(String name, String link, String email) {
+        try {
+            // Load the email template from the file
+            ClassPathResource resource = new ClassPathResource("templates/email-template-org.html");
+            InputStreamReader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+            String emailTemplate = FileCopyUtils.copyToString(reader);
+
+            // Replace the placeholders with actual values
+            emailTemplate = emailTemplate.replace("{name}", name);
+            emailTemplate = emailTemplate.replace("{link}", link);
+            emailTemplate = emailTemplate.replace("{email}", email);
+            return emailTemplate;
+        } catch (IOException e) {
+            // Handle the exception (e.g., log an error)
+            e.printStackTrace();
+            return ""; // Return an empty string or a default email template as a fallback
+        }
+    }
 }
