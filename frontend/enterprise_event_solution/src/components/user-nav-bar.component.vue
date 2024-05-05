@@ -108,9 +108,16 @@
     <style scoped>
       .col-auto{
         background-color: var(--main-bg-dark);
-        max-width: 200px;
+        max-width:200px;
+        overflow:auto;
+        
       }
-    
+
+      .container-fluid{
+        position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+      }
       span{
         color: var(--main-bg-ultra);
         font:var(--font-family-main);

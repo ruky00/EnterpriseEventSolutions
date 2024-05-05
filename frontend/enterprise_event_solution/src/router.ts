@@ -29,8 +29,16 @@ const routes =createRouter({
         {
           path: 'admin',
           name: 'admin-home',
-          component: ()=>import('../src/views/user-landing-page.view.vue'),
-          meta: { requiresAuth: true, roles: ['ADMIN'] }
+          component: ()=>import('../src/views/admin/admin-home.view.vue'),
+          meta: { requiresAuth: true, roles: ['ADMIN'] },
+          
+        },
+        {
+          path: 'admin/createOrganization',
+          name: 'create-org',
+          component: ()=>import('../src/views/admin/create-org.view.vue'),
+          meta: { requiresAuth: true, roles: ['ADMIN'] },
+         
         },
         {
           path: 'client',

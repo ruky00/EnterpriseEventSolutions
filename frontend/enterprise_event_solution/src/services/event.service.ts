@@ -123,4 +123,21 @@ export class EventService{
         }catch(error){ console.error('Error al crear el evento:', error)}
     }
 
+    public async buyTicket(id:number){
+        try{
+            const response =  await fetch('/api/clients/tickets/?id='+id,{
+                method: 'POST',
+                credentials: 'include',
+                headers: {  
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`Error al crear el evento: ${response.status} - ${response.statusText}`);
+            }
+            return data;
+        }catch(error){ console.error('Error al crear el evento:', error)}
+    }
 }

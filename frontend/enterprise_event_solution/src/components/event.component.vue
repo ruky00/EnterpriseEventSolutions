@@ -14,9 +14,9 @@
          <div class="col-2 fecha"><p id="fecha">Fecha: {{formattedDate}}</p></div>
          <div class="col-2 capacidad"><p>Capacidad: {{ event.current_capacity }}/{{ event.max_capacity }}</p></div>
       </div>
-      <div v-if="!haveTicket" class="row">
+      <div v-if="haveTicket()" class="row">
           <div class="col-12">
-            <button class="full-width-btn">Inscribirse</button>
+            <button class="full-width-btn" @click="buyTicket">Inscribirse</button>
           </div>
       </div>
       <div v-else class="row">
@@ -36,6 +36,8 @@
     import { useRouter } from 'vue-router';
     import { Event } from '../models/Event';
     import { onMounted, ref } from 'vue';
+import { Ticket } from '@/models/Ticket';
+import { UserService } from '@/services/user.service';
     
     export default {
       name: 'event_component',
@@ -43,32 +45,67 @@
         const router = useRouter();
         const event = ref({} as Event);
         const eventId = router.currentRoute.value.params['id'];
-        const haveTicket = ref(true);
-    
+        const ticket = ref({} as Ticket);
+        const tickets = ref([] as Ticket[]) 
         const setEvent = async () => {
           try {
             const eventData = await EventService.prototype.getEventById(Number(eventId));
             event.value = eventData;
+            
             if (!eventData) throw new Error('No se ha encontrado el evento');
           } catch (error) {
             console.log('Error: ', error);
           }
+         await getAllTickets();
         };
-       
+        const buyTicket = async()=>{
+          try{
+            const ticketData = await EventService.prototype.buyTicket(Number(eventId));
+            ticket.value = ticketData;
+           
+          }catch(error){
+            console.log('Error: ', error);
+          }
+        }
+        const getAllTickets= async() =>{
+          try{
+            const ticketsData = await UserService.prototype.getTickets();
+            tickets.value = ticketsData
+          }catch(error){
+            console.log('Error: ', error);
+          }
+          
+        }
+        const haveTicket = () => {
+            for (let i = 0; i < tickets.value.length; i++) {
+              const ticket = tickets.value[i];
+              if (ticket.event?.id === Number(eventId)) {
+
+                return false; // Si encuentra un ticket para el evento actual, retorna true
+              }
+            }
+          
+            return true; // Si no se encuentra ningún ticket para el evento actual, retorna false
+          };
+
+
         const dateFormatter = new Intl.DateTimeFormat('es-ES',{ year: 'numeric', month: 'long', day: 'numeric' });
-  
+        
   // Formatea la fecha utilizando el objeto dateFormatter
         const formattedDate = dateFormatter.format(event.value.date);
         onMounted(setEvent);
-    
+        
         return {
           router,
           event,
           eventId,
           haveTicket,
-          
+          buyTicket,
           dateFormatter,
           formattedDate,
+          ticket,
+          getAllTickets
+          
         };
       },
     };
