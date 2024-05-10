@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build && npm run copy-dist-to-spring",
+    "lint": "vue-cli-service lint",
+    "copy-dist-to-spring": "xcopy /Y /E dist ..\\..\\backend\\src\\main\\resources\\static"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

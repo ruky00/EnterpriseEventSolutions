@@ -4,6 +4,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+backend/src/main/resources/static/css
+backend/src/main/resources/static/index.html
+backend/src/main/resources/static/favicon.ico
+backend/src/main/resources/static/js
+backend/src/main/resources/static/fonts
+
+
 ### STS ###
 .apt_generated
 .classpath
