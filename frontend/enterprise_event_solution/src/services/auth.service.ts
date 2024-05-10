@@ -41,6 +41,27 @@ export class authService{
     }
 }
 
+public async logout() {
+    try {
+        const response = await fetch(BASE_URL + '/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+           
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
+        }
+        const data = await response.json();
+        // AQUÍ PUEDES VER QUE SE PIDEN TUS EVENTOS Y FUNCIONA (SALE VACÍO PORQUE NO HAY NINGUNO)
+    } catch (error) {
+        throw new Error();
+    }
+}
    
     
     public  async getUserInfoFromServer(): Promise<User | null> {

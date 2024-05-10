@@ -1,4 +1,5 @@
 <template>
+  <h1 v-if="isMe"> {{ user.username }} profile</h1>
     <div class="container-flex">
       <div v-if="user.role === 'ORGANIZATION' && !isMe" class="row logo">
         <img :src="getLogo()" alt="Logo organizacion" height="80px">
@@ -13,7 +14,8 @@
           <p>{{ user.description }}</p>
         </div>
         </div>
-        <div v-if="user.role === 'ORGANIZATION'">
+        <div v-if="user.role === 'ORGANIZATION' && !isMe">
+        <div class="row"><h4>Eventos de empresa disponibles</h4></div>
         <div  class="col-12" v-for="(evento, index) in eventos" :key="index">
         <event_cards
         :evento="evento"
@@ -23,7 +25,7 @@
         </div>
         </div>
 
-
+        
         <div v-if="isMe" class="user-form-container">
       <div class="form-header">
         <h2>Edita tu perfil</h2>
@@ -69,7 +71,7 @@
 </template>
   
   <script lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { User } from '../models/User';
   import { UserService } from '@/services/user.service';
@@ -85,7 +87,7 @@ import { authService } from '@/services/auth.service';
     setup() {
       const user = ref({} as User);
       const router = useRouter();
-      const isMe = router.currentRoute.value.params.id === 'me';
+      const isMe = ref(router.currentRoute.value.params.id === 'me');
       const newPassword = ""
       const newImage = new FormData();
       const store = useStore();
@@ -107,7 +109,7 @@ import { authService } from '@/services/auth.service';
 
       const fetchUser = async () => {
         try {
-          if (isMe) {
+          if (isMe.value) {
             const response = await authService.prototype.getUserInfoFromServer();
             if(response){
             user.value = response;
@@ -156,7 +158,11 @@ import { authService } from '@/services/auth.service';
       }
 
       onMounted(fetchUser);
-  
+
+    watch(() => router.currentRoute.value.params.id, () => {
+      isMe.value = router.currentRoute.value.params.id === 'me';
+      fetchUser();
+    });
       return {
         user,
         isMe,
@@ -172,7 +178,7 @@ import { authService } from '@/services/auth.service';
   </script>
   
 <style scoped>
-p, h1{
+p, h1,h4{
   text-align: left;
   font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
 }
@@ -185,8 +191,12 @@ p{
 label,input,h2{
   font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
 }
-.container-flex{
-    margin-left: 5px;
+.user-form-container{
+    margin-left: 1%;
+    box-shadow: #b1b1b1 0px 10px 25px 15px,  #b1b1b1 10px -15px 10px 0px; 
+    border-radius: 10px 0  10px 0px;;
+    margin-right: 1%;
+    margin-top: 2%;
 }
 
 

@@ -1,9 +1,8 @@
 <template>
-   
+   <template v-if="isOrg">
     <div class="row">
-     <router-link :to="{ name: 'event-view', params: { id: evento?.id }}"> 
       <div class="col-12">
-        <div class="card">
+        <div class="card org">
           <img class="card-img">
           <div class="card-img-overlay">
             <h5 class="card-title">{{ evento?.name }}</h5>
@@ -22,7 +21,7 @@
           </div>
         </div>
       </div>
-    </router-link>  
+
     </div>
     <div v-if="isOrg" class="row">
         <div class="col-12">
@@ -31,6 +30,25 @@
             </div>
         </div>
     </div>
+   </template>
+   <template v-else>
+    <div class="row">
+     <router-link :to="{ name: 'event-view', params: { id: evento?.id }}"> 
+      <div class="col-12">
+        <div class="card client">
+          <img class="card-img">
+          <div class="card-img-overlay">
+            <h5 class="card-title">{{ evento?.name }}</h5>
+            <p class="card-text">{{ evento?.description }}</p>
+            <div class="d-flex justify-content-end align-items-end">
+          </div>  
+          </div>
+        </div>
+      </div>
+    </router-link>  
+    </div>
+   </template>
+    
  
 </template>
 
@@ -40,7 +58,6 @@ import {EventService} from "../services/event.service";
 import { useRouter } from 'vue-router';
 import { Event } from '../models/Event';
 import { ref } from 'vue';
-
 export  default {
     name: 'event_cards',
     props:{
@@ -50,7 +67,6 @@ export  default {
     setup(){
       const router = useRouter();
       const eventos = ref ({} as Event)
-      
         const deleteEvent = async(id: number)=>{
             await EventService.prototype.deleteEvent(id)
         }
@@ -58,7 +74,8 @@ export  default {
         return{
             eventos,
             router,
-            deleteEvent
+            deleteEvent,
+
         }
     },
 
@@ -76,9 +93,10 @@ export  default {
       background-repeat: no-repeat;
       background-size: cover;
       font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+      transition: all 0.7s ease;
       }
 
-    .card:hover{
+    .card .client:hover{
       transform: scale(1.06);
       transition: all 0.7s ease;
     }

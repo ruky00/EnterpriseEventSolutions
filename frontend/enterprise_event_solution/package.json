@@ -24,6 +24,7 @@
     "vue-d3-charts": "^0.2.8",
     "vue-resource": "^1.5.3",
     "vue-router": "^4.2.5",
+    "vuetify": "^3.6.3",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
