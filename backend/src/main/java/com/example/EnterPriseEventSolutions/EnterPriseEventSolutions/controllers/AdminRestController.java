@@ -214,7 +214,7 @@ public class AdminRestController {
                     content = @Content
             )
     })
-    @DeleteMapping("/organizers/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<User> deleteOrganizers(@PathVariable Long id){
         Optional<User> user = userService.findById(id);
         if (user.isPresent()){

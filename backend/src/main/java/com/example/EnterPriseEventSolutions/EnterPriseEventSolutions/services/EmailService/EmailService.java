@@ -18,6 +18,7 @@ public class EmailService{
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
 
+
     @Async
     public void send(String to, String email){
         try{
