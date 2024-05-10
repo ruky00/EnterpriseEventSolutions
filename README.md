@@ -52,7 +52,7 @@ Aqui se puede ver los pasos a seguir para realizar esto. Y de igual forma crears
 
 5. Abrir el navegador y buscar [http://localhost:8080](http://localhost:8080).
 
-### A dia 10/5/2024 Hay problemas con la configuración del front para su `build`. En caso de que no funcionara correctamente, Iniciar con `npm run serve`)
+### A dia 10/5/2024 Hay problemas con la configuración del front para su `build`. En caso de que no funcionara correctamente, Iniciar con `npm run serve` (Se subirá una correccíon con la mayor brevedad posible)
 
 
 ### USO DE LA APLICACIÓN
