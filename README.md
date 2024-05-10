@@ -36,7 +36,7 @@ Las diferentes tecnologías utilizadas para esta fase son:
    7.2 Crearse en las variables de entorno del sistema todas aquellas properties que se encuentren embedidas en ${}.
 
 8. Para el Servicio de Email hay que crearse un correo y generar una contraseña para aplicaciones [https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.](https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.)
-Aqui se puede ver los pasos a seguir para realizar esto. Y de igual forma crearse las variables de entorno en el sistema para hacer uso de ellas y no exponerlas en la aplicación.
+Aqui se puede ver los pasos a seguir para realizar esto. Y de igual forma crearse las variables de entorno en el sistema para hacer uso de ellas y no exponerlas en la aplicación. Si no dispones de esto, no podrás crear usuarios y utilizarlos con normalidad ya que no podrán ser activados debido a la confirmación por Correo Electrónico.
 
 
 
