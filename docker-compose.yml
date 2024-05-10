@@ -1,12 +1,7 @@
 version: '3.8'
 
 services:
-  frontend:
-    image: ruky00/frontevs1
-    ports:
-      - "8080:8080"
-    environment:
-      - VUE_APP_API_BASE_URL=http://backend:8443/api
+
   mysql:
     image: mysql:8.0.28
     container_name: evs1
@@ -15,12 +10,14 @@ services:
       - MYSQL_ROOT_PASSWORD=password
     ports:
       - "3306:3306"
+    restart: on-failure
 
-  backend:
+  backend_prod:
     image: ruky00/evs1
     ports:
       - "8443:8443"
     environment:
+      - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATASOURCE_URL=jdbc:mysql://evs1:3306/evs
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
@@ -31,4 +28,10 @@ services:
       - EMAIL_SERVICE=${EMAIL_SERVICE}
     depends_on:
       - mysql
+    restart: on-failure
+
+  backend_dev:
+    image: ruky00/evs1
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
     restart: on-failure
