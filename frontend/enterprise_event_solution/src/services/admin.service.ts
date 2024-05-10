@@ -2,6 +2,7 @@ import { User } from "@/models/User";
 import {Event} from "../models/Event"
 const BASE_URL = "/api/admin"
 export class AdminService{
+   
 
     constructor(){}
 
@@ -137,7 +138,41 @@ export class AdminService{
         }catch(error){ console.error('Error al crear el evento:', error)}
     }
 
+    public async getUsers(){
+        try{
+            const response =  await fetch(BASE_URL+'/users',{
+                method: 'GET',
+                credentials: 'include',
+                headers: {  
+                    "Access-Control-Allow-Origin": "*",
 
+                },
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`Error al crear el evento: ${response.status} - ${response.statusText}`);
+              }
+            return data;
+        }catch(error){ console.error('Error al crear el evento:', error)}
+    }
+
+
+    public async deleteUsers(id: number){
+        try{
+            const response =  await fetch(BASE_URL+'/users/'+id,{
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {  
+                    "Access-Control-Allow-Origin": "*",
+                },
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`Imposible eliminar al usuario: ${response.status} - ${response.statusText}`);
+              }
+            return data;
+        }catch(error){ console.error('Imposible eliminar al usuario', error)}
+    }
 
 
 

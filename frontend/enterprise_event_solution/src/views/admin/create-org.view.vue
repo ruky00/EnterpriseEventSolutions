@@ -1,9 +1,9 @@
 <template>
 
-<h1>Organization Creation</h1>
+<h1>Creacion de Organizaciones</h1>
 
 <div class="form-header" v-if="user">
-        <h2>Crear Perfil para Organización</h2>
+        <h2>Crear un Perfil para una Organización</h2>
       {{ user.email }}
       <div class="form-body">
         <div class="row">
@@ -54,8 +54,11 @@
             
          
         </div>
-        <button @click="registerOrg" class="btn btn-primary">Registrar Organizador</button>
-    
+        <button v-if="!seleccionado" @click="registerOrg" class="btn btn-primary">Registrar Organización</button>
+        <button v-else class="btn btn-primary" type="button" disabled>
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Cargando...
+        </button>
 </div>
 </template>
 
@@ -72,7 +75,9 @@ export default{
         const newLogo =  new FormData();
         const vistaPreviaImagenPerfil = ref('');
         const vistaPreviaImagenLogo = ref('');
+        const seleccionado = ref(false);
         const registerOrg = async ()=>{
+           seleccionado.value=true;
             user.value.encodedPassword = newPassword;
             try{
                 const userData = await AdminService.prototype.postOrganizer(user.value)
@@ -85,6 +90,7 @@ export default{
                 console.log(error);
                 alert('El usuario que intentas crear ya está en el sistema')
             }
+            seleccionado.value=false;
         }
 
         
@@ -123,7 +129,8 @@ export default{
             handleFileChange1,
             handleFileChange2,
             vistaPreviaImagenPerfil,
-            vistaPreviaImagenLogo
+            vistaPreviaImagenLogo,
+            seleccionado
 
             
         }
@@ -140,7 +147,7 @@ export default{
     margin-left: 1%;
     border-radius: 15px;
     background: linear-gradient(to top right, var(--main-bg-light), var(--main-bg-org)); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);    
+    box-shadow: #b1b1b1 0px 10px 25px 15px,  #b1b1b1 10px -15px 10px 0px; 
     margin-right: 1%;
 }
 
@@ -166,7 +173,10 @@ textarea, label,input,h2{
   color: black;
 }
 
-label
+label:hover{
+  cursor: pointer;
+  
+}
 
 .container-flex{
     margin-left: 5px;
@@ -245,7 +255,7 @@ label
   background-color: var(--main-bg-org); 
   color: #fff; 
   border: none; 
-  border-radius: 4px; 
+  border-radius: 9px; 
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.4s ease-in-out;
@@ -254,7 +264,7 @@ label
 
 
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: var(--main-bg-dark);
 }
 
 input[type="text"],
@@ -280,7 +290,9 @@ input[type="file"]{
   position: absolute;
   z-index: -1;
 }
-
+img{
+  border-radius: 15px;
+}
 .custom-file-input:hover {
   
   resize:20px;

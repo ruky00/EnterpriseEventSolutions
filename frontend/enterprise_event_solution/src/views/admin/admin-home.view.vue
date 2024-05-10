@@ -75,12 +75,12 @@ export default ({
  }
  .col-6{
     border-radius: 20px;
-    box-shadow: var(--main-bg-light) 0px 10px 15px -3px, var(--main-bg-light) 0px -15px 10px 0px;
+    box-shadow: #b1b1b1 0px 10px 15px -3px,  #b1b1b1 0px -15px 10px 0px;
     margin-left: 0px;
  }
  .col-8{ 
     border-radius: 20px;
-    box-shadow: var(--main-bg-light) 0px 10px 15px -3px, var(--main-bg-light) 0px -15px 10px 0px;
+    box-shadow: #b1b1b1 0px 10px 15px -3px,  #b1b1b1 0px -15px 10px 0px;
     margin-left: 0%;
     
     height: 20%;
@@ -94,7 +94,7 @@ export default ({
    
     height: 37vh;
     border-radius: 15px;
-    box-shadow: var(--main-bg-org) 0px 10px 15px -3px, var(--main-bg-light) 0px -15px 10px 0px;
+    box-shadow: #b1b1b1 0px 10px 15px -23px,  #b1b1b1 0px -15px 10px 0px;
     background: #f7b679;
     border-width: 5px;
  }

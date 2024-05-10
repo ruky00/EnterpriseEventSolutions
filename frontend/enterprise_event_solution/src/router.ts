@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter,  createWebHashHistory } from 'vue-router';
 import { authGuard } from './guards/authguard';
 const routes =createRouter({
-   history: createWebHistory(),
+   history: createWebHashHistory(),
    routes: [
     {
       path: '/',
@@ -37,6 +37,13 @@ const routes =createRouter({
           path: 'admin/createOrganization',
           name: 'create-org',
           component: ()=>import('../src/views/admin/create-org.view.vue'),
+          meta: { requiresAuth: true, roles: ['ADMIN'] },
+         
+        },
+        {
+          path: 'admin/usersTable',
+          name: 'user-table',
+          component: ()=>import('../src/views/admin/admin-userTable.view.vue'),
           meta: { requiresAuth: true, roles: ['ADMIN'] },
          
         },
