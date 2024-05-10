@@ -50,7 +50,9 @@ Aqui se puede ver los pasos a seguir para realizar esto. Y de igual forma crears
 
 4. Una vez instaladas todas las dependencias: `npm run build`.
 
-5. Abrir el navegador y buscar [http://localhost:8080](http://localhost:8080).
+5. Instalar serve para lanzar el entorno en producción `npm install -g serve`
+
+6. Abrir el navegador y buscar [http://localhost:8080](http://localhost:8080).
 
 ### A dia 10/5/2024 Hay problemas con la configuración del front para su `build`. En caso de que no funcionara correctamente, Iniciar con `npm run serve` (Se subirá una correccíon con la mayor brevedad posible)
 
