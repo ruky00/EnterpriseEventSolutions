@@ -30,6 +30,7 @@ Las diferentes tecnologías utilizadas para esta fase son:
    6.2 ` docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql:8.0.28` Lanzará la imagen en un contenedor Docker que será expuesto en el puerto 3306 para su uso.
 
 7. `java -jar "-Dspring.profiles.active=<dev o prod>" EnterPriseEventSolutions-0.0.1-SNAPSHOT.jar` Lanzará nuestra apliación.
+   
    7.1 Para poder hacer uso del perfil en producción es necesario configurar un perfil de AWS y crear un bucket de S3.
    
    7.2 Crearse en las variables de entorno del sistema todas aquellas properties que se encuentren embedidas en ${}.
