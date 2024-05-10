@@ -6,9 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="EnterPriseEventSolutions (1)" />
-        <module name="EnterPriseEventSolutions" />
         <module name="EnterPriseEventSolutions (2)" />
+        <module name="EnterPriseEventSolutions" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

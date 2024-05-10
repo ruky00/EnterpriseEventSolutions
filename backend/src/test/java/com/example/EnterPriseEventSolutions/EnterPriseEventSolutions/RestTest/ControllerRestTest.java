@@ -34,7 +34,7 @@ public class ControllerRestTest {
     protected ObjectMapper objectMapper;
 
     @Container
-    public static MySQLContainer mySQLContainer = new MySQLContainer<>("mysql:8.0.24")
+    public static MySQLContainer mySQLContainer = new MySQLContainer<>("mysql:8.0.28")
             .withDatabaseName("test")
             .withUsername("user")
             .withPassword("pass");
