@@ -41,6 +41,9 @@ Las diferentes tecnologías utilizadas para esta fase son:
 
    7.3 Cabe destacar que solo será necesario para el perfil prod, el perfil dev esta configurado para no instanciar estos servicios. Se usaran Mocks y servicios auxiliares para no tener que hacerse AWS ni Gmail.
 
+### 8. Si quieres lanzar la app directamente simplemente ejecuta `docker-compose run  --service-port backend_<dev o prod>`. En caso de no tener las imagenes bajadas de antemano hacer `docker pull ruky00/evs1` y  `docker pull mysql:28.0.8`
+
+
 #### FRONTEND
 
 1. Clonar repositorio (Si no se ha clonado previamente) en otro directorio de nuestro IDE (Para el front es recomendable usar VS Code).
