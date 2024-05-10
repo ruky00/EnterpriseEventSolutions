@@ -23,22 +23,23 @@ Las diferentes tecnologías utilizadas para esta fase son:
 
 5. `cd target`
 
-6. Para poder utilizar la app hay que crearse una Base de Datos MySQL, lo más sencillo es rapido es usar Docker.
+6. Para poder utilizar la app en producción  hay que crearse una Base de Datos MySQL, lo más sencillo es rapido es usar Docker.
 
    6.1 `docker pull mysql:8.0.28` Descargará la imagen de docker.io (Obviamente tenemos que disponer de docker en nuestro sistema pero esta parte no entra en el scope del TFG).
    
    6.2 ` docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql:8.0.28` Lanzará la imagen en un contenedor Docker que será expuesto en el puerto 3306 para su uso.
 
+   6.3 Para el Servicio de Email hay que crearse un correo y generar una contraseña para aplicaciones [https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.](https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.)
+   Aqui se puede ver los pasos a seguir para realizar esto. Y de igual forma crearse las variables de entorno en el sistema para hacer uso de ellas y no exponerlas en la aplicación.
+   Si no dispones de esto, no podrás crear usuarios y utilizarlos con normalidad ya que no podrán ser activados debido a la confirmación por Correo Electrónico.
+   
 7. `java -jar "-Dspring.profiles.active=<dev o prod>" EnterPriseEventSolutions-0.0.1-SNAPSHOT.jar` Lanzará nuestra apliación.
    
    7.1 Para poder hacer uso del perfil en producción es necesario configurar un perfil de AWS y crear un bucket de S3.
    
    7.2 Crearse en las variables de entorno del sistema todas aquellas properties que se encuentren embedidas en ${}.
 
-8. Para el Servicio de Email hay que crearse un correo y generar una contraseña para aplicaciones [https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.](https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.)
-Aqui se puede ver los pasos a seguir para realizar esto. Y de igual forma crearse las variables de entorno en el sistema para hacer uso de ellas y no exponerlas en la aplicación. Si no dispones de esto, no podrás crear usuarios y utilizarlos con normalidad ya que no podrán ser activados debido a la confirmación por Correo Electrónico.
-
-
+   7.3 Cabe destacar que solo será necesario para el perfil prod, el perfil dev esta configurado para no instanciar estos servicios. Se usaran Mocks y servicios auxiliares para no tener que hacerse AWS ni Gmail.
 
 #### FRONTEND
 
