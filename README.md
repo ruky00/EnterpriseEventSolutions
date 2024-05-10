@@ -6,7 +6,7 @@ Las diferentes tecnologías utilizadas para esta fase son:
 - SpringBoot 2.7.14
 - Maven: 4.0.0
 - Java: 19.0.2
-- h2: 2.2.224
+- MySQL:8.0.28
 - Vue3: 5.0.8
 
 ### CONFIGURACIÓN
@@ -17,13 +17,25 @@ Las diferentes tecnologías utilizadas para esta fase son:
 
 2. Cargar proyecto como Maven Project. (En caso de no hacer esto, no funcionará la aplicación) y ejecutar `mvnw install` si es la primera vez que se ejecuta.
 
-3. El documento `application.properties` está configurado para lanzar la aplicación en modo dev. Se está comprobando algunos fallos que surgían de eliminar este elemento por defecto e intentar ejecutarlo con la configuración del launcher.
+3. El documento `application.properties`  teine por defecto algunas configuraciones pero según el modo de lanzamiento de la app, se cargarán otros archivos de configuración.
 
 4. Abrir la terminal. `cd backend` y ejecutar `mvn package`. Este comando compila y empaqueta el proyecto en un archivo JAR, que puede ejecutarse o implementarse en un servidor. Incluye la clase compilada.
 
 5. `cd target`
 
-6. `java -jar EnterPriseEventSolutions-0.0.1-SNAPSHOT.jar` (La aplicación empezará a lanzarse y se instanciará la base de datos h2).
+6. Para poder utilizar la app hay que crearse una Base de Datos MySQL, lo más sencillo es rapido es usar Docker.
+
+   6.1 `docker pull mysql:8.0.28` Descargará la imagen de docker.io (Obviamente tenemos que disponer de docker en nuestro sistema pero esta parte no entra en el scope del TFG).
+   6.2 ` docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password mysql:8.0.28` Lanzará la imagen en un contenedor Docker que será expuesto en el puerto 3306 para su uso.
+
+7. `java -jar "-Dspring.profiles.active=<dev o prod>" EnterPriseEventSolutions-0.0.1-SNAPSHOT.jar` Lanzará nuestra apliación.
+   7.1 Para poder hacer uso del perfil en producción es necesario configurar un perfil de AWS y crear un bucket de S3.
+   7.2 Crearse en las variables de entorno del sistema todas aquellas properties que se encuentren embedidas en ${}.
+
+8. Para el Servicio de Email hay que crearse un correo y generar una contraseña para aplicaciones [https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.](https://support.google.com/mail/answer/185833?hl=es#:~:text=En%20%22C%C3%B3mo%20inicias%20sesi%C3%B3n%20en,Selecciona%20Generar.)
+Aqui se puede ver los pasos a seguir para realizar esto. Y de igual forma crearse las variables de entorno en el sistema para hacer uso de ellas y no exponerlas en la aplicación.
+
+
 
 #### FRONTEND
 
@@ -36,6 +48,9 @@ Las diferentes tecnologías utilizadas para esta fase son:
 4. Una vez instaladas todas las dependencias: `npm run build`.
 
 5. Abrir el navegador y buscar [http://localhost:8080](http://localhost:8080).
+
+A dia 10/5/2024 Hay problemas con la configuración del front para su `build`. En caso de que no funcionara correctamente, Iniciar con `npm run serve`)
+
 
 ### USO DE LA APLICACIÓN
 
