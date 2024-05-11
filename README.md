@@ -61,6 +61,9 @@ Las diferentes tecnologías utilizadas para esta fase son:
 ### A dia 10/5/2024 Hay problemas con la configuración del front para su `build`. En caso de que no funcionara correctamente, Iniciar con `npm run serve` (Se subirá una correccíon con la mayor brevedad posible)
 
 
+#### FULL STACK
+1. Para lanzar la aplicación al completo con el front servido por Spring se ha creado una imagen especifica `ruky00/evsglobal` por lo que si, en el paso Nº 8 de Backend ponemos esta nueva imagen podremos hacer un despliegue total. (Recomendable solo en producción).
+
 ### USO DE LA APLICACIÓN
 
 1. Para ingresar en la app hay usuarios creados en la BD con los permisos necesarios para acceder a la aplicación web.
