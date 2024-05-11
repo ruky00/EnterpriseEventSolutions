@@ -1,6 +1,10 @@
-const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig({
+module.exports = {
   transpileDependencies: true,
+
+  pluginOptions: {
+    webpackBundleAnalyzer: {
+      openAnalyzer: false
+    },
   devServer: {
     proxy: {
       '^/api': {
@@ -10,5 +14,5 @@ module.exports = defineConfig({
       },
     }
   },
-  publicPath: process.env.NODE_ENV === 'production' ? '' : '/'
-})
+}
+}

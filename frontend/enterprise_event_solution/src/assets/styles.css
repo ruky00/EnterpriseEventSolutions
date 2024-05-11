@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css");
+
 
 :root{
         --main-bg-dark: #001524;
@@ -6,7 +6,4 @@
         --main-bg-org-hover: #a85201;
         --main-bg-light: #15616D;
         --main-bg-ultra:#FFECD1;
-
-        --font-family-main: Libre Frankling;
-
 }

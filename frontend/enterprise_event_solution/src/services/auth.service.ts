@@ -1,6 +1,4 @@
 import {User} from '../models/User'
-import Cookies from 'js-cookie';
-import jwt from 'jsonwebtoken';
 import {EventService} from '../services/event.service'
 
 const BASE_URL = "/api/auth"
