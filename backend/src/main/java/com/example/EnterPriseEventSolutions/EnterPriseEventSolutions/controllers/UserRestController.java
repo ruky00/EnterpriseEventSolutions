@@ -8,6 +8,7 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.ConfirmationTokenRepository;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.ConfirmationTokenService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
+
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.RegisterService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EventService;
 
@@ -32,14 +33,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 
 import java.nio.file.Files;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -113,11 +113,6 @@ public class UserRestController {
             if(user.getDescription()!=null){
                 user.setRole(UserTipeEnum.ORGANIZATION);
             }else{user.setRole(UserTipeEnum.CLIENT);}
-
-            String filePath = "static/images/mujer2.jpg";
-            MultipartFile multipartFile = convert(filePath);
-            String imageName = imageService.createImage(multipartFile,"profileImage",user.getUsername());
-            user.setImage(imageName);
             userService.saveUser(user);
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
@@ -131,6 +126,7 @@ public class UserRestController {
             System.out.println(e);  return new ResponseEntity<>(HttpStatus.BAD_REQUEST);}
     }
 
+    /*
 
     private MultipartFile convert(String filePath) throws IOException {
         // Obtiene el archivo de la ruta especificada
@@ -143,12 +139,7 @@ public class UserRestController {
         return new MockMultipartFile(file.getName(), file.getName(),
                 Files.probeContentType(file.toPath()), bytes);
     }
-
-    private String getUserProfileImageUrl(String username) {
-        // Construyes la URL de la imagen para el usuario
-        return "https://" + "enterpriseeventsolutions" + ".s3.eu-west-2.amazonaws.com/" + username + "/profileImage";
-    }
-
+    */
 
     @GetMapping("/users/confirm")
     public String confirm(@RequestParam("token") String token){

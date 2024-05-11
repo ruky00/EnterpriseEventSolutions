@@ -10,7 +10,6 @@ public class EnterPriseEventSolutionsApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(EnterPriseEventSolutionsApplication.class, args);
-
 	}
 
 }

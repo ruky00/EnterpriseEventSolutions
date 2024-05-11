@@ -13,7 +13,7 @@ services:
     restart: on-failure
 
   backend_prod:
-    image: ruky00/evs1
+    image: ruky00/evsglobal
     ports:
       - "8443:8443"
     environment:
@@ -31,7 +31,7 @@ services:
     restart: on-failure
 
   backend_dev:
-    image: ruky00/evs1
+    image: ruky00/evsglobal
     ports:
       - "8443:8443"
     environment:

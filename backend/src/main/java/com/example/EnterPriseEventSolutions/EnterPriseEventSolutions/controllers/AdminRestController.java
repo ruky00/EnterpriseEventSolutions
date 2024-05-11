@@ -5,7 +5,6 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Conf
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Event;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
-import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.AmazonS3Service;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.ConfirmationTokenService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.EmailService;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.EmailService.RegisterService;
@@ -183,19 +182,6 @@ public class AdminRestController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
     }
-
-    private File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        multipartFile.transferTo(file);
-        return file;
-    }
-
-    private String getUserProfileImageUrl(String username) {
-        // Construyes la URL de la imagen para el usuario
-        return "https://" + "enterpriseeventsolutions" + ".s3.eu-west-2.amazonaws.com/" + username + "/orgImage";
-    }
-
-
 
     //DELETE ORGANIZERS
     @Operation(summary = "DELETE Organizers")
