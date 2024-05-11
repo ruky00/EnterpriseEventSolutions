@@ -32,6 +32,8 @@ services:
 
   backend_dev:
     image: ruky00/evs1
+    ports:
+      - "8445:8443"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     restart: on-failure
