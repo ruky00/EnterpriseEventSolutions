@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+
+  backend:
+    image: ruky00/evs1
+
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    ports:
+      - "8443:8443"
+    restart: on-failure
+
+  frontend:
+    image: ruky00/frontevs1
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+    restart: on-failure
