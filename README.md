@@ -62,7 +62,7 @@ Las diferentes tecnologías utilizadas para esta fase son:
 ## Se han solucionados los problemas relacionados con el frontal. Ya se pueden usar imagenes del Front y del Back en conjunto.
 
 #### FULL STACK
-1. Para lanzar la aplicación al completo con el front servido por Spring se ha creado una imagen especifica `ruky00/evsglobal` por lo que si, en el paso Nº 8 de Backend ponemos esta nueva imagen podremos hacer un despliegue total. (Recomendable solo en producción).
+1. ##PRODUCCIÓN## Para lanzar la aplicación al completo con el front servido por Spring se ha creado una imagen especifica `ruky00/evsglobal` por lo que si, en el paso Nº 8 de Backend ponemos esta nueva imagen podremos hacer un despliegue total. (Recomendable solo en producción).
 
 2. En caso de no disponer de los servicios back tales como S3 o Email, se podrá lanzar la app en modo dev. Las imagenes `evs1` y `frontevs1` encapsuladas en un `docker-compose` permitirá lanzar la app para trastear con ella.
 
