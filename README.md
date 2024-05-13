@@ -65,7 +65,9 @@ Las diferentes tecnologías utilizadas para esta fase son:
 1. Para lanzar la aplicación al completo con el front servido por Spring se ha creado una imagen especifica `ruky00/evsglobal` por lo que si, en el paso Nº 8 de Backend ponemos esta nueva imagen podremos hacer un despliegue total. (Recomendable solo en producción).
 
 2. En caso de no disponer de los servicios back tales como S3 o Email, se podrá lanzar la app en modo dev. Las imagenes `evs1` y `frontevs1` encapsuladas en un `docker-compose` permitirá lanzar la app para trastear con ella.
-`version: '3.8'
+
+```
+version: '3.8'
    services:
 
   backend:
@@ -83,7 +85,8 @@ Las diferentes tecnologías utilizadas para esta fase son:
       - "8080:8080"
     depends_on:
       - backend
-    restart: on-failure`
+    restart: on-failure
+``` 
 Este docker-compose lanzará un contenedor con ambas imagenes y podras usarla.
 
 ### USO DE LA APLICACIÓN
