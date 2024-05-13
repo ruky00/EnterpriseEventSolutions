@@ -91,7 +91,7 @@ public async logout() {
 
 
     public async register(user: User){
-        await fetch('https://localhost:8443/api/users/',{
+        await fetch('/api/users/',{
             method:'POST', 
             headers:{
                 'Content-Type': 'application/json',

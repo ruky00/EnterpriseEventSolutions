@@ -12,7 +12,7 @@ services:
       - "3306:3306"
     restart: on-failure
 
-  backend_prod:
+  app_prod:
     image: ruky00/evsglobal
     ports:
       - "8443:8443"
@@ -30,10 +30,20 @@ services:
       - mysql
     restart: on-failure
 
-  backend_dev:
-    image: ruky00/evsglobal
+  backend_prod:
+    image: ruky00/evs1
     ports:
       - "8443:8443"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://evs1:3306/evs
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - EMAIL_TFG=${EMAIL_TFG}
+      - EMAIL_SERVICE=${EMAIL_SERVICE}
+    depends_on:
+      - mysql
     restart: on-failure
