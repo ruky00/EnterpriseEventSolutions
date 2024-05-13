@@ -36,7 +36,7 @@ public class LocalImageService implements ImageService {
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't save image locally", ex);
         }
-        final String baseUrl =  ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+       final String baseUrl = "https://127.0.0.1:8443";
         return baseUrl + "/" + fileName;
     }
 

@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "copy-dist-to-spring": "xcopy /Y /E dist ..\\..\\backend\\src\\main\\resources\\static"
+    "copy-dist-to-spring": "cp -r dist ..\\..\\backend\\src\\main\\resources\\static"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

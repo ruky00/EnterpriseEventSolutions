@@ -6,13 +6,23 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.EventRepository;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.UserRepository;
+import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Image.ImageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Calendar;
 
 @Component
@@ -29,8 +39,11 @@ public class DataBaseInitializer {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ImageService imageService;
+
     @PostConstruct
-    public void init() {
+    public void init() throws IOException {
 
         if (!this.userRepository.findById(1L).isPresent()) {
             log.info("--> EMPTY DATABASE, CREATING DATA");
@@ -46,12 +59,21 @@ public class DataBaseInitializer {
                     "una institución académica de renombre en España, reconocida por su excelencia en la educación superior y la investigación. Fundada en 1996, la URJC se ha destacado " +
                     "por su enfoque innovador en la enseñanza, su compromiso con la investigación ç" +
                     "multidisciplinaria y su contribución al desarrollo social y económico del país.");
-            organizer1.setImage("https://localhost:8443/urjc.jpg");
+            Resource resource = new ClassPathResource("static/images/urjc.jpg" );
+            byte[] imageBytes = StreamUtils.copyToByteArray(resource.getInputStream());
+            MultipartFile multipartFile1 = new MockMultipartFile("urjc.jpg", "urjc.jpg", "image/jpeg", imageBytes);
+            String imageName1Saved = imageService.createImage(multipartFile1, "profileImage", organizer1.getUsername());
+            organizer1.setImage(imageName1Saved);
             organizer1.setEnable(true);
             userRepository.save(organizer1);
 
+
             User organizer2 = new User("KPMG", "laura@example.com", passwordEncoder.encode("pass"), "Eventos Tech Solutions");
-            organizer2.setImage("https://localhost:8443/kpmg.jpg");
+            Resource resource1 = new ClassPathResource("static/images/kpmg.jpg" );
+            byte[] imageBytes1 = StreamUtils.copyToByteArray(resource1.getInputStream());
+            MultipartFile multipartFile2 = new MockMultipartFile("kpmj.jpg", "kpmg.jpg", "image/jpeg", imageBytes1);
+            String imageName2Saved = imageService.createImage(multipartFile2, "profileImage", organizer2.getUsername());
+            organizer2.setImage(imageName2Saved);
             organizer2.setEnable(true);
             userRepository.save(organizer2);
 
@@ -92,5 +114,17 @@ public class DataBaseInitializer {
             log.info("--> DATABASE WITH DATA");
         }
 
+    }
+
+    private MultipartFile convert(String filePath) throws IOException {
+        // Obtiene el archivo de la ruta especificada
+        File file = ResourceUtils.getFile("classpath:" + filePath);
+
+        // Lee el contenido del archivo en un array de bytes
+        byte[] bytes = Files.readAllBytes(file.toPath());
+
+        // Crea una instancia de MultipartFile utilizando MockMultipartFile
+        return new MockMultipartFile(file.getName(), file.getName(),
+                Files.probeContentType(file.toPath()), bytes);
     }
 }
