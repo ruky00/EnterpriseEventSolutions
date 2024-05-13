@@ -58,8 +58,8 @@ Las diferentes tecnologías utilizadas para esta fase son:
 
 6. Abrir el navegador y buscar [http://localhost:8080](http://localhost:8080).
 
-### A dia 10/5/2024 Hay problemas con la configuración del front para su `build`. En caso de que no funcionara correctamente, Iniciar con `npm run serve` (Se subirá una correccíon con la mayor brevedad posible)
-
+### ~~A dia 10/5/2024 Hay problemas con la configuración del front para su `build`. En caso de que no funcionara correctamente, Iniciar con `npm run serve` (Se subirá una correccíon con la mayor brevedad posible)~~
+## Se han solucionados los problemas relacionados con el frontal. Ya se pueden usar imagenes del Front y del Back en conjunto.
 
 #### FULL STACK
 1. Para lanzar la aplicación al completo con el front servido por Spring se ha creado una imagen especifica `ruky00/evsglobal` por lo que si, en el paso Nº 8 de Backend ponemos esta nueva imagen podremos hacer un despliegue total. (Recomendable solo en producción).
@@ -87,7 +87,7 @@ version: '3.8'
       - backend
     restart: on-failure
 ``` 
-Este docker-compose lanzará un contenedor con ambas imagenes y podras usarla.
+Este docker-compose lanzará un contenedor con ambas imagenes y podras usarla. Busacando http://localhost:8080 accederiamos al front.
 
 ### USO DE LA APLICACIÓN
 
