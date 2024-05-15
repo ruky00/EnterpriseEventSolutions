@@ -11,16 +11,15 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Select repository 
-        run: cd ../EnterpriseEventSolutions
+      - name: Checkout repository
+        uses: actions/checkout@v2
         
       - name: Pull docker Image
         run: sudo docker pull ruky00/evsglobal
         
       - name: Delete old docker container
         run: sudo docker rm -f evs
-      - name: Donde estoy
-        run: ls
+        
       - name: Relanzar contenedor con la nueva imagen
         run: sudo docker-compose up 
 
