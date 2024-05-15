@@ -1,4 +1,4 @@
-name: Construir y Subir Imagen Docker
+name: Despliegue en EC2
 
 on:
   workflow_run:
