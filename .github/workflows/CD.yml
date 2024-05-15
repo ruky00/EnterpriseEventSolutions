@@ -19,7 +19,8 @@ jobs:
         
       - name: Delete old docker container
         run: sudo docker rm -f evs
-        
+      - name: Donde estoy
+        run: ls
       - name: Relanzar contenedor con la nueva imagen
         run: sudo docker-compose up 
 
