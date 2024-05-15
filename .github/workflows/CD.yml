@@ -10,18 +10,17 @@ jobs:
   build-and-push:
     runs-on: self-hosted
 
+    env:
+      EMAIL_SERVICE: ${{ secrets.EMAIL_SERVICE }}
+      EMAIL_TFG: ${{ secrets.EMAIL_TFG }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         
-      - name: Set variables de entorno
-        run: |
-          export EMAIL_SERVICE=${{ secrets.EMAIL_SERVICE }}
-          export EMAIL_TFG=${{ secrets.EMAIL_TFG}}
-          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          export AWS_REGION=${{ secrets.AWS_REGION }}
-          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}  
-     
       - name: Pull docker Image
         run: sudo docker pull ruky00/evsglobal
         
