@@ -1,0 +1,27 @@
+name: Construir y Subir Imagen Docker
+
+on:
+  workflow_run:
+    workflows: ["Construir y Subir Imagen Docker"]
+    types:
+      - completed
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    steps:
+      - name: Select repository 
+        run: cd EnterpriseEventSolutions
+        
+      - name: Pull docker Image
+        run: sudo docker pull ruky00/evsglobal
+        
+      - name: Delete old docker container
+        run: sudo docker ps -q --filter "name=evs_app_prod" | xargs docker rm
+        
+      - name: Relanzar contenedor con la nueva imagen
+        run: sudo docker-compose run --service-port app_prod
+
+      
+          
