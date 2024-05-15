@@ -19,7 +19,7 @@ jobs:
         run: sudo docker pull ruky00/evsglobal
         
       - name: Delete old docker container
-        run: sudo docker rm -f evs
+        run: sudo docker-compose down
         
       - name: Setear variables de entorno
         run: |
