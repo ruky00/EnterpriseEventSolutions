@@ -21,7 +21,7 @@ jobs:
         run: sudo docker rm -f evs
         
       - name: Relanzar contenedor con la nueva imagen
-        run: sudo docker-compose up --name evs
+        run: sudo docker-compose up 
 
       
           
