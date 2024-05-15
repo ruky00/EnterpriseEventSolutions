@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Select repository 
-        run: cd EnterpriseEventSolutions
+        run: cd ../EnterpriseEventSolutions
         
       - name: Pull docker Image
         run: sudo docker pull ruky00/evsglobal
