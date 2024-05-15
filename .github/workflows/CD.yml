@@ -18,10 +18,10 @@ jobs:
         run: sudo docker pull ruky00/evsglobal
         
       - name: Delete old docker container
-        run: sudo docker ps -q --filter "name=evs_app_prod" | xargs docker rm
+        run: sudo docker rm -f evs
         
       - name: Relanzar contenedor con la nueva imagen
-        run: sudo docker-compose run --service-port app_prod
+        run: sudo docker-compose up --name evs
 
       
           
