@@ -25,7 +25,7 @@
           </div>
         </div>
         <form class="sign-up"  @submit.prevent="registerUser">
-          <h2>Create login</h2>
+          <h2>Create User</h2>
           <div>Use your email for registration</div>
           <input v-model="user.username" type="text" placeholder="Name" />
           <input v-model="user.email" type="email" placeholder="Email" />
@@ -35,8 +35,8 @@
         <form class="sign-in"  @submit.prevent="loginUser">
           <h2>Sign In</h2>
           <div>Use your account</div>
-          <input v-model="user.email" type="email" placeholder="Email" :class="{ 'error-border': loginError !== '' }"/>
-          <input v-model="user.encodedPassword" type="password" placeholder="Password" :class="{ 'error-border': loginError !== '' }" />
+          <input v-model="user.email" type="email" placeholder="Email" :class="{ 'error-border': loginError !== '' }" required/>
+          <input v-model="user.encodedPassword" type="password" placeholder="Password" :class="{ 'error-border': loginError !== '' }" required/>
           <a href="#">Forgot your password?</a>
           <div v-if="loginError !== ''" class="error-mensaje">
           {{ loginError }}

@@ -6,4 +6,6 @@ export interface Ticket{
     price:number;
     user:User;
     event:Event;
+    qrCode: string;
+    creationTime:Date
 }

@@ -1,15 +1,29 @@
 <template>
+  <h1>Organizaciones</h1>
     <div class="container">
-      <!-- Generar dinámicamente las cajas según el número especificado -->
-    <router-link :to="{ name: 'user-info', params: { id: organizer.id }}" v-for="(organizer, index) in organizers.slice(0,8)" :key="index" class="box" :style="{ backgroundImage: 'url(' + organizer.image + ')' }">
-    </router-link>
+      <div class="card-group">
+      <div class="col" v-for="(organizer, index) in organizers" :key="index">
+
+    <router-link :to="{ name: 'user-info', params: { id: organizer.id }}" style="text-decoration: none;">    
+      <div class="card" style="width: 20rem; height: 20rem;">
+        <img v-if="organizer" :src="organizer.image" class="card-img-top img-thumbnail img-fluid" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{organizer.username}}</h5>
+          <p class="card-text">{{truncatedDescription(organizer.description!)}}</p>
+         
+      </div>
+      </div>
+    </router-link>  
+
+    </div>
+    </div>
     </div>
   </template>
   
   <script lang="ts">
 import { User } from '@/models/User';
 import { UserService } from '@/services/user.service';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
   export default {
     name: "client-home",
@@ -22,12 +36,20 @@ import { onMounted, ref } from 'vue';
         organizers.value = response;
      }
 
+     const truncatedDescription = computed(() => (description: string) => {
+      if (description && description.length > 80) {
+        return description.substring(0, 80) + '...';
+      }
+      return description;
+    });
+
   
       onMounted(getOrganizers);
   
       return {
         organizers,
-        getOrganizers
+        getOrganizers,
+        truncatedDescription
       }
     }
   }
@@ -35,14 +57,26 @@ import { onMounted, ref } from 'vue';
   
 <style scoped>
 
+    p, h1{
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
 
+h5{
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+}
 .container {
   display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 100vh; 
-  padding-left: 0px;
-  margin: 0px;/* Ajusta la altura como desees */
+    flex-wrap: nowrap;
+    width: 100%;
+    padding-left: 0px;
+    margin: 0px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2% ;
+    margin-top: 3%;
 }
 
 .box {
@@ -60,4 +94,34 @@ import { onMounted, ref } from 'vue';
   transform: scale(1.2); /* Aumenta el tamaño al hacer hover */
   opacity: 200; /* Reduce la opacidad al hacer hover */
 }
+
+.card-img-top {
+    object-fit: cover; /* Preserve aspect ratio and cover the entire area */
+    height: 100%; /* Set the height to 100% of the container */
+    width: auto;
+    max-height: 170px; /* Automatically adjust the width to maintain the aspect ratio */
+  }
+
+
+.card-body{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card {
+  transition: transform 0.5s ease-in-out; 
+  border-style: solid;
+  border-color:var(--main-bg-dark);
+  overflow: hidden;
+  margin-top: 3%;
+}
+
+.card:hover {
+  transform: scale(1.1); 
+  border-color:var(--main-bg-org);
+}
+
 </style>

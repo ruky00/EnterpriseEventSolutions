@@ -6,6 +6,7 @@ export interface Event{
     max_capacity: number;
     current_capacity: number;
     date: Date;
+    privateEvent:boolean;
     organization:{
         id:number,
         name:string

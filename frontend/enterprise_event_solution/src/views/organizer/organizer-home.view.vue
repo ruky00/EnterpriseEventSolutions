@@ -1,7 +1,8 @@
 <template>
    <h1>Eventos de {{user?.username}}</h1>
-    <div class="row">
-      <div  class="col-12" v-for="(evento, index) in eventos" :key="index">
+   <div class="container-flex">
+        <div class="card-group">
+        <div  class="col" v-for="(evento, index) in eventos" :key="index">
         <event_cards
         :evento="evento"
         :is-org="true"
@@ -9,7 +10,13 @@
         </event_cards>
         </div>
     </div>
- 
+    <div class="col">
+            <div class="d-flex justify-content-end mb-3">
+               <router-link :to="`event/create`"><button class="btn btn-primary"><i class="bi bi-plus"></i> Crear Nuevo Evento</button></router-link> 
+            </div>
+        </div>
+    </div>
+    
 </template>
 
 <script lang="ts">
@@ -66,11 +73,44 @@ export  default {
 
 
 <style scoped>
-  h1{
-    margin-top: 2%;
-    margin-bottom: 1%;
+
+
+  .container-flex{
+    margin-top: 10%;
     display: flex;
-    font-size: 2em;
-    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    align-items: center;
   }
+
+    p, h1{
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
+
+
+
+.btn-primary {
+      padding: 0.75rem 1.5rem;
+      background-color: var(--main-bg-org); 
+      color: #fff; 
+      border: none; 
+      border-radius: 9px; 
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.4s ease-in-out;
+      margin-bottom: 1%;
+    }
+
+
+    .btn-primary:hover {
+      background-color: var(--main-bg-dark);
+    }
+
+.col{
+  margin-top: 4%;
+}
+
 </style>

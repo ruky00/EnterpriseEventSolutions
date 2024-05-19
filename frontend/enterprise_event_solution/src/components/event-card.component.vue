@@ -1,52 +1,36 @@
 <template>
    <template v-if="isOrg">
-    <div class="row">
-      <div class="col-12">
-        <div class="card org">
-          <img class="card-img">
-          <div class="card-img-overlay">
-            <h5 class="card-title">{{ evento?.name }}</h5>
-            <p class="card-text">{{ evento?.description }}</p>
-            <div class="d-flex justify-content-end align-items-end">
-            
-            <button v-if="isOrg" class="btn btn-sm btn-danger me-2" @click="deleteEvent(evento?.id!)">
+    
+      <div class="card  text-center" style="width: 28rem; height: 10rem;">
+     
+        <div class="card-body">
+          <h5 class="card-title">{{ evento?.name }}</h5>
+          <p class="card-text">{{truncatedDescription(evento?.description!)}}</p>
+          <div class="row">
+            <button class="btn btn-sm btn-danger me-2" @click="deleteEvent(evento?.id!)">
               <i class="bi bi-trash"></i>
             </button>
            
-                <router-link v-if="isOrg" :to="{ name: 'edit-event', params: { id: evento?.id }}" class="btn btn-sm btn-primary">
+                <router-link :to="{ name: 'edit-event', params: { id: evento?.id }}" class="btn btn-sm btn-primary">
                     <i class="bi bi-gear"></i>
-            </router-link>
-            
-          </div>  
-          </div>
-        </div>
-      </div>
+              </router-link> 
 
-    </div>
-    <div v-if="isOrg" class="row">
-        <div class="col-12">
-            <div class="d-flex justify-content-end mb-3">
-               <router-link :to="`event/create`"> <i class="bi bi-plus"></i> Crear Nuevo Evento</router-link> 
-            </div>
-        </div>
-    </div>
+          </div>
+      </div>
+      </div>
    </template>
    <template v-else>
-    <div class="row">
-     <router-link :to="{ name: 'event-view', params: { id: evento?.id }}"> 
-      <div class="col-12">
-        <div class="card client">
-          <img class="card-img">
-          <div class="card-img-overlay">
-            <h5 class="card-title">{{ evento?.name }}</h5>
-            <p class="card-text">{{ evento?.description }}</p>
-            <div class="d-flex justify-content-end align-items-end">
-          </div>  
-          </div>
-        </div>
+  
+        <router-link :to="{ name: 'event-view', params: { id: evento?.id }}" style="text-decoration: none">   
+      <div class="card not-org text-center" style="width: 28rem; height: 10rem;">
+     
+        <div class="card-body">
+          <h5 class="card-title">{{ evento?.name }}</h5>
+          <p class="card-text">{{truncatedDescription(evento?.description!)}}</p>
+         
+      </div>
       </div>
     </router-link>  
-    </div>
    </template>
     
  
@@ -57,7 +41,7 @@
 import {EventService} from "../services/event.service";
 import { useRouter } from 'vue-router';
 import { Event } from '../models/Event';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 export  default {
     name: 'event_cards',
     props:{
@@ -71,10 +55,18 @@ export  default {
             await EventService.prototype.deleteEvent(id)
         }
       
+        const truncatedDescription = computed(() => (description: string) => {
+          if (description && description.length > 80) {
+            return description.substring(0, 80) + '...';
+          }
+          return description;
+        });  
+
         return{
             eventos,
             router,
             deleteEvent,
+            truncatedDescription
 
         }
     },
@@ -86,21 +78,35 @@ export  default {
 
 
 <style scoped>
-    .card{
-      height: 105px;
-      margin-top: 40px;
-      margin-right: 30px;
-      background-repeat: no-repeat;
-      background-size: cover;
-      font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
-      transition: all 0.7s ease;
-      }
 
-    .card .client:hover{
-      transform: scale(1.06);
-      transition: all 0.7s ease;
+    p, h1{
+      text-align: left;
+      font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+      margin-top: 1%;
     }
 
+    h5{
+      font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+    }
+
+   .card-body{
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card {
+      transition: transform 0.5s ease-in-out; 
+      border-style: solid;
+      border-color:var(--main-bg-dark);
+    }
+
+    .not-org:hover{
+      transform: scale(1.1); 
+      border-color:var(--main-bg-org);
+    }
     p{
         margin: 0px;
     }

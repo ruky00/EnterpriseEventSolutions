@@ -54,6 +54,12 @@ const routes =createRouter({
           meta: { requiresAuth: true, roles: ['CLIENT'] }
         },
         {
+          path: 'client/tickets',
+          name: 'client-tickets',
+          component: ()=>import('../src/views/client/client-tickets.view.vue'),
+          meta: { requiresAuth: true, roles: ['CLIENT'] }
+        },
+        {
           path: 'organization',
           name: 'organization-home',
           component: ()=>import('../src/views/organizer/organizer-home.view.vue'),

@@ -69,7 +69,7 @@
               scales: {
                 y: { // Define min and max for consistent scale
                   min: 0,
-                  max: 100,
+                  max: 15,
                 },
               },
               responsive: true,

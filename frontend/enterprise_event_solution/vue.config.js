@@ -1,10 +1,6 @@
-module.exports = {
-  transpileDependencies: true,
+const { defineConfig } = require("@vue/cli-service")
 
-  pluginOptions: {
-    webpackBundleAnalyzer: {
-      openAnalyzer: false
-    },
+module.exports = defineConfig({
   devServer: {
     proxy: {
       '^/api': {
@@ -14,5 +10,4 @@ module.exports = {
       },
     }
   },
-}
-}
+})

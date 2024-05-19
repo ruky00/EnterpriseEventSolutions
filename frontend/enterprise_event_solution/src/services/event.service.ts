@@ -123,7 +123,7 @@ export class EventService{
         }catch(error){ console.error('Error al crear el evento:', error)}
     }
 
-    public async buyTicket(id:number){
+    public async buyTicket(id:number,password:string){
         try{
             const response =  await fetch('/api/clients/tickets/?id='+id,{
                 method: 'POST',
@@ -132,6 +132,7 @@ export class EventService{
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
+                body: password
             });
             const data = await response.json();
             if (!response.ok) {
