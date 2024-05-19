@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-0">
-    <div class="row">
+    <div class="row gx-0">
       <!-- Barra de navegación lateral en pantallas grandes -->
       <div :class="[isNavbarTop ? 'navbar-top' : 'navbar-side', 'col-lg-2', 'd-none', 'd-sm-block', 'bg-dark', 'p-0']">
         <user-navbar />
@@ -15,38 +15,40 @@
 </template>
 
 <script lang="ts">
-import UserNavbar from '../components/user-nav-bar.component.vue'
+import { defineComponent, ref, computed, onMounted } from 'vue';
+import UserNavbar from '../components/user-nav-bar.component.vue';
 
-export default {
+export default defineComponent({
   components: {
-    UserNavbar
+    UserNavbar,
   },
-  data() {
+  setup() {
+    const isNavbarTop = ref(false);
+
+    const contentClass = computed(() => ({
+      'col-lg-10': !isNavbarTop.value,
+      'col-md-12': !isNavbarTop.value,
+      'col-sm-12': !isNavbarTop.value,
+      'col-12': !isNavbarTop.value,
+      'sticky-content': !isNavbarTop.value,
+    }));
+
+    onMounted(() => {
+      isNavbarTop.value = window.innerWidth < 576; 
+    });
+
     return {
-      isNavbarTop: false
+      isNavbarTop,
+      contentClass,
     };
   },
-  computed: {
-    contentClass() {
-      return {
-        'col-lg-10': !this.isNavbarTop,
-        'col-md-12': !this.isNavbarTop,
-        'col-sm-12': !this.isNavbarTop,
-        'col-12': !this.isNavbarTop,
-        'sticky-content': !this.isNavbarTop // Aplicar clase para el contenido pegajoso cuando la barra de navegación está en la parte superior
-      };
-    }
-  },
-  mounted() {
-    this.isNavbarTop = window.innerWidth < 576; // Cambia a true si el ancho de la ventana es menor que 576px
-  }
-};
+});
 </script>
 
 <style scoped>
 .container-fluid {
   padding: 0; /* Quita el padding superior e inferior */
-} 
+}
 
 .row {
   margin-right: 0;

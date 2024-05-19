@@ -67,6 +67,13 @@ const routes =createRouter({
           beforeEnter: authGuard,
         },
         {
+        path: 'organization/stats',
+        name: 'organization-stats',
+        component: ()=>import('../src/views/organizer/organizer-stats.view.vue'),
+        meta: { requiresAuth: true, roles: ['ORGANIZATION']},
+        beforeEnter: authGuard,
+        },
+        {
             path:'event/:id/edit',
             name: 'edit-event',
             component: ()=>import('../src/views/organizer/organizer-edit.view.vue'),

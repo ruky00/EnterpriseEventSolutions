@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Barra de navegación superior en pantallas pequeñas -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none" style="padding: 0; z-index: 1000">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none" style="padding: 0;     z-index: 1000">
       <div class="container-fluid">
         
-        <a class="navbar-brand" href="#">Hi, {{ user?.username }}</a>
+        <h1 class="navbar-brand" href="#">Hi, {{ user?.username }}</h1>
         <!-- Solo mostrar el botón de hamburguesa en pantallas pequeñas -->
         <button
           v-if="isSmallScreen"
@@ -57,6 +57,11 @@
             <li class="nav-item" v-if="user?.role == 'ORGANIZATION'">
               <router-link :to="{ name: 'organization-home' }" class="nav-link">
                 Mis eventos
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="user?.role == 'ORGANIZATION'">
+              <router-link :to="{ name: 'organization-home' }" class="nav-link">
+                Estadísticas
               </router-link>
             </li>
           </ul>
@@ -128,8 +133,13 @@
                   </router-link>
                 </li>
                 <li v-if="user?.role == 'ORGANIZATION'">
-                  <router-link :to="{ name: 'organization-home' }" data-bs-toggle="collapse" class="nav-link px-0 align-middle" exact-active-class="active-link">
+                  <router-link :to="{ name: 'organization-home' }"  class="nav-link px-0 align-middle" exact-active-class="active-link">
                     <i class="fs-4 bi-calendar-event"><span class="ms-1 d-none d-sm-inline">Mis eventos</span></i>
+                  </router-link>
+                </li>
+                <li v-if="user?.role == 'ORGANIZATION'">
+                  <router-link :to="{ name: 'organization-stats' }"  class="nav-link px-0 align-middle" exact-active-class="active-link">
+                    <i class="fs-4 bi-graph-up"><span class="ms-1 d-none d-sm-inline">Estadísticas</span></i>
                   </router-link>
                 </li>
               </ul>
@@ -308,7 +318,11 @@ span {
   margin-bottom: 0;
 }
 
-
+p, h1 {
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
 
 </style>
 

@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div class="card text-center"  >
+      <div class="card text-center" style="width: 34rem;"  >
         <div class="row g-0">
           <div class="col-md-4 d-flex align-items-center justify-content-center">
             <img :src="qrCodeURL" class="img-fluid rounded-start" alt="QR Code">

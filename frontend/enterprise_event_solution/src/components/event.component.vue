@@ -12,8 +12,9 @@
     </div>
     <div v-if="haveTicket()" class="row">
       <div class="col-2">
-        <button v-if="!seleccionado" class="btn btn-primary" @click="openConfirmationBanner">Inscribirse</button>
-        <button v-else class="btn btn-primary" type="button" disabled>
+        <button v-if="!seleccionado  && isPrivate" class="btn btn-primary" @click="openConfirmationBanner">Inscribirse</button>
+        <button v-if="!seleccionado && !isPrivate" class="btn btn-primary" @click="buyTicket">Inscribirse</button>
+        <button v-if="seleccionado" class="btn btn-primary" type="button" disabled>
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           Adquiriendo Entrada...
         </button>
