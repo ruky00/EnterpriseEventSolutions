@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/clients")
@@ -54,15 +55,18 @@ public class ClientRestController {
             )
     })
     @PostMapping("/tickets/")
-    public ResponseEntity<Ticket>  buyTicket(HttpServletRequest request, @RequestParam Long id){
+    public ResponseEntity<Ticket>  buyTicket(HttpServletRequest request, @RequestParam Long id,@RequestBody(required = false)  String password){
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
+        String passwordSent;
         try {
-
-            Ticket ticket = ticketService.createTicket(user,id);
+            if (password == null){passwordSent="";}else{passwordSent=password;}
+            Ticket ticket = ticketService.createTicket(user,id,passwordSent);
+            if(ticket!=null)
             return new ResponseEntity<>(ticket,HttpStatus.CREATED);
 
         }catch (Exception e){return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);}
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     //GET MY TICKETS
@@ -95,6 +99,18 @@ public class ClientRestController {
         return new ResponseEntity<>(tickets,HttpStatus.OK);
 
     }
+
+    @GetMapping("/tickets/{id}")
+    public ResponseEntity<Optional<Ticket>> getTicketById(@PathVariable long id){
+        try {
+            Ticket ticket = ticketService.findById(id).orElseThrow();
+            return new ResponseEntity(ticket, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
     @JsonView(User.OrgInfo.class)
     @GetMapping("/organizers")

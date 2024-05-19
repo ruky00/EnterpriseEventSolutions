@@ -206,7 +206,7 @@ public class UserRestController {
 
 
     })
-
+    @JsonView(Event.BasicInfo.class)
     @GetMapping("/events")
     public ResponseEntity<List<Event>> getEventsFromOrg(@RequestParam(name = "org") String org){
         Optional<User> userOrg = userService.findByUsername(org);

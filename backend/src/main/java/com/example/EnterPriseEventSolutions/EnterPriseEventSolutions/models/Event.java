@@ -1,8 +1,10 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -39,6 +41,10 @@ public class Event {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
+
+
+    @CreationTimestamp
+    @JsonIgnore
     private LocalDateTime creationTime;
 
     @DateTimeFormat
@@ -53,8 +59,34 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 
+    @JsonView(BasicInfo.class)
+    private boolean privateEvent;
 
+    private String encodedPassword;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public boolean isPrivateEvent() {
+        return privateEvent;
+    }
+
+    public void setPrivateEvent(boolean privateEvent) {
+        this.privateEvent = privateEvent;
+    }
+
+    public String getEncodedPassword() {
+        return encodedPassword;
+    }
+
+    public void setEncodedPassword(String encodedPassword) {
+        this.encodedPassword = encodedPassword;
+    }
 
     public Long getId() {
         return id;
@@ -144,6 +176,19 @@ public class Event {
         this.price = price;
         this.max_capacity = max_capacity;
         this.current_capacity = 0;
-        this.creationTime = LocalDateTime.now();
+        this.privateEvent=false;
     }
+
+    public Event(String name, String description, Date date, Double price, int max_capacity, String encodedPassword) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+        this.price = price;
+        this.max_capacity = max_capacity;
+        this.current_capacity = 0;
+        this.encodedPassword= encodedPassword;
+        this.privateEvent=true;
+    }
+
+
 }

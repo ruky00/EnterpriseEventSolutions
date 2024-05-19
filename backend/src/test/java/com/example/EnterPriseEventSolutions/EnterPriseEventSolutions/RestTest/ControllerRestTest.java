@@ -51,10 +51,10 @@ public class ControllerRestTest {
 
 
         // CREATE CLIENT
-        client = new User("juan", "admin@urjc.es", "pass");
+        client = new User("Pepito", "admin@urjc.es", "pass");
         userService.saveUser(client);
         // CREATE ORGANIZER
-        organizer = new User("Jose", "francisco.gortazar@urjc.es", "pass", "Zara and Associates");
+        organizer = new User("Menganito", "francisco.gortazar@urjc.es", "pass", "Zara and Associates");
         userService.saveUser(organizer);
     }
 
