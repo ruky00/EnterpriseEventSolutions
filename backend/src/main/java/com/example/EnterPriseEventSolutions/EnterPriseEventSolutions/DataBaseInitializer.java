@@ -10,11 +10,13 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.services.Im
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Component
+@Profile({"prod","dev"})
 public class DataBaseInitializer {
 
     private static final Logger log = LoggerFactory.getLogger(DataBaseInitializer.class);

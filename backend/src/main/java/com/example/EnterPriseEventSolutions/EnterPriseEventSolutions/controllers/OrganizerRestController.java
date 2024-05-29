@@ -29,8 +29,7 @@ public class OrganizerRestController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private TicketService ticketService;
+
 
     @Autowired
     private EventService eventService;
