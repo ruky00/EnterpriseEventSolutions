@@ -14,12 +14,6 @@ const routes =createRouter({
         component: ()=>import("../src/views/auth.view.vue")
     },
     {
-      path:"/company",
-      name: 'dashboard',
-      component: ()=>import('../src/views/company-dashboard.view.vue'),
-      meta: { requiresAuth: true, roles:['ORGANIZATION']},
-    }, 
-    {
       path:"/user",
       name: 'user-landing',
       component: ()=>import('../src/views/user-landing-page.view.vue'),
@@ -103,16 +97,32 @@ const routes =createRouter({
         component:()=>import('../src/views/user-info.view.vue'),
         meta: { requiresAuth: true, roles:['CLIENT','ORGANIZATION','ADMIN'],
         beforeEnter: authGuard,
+        props: true 
       }
+      },
+      {
+        path: ':pathMatch(.*)',
+        name: 'Error',
+        component: ()=>import('../src/views/error.view.vue'),
+        props: (route) => {
+          const errorCode = route.query.code ? parseInt(route.query.code as string) : 404;
+          return { errorCode };
+        }
       }
+
       ]
     },
 
-    
-    //{
-     //   path:'/:pathMatch(.*)*',
-     //   component: () => import('')
-    // },
+    {
+      path: '/:pathMatch(.*)',
+      name: 'Error',
+      component: ()=>import('../src/views/error.view.vue'),
+      props: (route) => {
+        const errorCode = route.query.code ? parseInt(route.query.code as string) : 404;
+        return { errorCode };
+      }
+    }
+
   ],
   
 })

@@ -17,6 +17,9 @@
         <div v-if="user.role === 'ORGANIZATION' && !isMe">
         <div class="row"><h4>Eventos de empresa disponibles</h4></div>
         <div class="container">
+          <div v-if="eventos.length === 0" class="empty-events">
+            <h4>Esta organización aún no tiene eventos</h4>
+          </div>
         <div class="card-group">
         <div  class="col" v-for="(evento, index) in eventos" :key="index">
           
@@ -191,6 +194,13 @@ p, h1{
   text-align: left;
   font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
   margin-top: 1%;
+}
+
+.empty-events {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 50vh; 
 }
 
 p{

@@ -60,13 +60,21 @@ export default createStore({
       }
     },
     logout({ commit }: { commit: Commit }) {
+      try{
       // Lógica de cierre de sesión
       commit('setAuthentication', false);
       commit('setUserRoles', []);
       commit('setUser', null);
+      
       // Limpiar el token JWT si lo estás utilizando
       // localStorage.removeItem('jwtToken');
+    }catch (error) {
+      console.error('Error al realizar el login:', error);
+      throw error;
+    }
     },
+
+
     updateUser({ commit }, newUser) {
       commit('updateUser', newUser);
     }

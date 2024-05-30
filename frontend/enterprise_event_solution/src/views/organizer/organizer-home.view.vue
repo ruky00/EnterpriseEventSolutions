@@ -1,6 +1,9 @@
 <template>
    <h1>Eventos de {{user?.username}}</h1>
    <div class="container-flex">
+          <div v-if="eventos.length === 0" class="empty-events">
+            <h4>Esta organización aún no tiene eventos</h4>
+          </div>
         <div class="card-group">
         <div  class="col" v-for="(evento, index) in eventos" :key="index">
         <event_cards
@@ -90,7 +93,12 @@ export  default {
   margin-top: 1%;
 }
 
-
+.empty-events {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 50vh; 
+}
 
 .btn-primary {
       padding: 0.75rem 1.5rem;

@@ -91,22 +91,28 @@ public async logout() {
 
 
     public async register(user: User){
-        await fetch('/api/users/',{
-            method:'POST', 
-            headers:{
-                'Content-Type': 'application/json',
-            },
-            body:JSON.stringify({
-                username:user.username,
-                email:user.email,
-                encodedPassword:user.encodedPassword
-            }),
-            credentials: 'include'
-        })
-        .then(response => response.json)
-        .then(data => {
-                return data;
-        })
-        .catch(error=> alert("Error al crear Usuario. Intentelo de nuevo"))
+        try {
+            const response = await fetch('/api/users/', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: user.username,
+                    email: user.email,
+                    encodedPassword: user.encodedPassword
+                }),
+                credentials: 'include'
+            });
+    
+            if (!response.ok) {
+                throw new Error('Inténtelo de nuevo');
+            }
+    
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            throw new Error('El usuario ya existe en el sistema');
+        }
     }
 }

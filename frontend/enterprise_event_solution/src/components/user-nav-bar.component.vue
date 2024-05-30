@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item" v-if="user?.role == 'CLIENT'">
-              <router-link :to="{ name: 'client-tickets' }" class="nav-link">
+              <router-link :to="{ name: 'client-tickets' }" class="nav-link" exact-active-class="active-link">
                 Mis Entradas
               </router-link>
             </li>
@@ -35,32 +35,29 @@
               </a>
               <ul class="collapse" id="submenu1">
                 <li>
-                  <router-link :to="{ name: 'client-home' }" class="nav-link">
+                  <router-link :to="{ name: 'client-home' }" class="nav-link" exact-active-class="active-link">
                     Empresas
                   </router-link>
-                </li>
-                <li>
-                  <a href="#" class="nav-link">Eventos</a>
                 </li>
               </ul>
             </li>
             <li class="nav-item" v-if="user?.role == 'ADMIN'">
-              <router-link :to="{ name: 'user-table' }" class="nav-link">
+              <router-link :to="{ name: 'user-table' }" class="nav-link" exact-active-class="active-link">
                 Usuarios
               </router-link>
             </li>
             <li class="nav-item" v-if="user?.role == 'ADMIN'">
-              <router-link :to="{ name: 'create-org' }" class="nav-link">
+              <router-link :to="{ name: 'create-org' }" class="nav-link" exact-active-class="active-link">
                 Añadir Usuarios
               </router-link>
             </li>
             <li class="nav-item" v-if="user?.role == 'ORGANIZATION'">
-              <router-link :to="{ name: 'organization-home' }" class="nav-link">
+              <router-link :to="{ name: 'organization-home' }" class="nav-link" exact-active-class="active-link">
                 Mis eventos
               </router-link>
             </li>
             <li class="nav-item" v-if="user?.role == 'ORGANIZATION'">
-              <router-link :to="{ name: 'organization-home' }" class="nav-link">
+              <router-link :to="{ name: 'organization-home' }" class="nav-link" exact-active-class="active-link">
                 Estadísticas
               </router-link>
             </li>
@@ -102,7 +99,7 @@
               <span class="fs-3 d-none d-sm-inline">Hi, {{ user?.username }}</span>
               <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-sm-start" id="menu">
                 <li v-if="user?.role == 'CLIENT'">
-                  <router-link :to="{ name: 'client-tickets' }" class="nav-link px-0">
+                  <router-link :to="{ name: 'client-tickets' }" class="nav-link px-0" exact-active-class="active-link">
                     <i class="fs-4 bi-ticket-detailed"><span class="ms-1 d-none d-sm-inline">Mis Entradas</span></i>
                   </router-link>
                 </li>
@@ -185,7 +182,7 @@ export default {
     const user = ref<User | null>(store.state.user);
 
     const getUserImage = () => {
-      if (user.value!.image) {
+      if (user.value && user.value!.image) {
         return user.value!.image;
       } else {
         return 'https://github.com/mdo.png'; // URL de imagen predeterminada en caso de que el Blob no esté presente
@@ -195,6 +192,7 @@ export default {
     const logout = async () => {
       try {
         await authService.prototype.logout();
+        store.dispatch('logout')
         router.push('/');
       } catch (error) {
         console.log('Error al cerrar sesión');
@@ -219,7 +217,7 @@ export default {
       user,
       getUserImage,
       logout,
-      isSmallScreen,
+      isSmallScreen
     };
   },
 };

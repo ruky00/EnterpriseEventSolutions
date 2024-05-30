@@ -1,74 +1,74 @@
 <template>
-    <div class="user-table">
-      <div class="filters">
-        <select v-model="filterUserType">
-          <option value="all">Todos los usuarios</option>
-          <option value="ADMIN">Administradores</option>
-          <option value="ORGANIZATION">Organizaciones</option>
-          <option value="CLIENT">Clientes</option>
-        </select>
-        <input type="text" v-model="searchQuery" placeholder="Buscar por nombre">
-      </div>
-  
-      <table>
-        <thead>
-          <tr>
-            <th v-for="header in headers" :key="header.text" :class="{ sortable: header.sortable }" @click="sortUsers(header.text)">
-              {{ header.text }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in filteredUsers" :key="user.id">
-            <td v-for="header in headers" :key="header.text">
-        <!-- Si el accessor es 'username' y el rol es 'ORGANIZATION', mostrar un router-link -->
-        <template v-if="header.accessor === 'username' && user.role === 'ORGANIZATION'">
-          <router-link :to="{ name: 'user-info', params: { id: user.id }}">
-            {{ user[header.accessor] }}
-          </router-link>
-        </template>
-        <!-- Si no, solo mostrar el valor -->
-        <template v-else>
-          {{ user[header.accessor] }}
-        </template>
-      </td>
-            <td>
-              <div v-for="action in rowActions" :key="action.icon">
-                <button @click="deleteUser(user)" class="actionButton">
-                  <i class="fas fa-fw" :class="action.icon"></i>
-                </button>
-                
-              </div>
-            </td>
-          </tr>
-          <tr v-if="!filteredUsers.length">
-            <td colspan="{{ headers.length }}">{{ emptyText }}</td>
-          </tr>
-        </tbody>
-      </table>
-  
-      <div v-if="pagination" class="pagination">
-        <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
-        <span>{{ currentPage }} / {{ totalPages }}</span>
-        <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
-      </div>
-  
-      <div v-if="isLoading" class="loading">
-        Loading...
-      </div>
-  
-      <div v-if="error" class="error">
-        {{ error }}
-      </div>
+  <div class="user-table">
+    <div class="filters">
+      <select v-model="filterUserType">
+        <option value="all">Todos los usuarios</option>
+        <option value="ADMIN">Administradores</option>
+        <option value="ORGANIZATION">Organizaciones</option>
+        <option value="CLIENT">Clientes</option>
+      </select>
+      <input type="text" v-model="searchQuery" placeholder="Buscar por nombre">
     </div>
-    <div v-if="showConfirmationBanner" class="overlay">
-    <div v-if="showConfirmationBanner" class="confirmation-banner">
+
+    <table>
+      <thead>
+        <tr>
+          <th v-for="header in headers" :key="header.text" :class="{ sortable: header.sortable }" @click="sortUsers(header.text)">
+            {{ header.text }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in paginatedUsers" :key="user.id">
+          <td v-for="header in headers" :key="header.text">
+            <!-- Si el accessor es 'username' y el rol es 'ORGANIZATION', mostrar un router-link -->
+            <template v-if="header.accessor === 'username' && user.role === 'ORGANIZATION'">
+              <router-link :to="{ name: 'user-info', params: { id: user.id }}">
+                {{ user[header.accessor] }}
+              </router-link>
+            </template>
+            <!-- Si no, solo mostrar el valor -->
+            <template v-else>
+              {{ user[header.accessor] }}
+            </template>
+          </td>
+          <td>
+            <div v-for="action in rowActions" :key="action.icon">
+              <button @click="deleteUser(user)" class="actionButton">
+                <i class="fas fa-fw" :class="action.icon"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr v-if="!paginatedUsers.length">
+          <td :colspan="headers.length">{{ emptyText }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div v-if="pagination" class="pagination">
+      <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+    </div>
+
+    <div v-if="isLoading" class="loading">
+      Loading...
+    </div>
+
+    <div v-if="error" class="error">
+      {{ error }}
+    </div>
+  </div>
+
+  <div v-if="showConfirmationBanner" class="overlay">
+    <div class="confirmation-banner">
       <p>¿Estás seguro de que deseas eliminar al usuario?</p>
       <button @click="confirmDeleteUser">Sí</button>
       <button @click="cancelDeleteUser">No</button>
     </div>
   </div>
-  </template>
+</template>
   
 
   <script lang="ts">
@@ -158,8 +158,15 @@
       return filteredByUsers;
     });
 
+    const paginatedUsers = computed(() => {
+      const start = (currentPage.value - 1) * props.paginationOptions.pageSize;
+      const end = start + props.paginationOptions.pageSize;
+      return filteredUsers.value.slice(start, end);
+    });
+
     const totalUsers = computed(() => filteredUsers.value.length);
     const totalPages = computed(() => Math.ceil(totalUsers.value / props.paginationOptions.pageSize));
+
 
     const sortUsers = (sortBy: string) => {
       if (currentSort.value === sortBy) {
@@ -231,7 +238,8 @@
       showConfirmationBanner,
       deleteUser,
       confirmDeleteUser,
-      cancelDeleteUser
+      cancelDeleteUser,
+      paginatedUsers
     };
   },
 });
