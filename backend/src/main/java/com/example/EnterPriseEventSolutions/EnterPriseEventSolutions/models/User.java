@@ -28,7 +28,6 @@ public class User {
     @JsonView(BasicInfo.class)
     private Long id;
 
-    @Column(unique = true)
     @JsonView(BasicInfo.class)
     private String username;
 

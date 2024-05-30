@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/organizers")
@@ -27,8 +29,7 @@ public class OrganizerRestController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private TicketService ticketService;
+
 
     @Autowired
     private EventService eventService;
@@ -169,4 +170,48 @@ public class OrganizerRestController {
         return  new ResponseEntity<>(event,HttpStatus.CREATED);
 
     }
+
+    @Operation(summary = "Get Events stats")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Event Stats",
+                    content = {@Content(
+                            mediaType = "application/json"
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal Server Error",
+                    content = @Content
+            )
+
+    })
+
+    @GetMapping("/event/stats")
+    public ResponseEntity<Map<String,Integer>> eventsStats(HttpServletRequest request){
+        try{Principal principal = request.getUserPrincipal();
+            User user = userService.findByEmail(principal.getName()).orElseThrow();
+            List<Event> events = eventService.findByUser(user);
+            Map<String, Integer> eventStats = new HashMap<>();
+            for(Event event: events){
+                int userCount = event.getCurrent_capacity();
+                eventStats.put(event.getName(), userCount);
+            }
+            return new ResponseEntity<>(eventStats, HttpStatus.OK);
+
+        }catch(Exception e){ return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); }
+    }
+
+
 }
