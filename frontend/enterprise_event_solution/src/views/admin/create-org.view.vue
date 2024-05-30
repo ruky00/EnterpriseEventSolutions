@@ -1,10 +1,8 @@
 <template>
 
-<h1>Creacion de Organizaciones</h1>
-
+<h1>Crear Organizaciones</h1>
 <div class="form-header" v-if="user">
-        <h2>Crear un Perfil para una Organización</h2>
-      {{ user.email }}
+   <form @submit.prevent="registerOrg">    
       <div class="form-body">
         <div class="row">
           <!-- Columna izquierda -->
@@ -31,22 +29,22 @@
           <div class="col-md-6">
             <div class="row custom-file-input">
              <div class="form-group">
-              <label for="profileImage" >Imagen de perfil Organizacion</label>
+              <button type="button" class="foto"><label for="profileImage" >Añadir Imagen de perfil Organizacion</label></button>
               <input type="file" id="profileImage" @change="handleFileChange1" required>
             </div>
             <div class="form-group">
-                <img :src="vistaPreviaImagenPerfil" alt="Imagen de perfil" class="imagen-perfil"/>
+                <img :src="vistaPreviaImagenPerfil" alt="Imagen de perfil" class="imagen-perfil-container"/>
               
             </div>
           </div>
        
             <div class="row custom-file-input"> 
               <div class="form-group">
-              <label for="logoImage">Logo de la Organizacion</label>
+             <button type="button" class="foto"><label for="logoImage">Añadir Logo de la Organizacion</label></button>
               <input type="file" id="logoImage" @change="handleFileChange2" class="custom-file-input" required >
             </div>
             <div class="form-group">
-                <img :src="vistaPreviaImagenLogo" alt="Logotipo" class="imagen-perfil" />
+                <img :src="vistaPreviaImagenLogo" alt="Logotipo" class="imagen-perfil-container" />
             </div>
         </div>
           </div>
@@ -54,11 +52,12 @@
             
          
         </div>
-        <button v-if="!seleccionado" @click="registerOrg" class="btn btn-primary">Registrar Organización</button>
+        <button type="submit" v-if="!seleccionado" class="btn btn-primary">Registrar Organización</button>
         <button v-else class="btn btn-primary" type="button" disabled>
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           Cargando...
         </button>
+    </form>
 </div>
 </template>
 
@@ -66,6 +65,7 @@
   import { ref } from 'vue';
   import { User } from '../../models/User';
 import { AdminService } from '@/services/admin.service';
+import router from '@/router';
 export default{
     name:'create-org',
     setup(){
@@ -86,11 +86,14 @@ export default{
                 await AdminService.prototype.postOrgLogo(newLogo,user.value.id)
 
                 alert('Se ha registrado correctamente el usuario')
+               
             }catch(error){
                 console.log(error);
                 alert('El usuario que intentas crear ya está en el sistema')
+                
             }
             seleccionado.value=false;
+            router.back();
         }
 
         
@@ -146,8 +149,8 @@ export default{
     margin-top: 2%;
     margin-left: 1%;
     border-radius: 15px;
-    background: linear-gradient(to top right, var(--main-bg-light), var(--main-bg-org)); 
-    box-shadow: #b1b1b1 0px 10px 25px 15px,  #b1b1b1 10px -15px 10px 0px; 
+    background: white; 
+    box-shadow: #b1b1b1 0px 10px 15px -1px,  #b1b1b1 0px -10px 10px 0px; 
     margin-right: 1%;
 }
 
@@ -262,9 +265,28 @@ label:hover{
   margin-bottom: 1%;
 }
 
+.imagen-perfil-container {
+  display: block; 
+  max-width:50% ; 
+  max-height: 200px;
+  margin: 0 auto; 
+  border: 1px solid #ddd; 
+  padding: 5px; 
+}
+
 
 .btn-primary:hover {
   background-color: var(--main-bg-dark);
+}
+
+.foto{
+  border-radius: 5px;
+  background-color: transparent;
+  transition: ease 0.5s
+}
+
+.foto:hover{
+  background-color: var(--main-bg-org);
 }
 
 input[type="text"],
@@ -288,7 +310,7 @@ input[type="file"]{
   margin-left:170px;
   opacity:0;
   position: absolute;
-  z-index: -1;
+  z-index: 1;
 }
 img{
   border-radius: 15px;

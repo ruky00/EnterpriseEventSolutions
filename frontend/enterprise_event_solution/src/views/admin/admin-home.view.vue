@@ -1,7 +1,6 @@
 <template>
+    <h1>Dashboard</h1>
     <div class="flex-container">
-
-       <div class="row"><h1>Dashboard</h1></div>
         <div class="row">
             <div class="col-6">
                 <div class="row"><h3>Usuarios Registrados por mes</h3></div>
@@ -55,14 +54,12 @@ export default ({
 
 <style scoped>
 
+p, h1{
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
 
- h1{
-    margin-top: -3%;
-    margin-bottom: -3%;
-    display: flex;
-    font-size: 2em;
-    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
- } 
  .flex-container{
     margin-left: 1%;
     margin-right: 2%;

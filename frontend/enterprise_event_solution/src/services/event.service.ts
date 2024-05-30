@@ -123,7 +123,7 @@ export class EventService{
         }catch(error){ console.error('Error al crear el evento:', error)}
     }
 
-    public async buyTicket(id:number){
+    public async buyTicket(id:number,password:string){
         try{
             const response =  await fetch('/api/clients/tickets/?id='+id,{
                 method: 'POST',
@@ -132,6 +132,7 @@ export class EventService{
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Origin": "*",
                 },
+                body: password
             });
             const data = await response.json();
             if (!response.ok) {
@@ -140,4 +141,25 @@ export class EventService{
             return data;
         }catch(error){ console.error('Error al crear el evento:', error)}
     }
+
+    public async getStats(){
+        try{
+            const response =  await fetch('/api/organizers/event/stats',{
+                method: 'GET',
+                credentials: 'include',
+                headers: {  
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Origin": "*",
+                },
+              
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(`Error al obtener las estadisticas: ${response.status} - ${response.statusText}`);
+            }
+            return data;
+        }catch(error){ console.error('Error al obtener las estadisticas', error)}
+    }
+
+
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="row"><h1>Users Table</h1></div>
+  <h1>Users Table</h1>
     <div class="row table">
         <userTables
             :users="users"
@@ -52,11 +52,14 @@ export default{
 </script>
 
 <style scoped>
-h1{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    display: flex;
-    margin-left: 1%;
+
+
+    p, h1{
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
 }
+
 .row{
     margin-top: 2%;
 }

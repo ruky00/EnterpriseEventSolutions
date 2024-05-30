@@ -1,4 +1,5 @@
 <template>
+  <h1>Edit Event</h1>
     <div class="create-event-container">
       <h2 class="create-event-title">Edit Event</h2>
       <form @submit.prevent="updateEvent" class="create-event-form">
@@ -49,9 +50,13 @@
         </div>
         <div class="form-group mb-3">
           <label for="date" class="form-label">Date:</label>
-          <input type="date" id="date" v-model="evento.date" class="form-control" required />
+          <input type="date" id="date" v-model="formattedDate" class="form-control" required />
         </div>
-        <button type="submit" class="btn btn-primary create-event-button">Create Event</button>
+        <button v-if="!seleccionado" type="submit" class="btn btn-primary create-event-button">Edit Event</button>
+        <button v-else class="btn btn-primary" type="button" disabled>
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Editando...
+        </button>
       </form>
     </div>
   </template>
@@ -68,7 +73,7 @@ export  default {
         const router = useRouter();
         const evento = ref({} as Event);
         const eventId  = ref(0);
-
+        const seleccionado=ref(false)
   
         onMounted(async () => {
             eventId.value = parseInt(router.currentRoute.value.params.id as string, 10)
@@ -76,10 +81,16 @@ export  default {
 
         });
 
+        const dateString =evento.value.date;
+        const dateObject = new Date(dateString);
+        const formattedDate = dateObject.toLocaleDateString("en-US")
+
         const updateEvent = async ()=>{
+            seleccionado.value=true;
             console.log(evento.value)
             await  EventService.prototype.updateEvent(evento.value)
             .then(() => {
+                seleccionado.value=false;
                 router.back();
             });
         }
@@ -88,7 +99,9 @@ export  default {
         return{
             router,
             evento,
-            updateEvent
+            updateEvent,
+            seleccionado,
+            formattedDate
         }
 
     }
@@ -101,12 +114,21 @@ export  default {
 </script>
 
 <style scoped>
+
+    p, h1{
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
+
+
 .create-event-container {
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Inner padding */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  max-width: 600px; /* Optional maximum width */
-  margin: 0 auto; /* Center the form horizontally */
+  border-radius: 10px; 
+  padding: 20px; 
+  box-shadow: #b1b1b1 0px 10px 15px -1px,  #b1b1b1 0px -10px 10px 0px; 
+  max-width: 600px; 
+  max-width: 100%; 
+  margin: 4%;
 }
 
 .create-event-title {
@@ -136,17 +158,17 @@ export  default {
 }
 
 .create-event-button {
-  background-color: #4CAF50; /* Green primary button */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Rounded corners for button */
-  padding: 10px 20px; /* Consistent padding for button */
-  cursor: pointer; /* Indicate clickable behavior */
-  transition: background-color 0.2s ease-in-out; /* Smooth transition on hover */
+  background-color: var(--main-bg-org); 
+  color: white;
+  border: none; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
+  cursor: pointer; 
+  transition: background-color 0.2s ease-in-out; 
 }
 
 .create-event-button:hover {
-  background-color: #3e8e41;  
+  background-color: var(--main-bg-dark);  
 
 }
 </style>

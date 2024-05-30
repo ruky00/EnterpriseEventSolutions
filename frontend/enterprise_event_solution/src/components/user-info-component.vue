@@ -16,12 +16,20 @@
         </div>
         <div v-if="user.role === 'ORGANIZATION' && !isMe">
         <div class="row"><h4>Eventos de empresa disponibles</h4></div>
-        <div  class="col-12" v-for="(evento, index) in eventos" :key="index">
+        <div class="container">
+          <div v-if="eventos.length === 0" class="empty-events">
+            <h4>Esta organización aún no tiene eventos</h4>
+          </div>
+        <div class="card-group">
+        <div  class="col" v-for="(evento, index) in eventos" :key="index">
+          
         <event_cards
         :evento="evento"
         :is-org="false"
         >
         </event_cards>
+        </div>
+        </div>
         </div>
         </div>
 
@@ -182,6 +190,18 @@ p, h1,h4{
   text-align: left;
   font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
 }
+p, h1{
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
+
+.empty-events {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 50vh; 
+}
 
 p{
   font-size: large;
@@ -193,7 +213,7 @@ label,input,h2{
 }
 .user-form-container{
     margin-left: 1%;
-    box-shadow: #b1b1b1 0px 10px 25px 15px,  #b1b1b1 10px -15px 10px 0px; 
+    box-shadow: #b1b1b1 0px 10px 15px -1px,  #b1b1b1 0px -10px 10px 0px; 
     border-radius: 10px 0  10px 0px;;
     margin-right: 1%;
     margin-top: 2%;
@@ -268,21 +288,30 @@ label,input,h2{
 }
 
 .btn-primary {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--main-bg-org); 
+  color: #fff; 
+  border: none; 
+  border-radius: 9px; 
+  font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.4s ease-in-out;
+  margin-bottom: 1%;
 }
 
+
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: var(--main-bg-dark);
 }
+
 
 input[type="file"]{
   margin-left:170px;
+}
+
+.col{
+  margin-top: 2%;
+  margin-bottom: 2%;  
 }
 
 </style>

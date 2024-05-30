@@ -1,8 +1,10 @@
 <template>
+  <h1>Create Event</h1>
     <div class="create-event-container">
       <h2 class="create-event-title">Create Event</h2>
       <form @submit.prevent="createEvent" class="create-event-form">
-        <div class="form-group mb-3">
+        <div class="form-body">
+        <div class="form-group">
           <label for="name" class="form-label">Name:</label>
           <input
             type="text"
@@ -13,7 +15,7 @@
             required
           />
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group ">
           <label for="description" class="form-label">Description:</label>
           <textarea
             id="description"
@@ -23,7 +25,7 @@
             required
           ></textarea>
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group ">
           <label for="price" class="form-label">Price:</label>
           <input
             type="number"
@@ -35,7 +37,7 @@
             placeholder="Price (optional)"
           />
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group ">
           <label for="maxCapacity" class="form-label">Max Capacity:</label>
           <input
             type="number"
@@ -47,11 +49,16 @@
             required
           />
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
           <label for="date" class="form-label">Date:</label>
           <input type="date" id="date" v-model="evento.date" class="form-control" required />
         </div>
-        <button type="submit" class="btn btn-primary create-event-button">Create Event</button>
+        <button v-if="!seleccionado" type="submit" class="btn btn-primary create-event-button">Create Event</button>
+        <button v-else class="btn btn-primary" type="button" disabled>
+          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+          Creando...
+        </button>
+      </div>
       </form>
     </div>
   </template>
@@ -67,10 +74,12 @@ export default{
     setup(){
         const router = useRouter();
         const evento = ref({} as Event);
-
+        const seleccionado = ref(false)
         const createEvent =  async()=>{
+          seleccionado.value=true
             await EventService.prototype.createEvent(evento.value)
             .then(() => {
+                seleccionado.value=false
                 router.back();
             });
         }
@@ -78,7 +87,8 @@ export default{
         return{
             evento,
             router,
-            createEvent
+            createEvent,
+            seleccionado
         }
 
     }
@@ -88,12 +98,20 @@ export default{
 
 
 <style scoped>
+
+p, h1{
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
+
 .create-event-container {
   border-radius: 10px; /* Rounded corners */
   padding: 20px; /* Inner padding */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: #b1b1b1 0px 10px 15px -1px,  #b1b1b1 0px -10px 10px 0px; 
   max-width: 600px; /* Optional maximum width */
-  margin: 0 auto; /* Center the form horizontally */
+  max-width: 100%; /* Center the form horizontally */
+  margin: 4%;
 }
 
 .create-event-title {
@@ -101,6 +119,8 @@ export default{
   text-align: center; /* Center the title */
   margin-bottom: 20px; /* Add some space after the title */
 }
+
+
 
 .form-group {
   margin-bottom: 15px; /* Consistent margin for form elements */
@@ -123,7 +143,7 @@ export default{
 }
 
 .create-event-button {
-  background-color: #4CAF50; /* Green primary button */
+  background-color: var(--main-bg-org); /* Green primary button */
   color: white; /* White text */
   border: none; /* Remove default border */
   border-radius: 5px; /* Rounded corners for button */
@@ -133,7 +153,7 @@ export default{
 }
 
 .create-event-button:hover {
-  background-color: #3e8e41;  
+  background-color: var(--main-bg-dark);  
 
 }
 </style>
