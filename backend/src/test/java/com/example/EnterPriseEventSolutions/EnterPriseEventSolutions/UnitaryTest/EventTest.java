@@ -97,7 +97,7 @@ public class EventTest {
 
         // Realizar la solicitud GET y verificar la respuesta
         mvc.perform(
-                get("/api/events")
+                get("/api/events")  
                         .param("org", "URJC")
                         .contentType(MediaType.APPLICATION_JSON)
         )

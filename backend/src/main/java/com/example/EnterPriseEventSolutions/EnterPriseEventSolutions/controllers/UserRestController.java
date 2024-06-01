@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -77,6 +78,10 @@ public class UserRestController {
     @Autowired
     private ImageService imageService;
 
+    @Value("${app.base-url}")
+    private String baseUrl;
+
+
     //POST members
     @Operation(summary = "Post a new member")
 
@@ -117,7 +122,7 @@ public class UserRestController {
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
             confirmationTokenService.saveConfirmationToken(confirmationToken);
-            String link = "https://127.0.0.1:8443/api/users/confirm?token=" + token;
+            String link = baseUrl + ":8443/api/users/confirm?token=" + token;
             emailService.send(user.getEmail(), registerService.buildEmail(user.getUsername(), link));
             URI location = fromCurrentRequest().path("/users/{id}")
                     .buildAndExpand(user.getId()).toUri();
