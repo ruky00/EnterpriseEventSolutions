@@ -117,7 +117,7 @@ public class UserRestController {
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
             confirmationTokenService.saveConfirmationToken(confirmationToken);
-            String link = "https://localhost:8443/api/users/confirm?token=" + token;
+            String link = "https://127.0.0.1:8443/api/users/confirm?token=" + token;
             emailService.send(user.getEmail(), registerService.buildEmail(user.getUsername(), link));
             URI location = fromCurrentRequest().path("/users/{id}")
                     .buildAndExpand(user.getId()).toUri();
