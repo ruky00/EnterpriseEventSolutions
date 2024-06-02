@@ -1,21 +1,26 @@
 <template>
-    <div class="error-page">
-      <h1 class="error-code">404</h1>
-      <p class="error-message">Página no encontrada</p>
-      <button @click="goBack" class="back-button">Volver atrás</button>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name:'error-page',
-    methods: {
-      goBack() {
+  <div class="error-page">
+    <h1 class="error-code">{{ errorCode }}</h1>
+    <p class="error-message">Acceso no autorizado</p>
+    <button @click="goBack" class="back-button">Volver atrás</button>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'error-page',
+  props: ['errorCode'], // Propiedad para recibir el código de error
+  methods: {
+    goBack() {
+      if (this.errorCode === 403) {
+        window.history.length > 2 ? this.$router.go(-2) : this.$router.push('/');
+      } else {
         window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
       }
     }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   .error-page {

@@ -13,6 +13,11 @@ const routes =createRouter({
         name:'auth',
         component: ()=>import("../src/views/auth.view.vue")
     },
+     {
+        path:'/login',
+        name:'auth',
+        component: ()=>import("../src/views/auth.view.vue")
+    },
     {
       path:"/user",
       name: 'user-landing',
@@ -25,6 +30,7 @@ const routes =createRouter({
           name: 'admin-home',
           component: ()=>import('../src/views/admin/admin-home.view.vue'),
           meta: { requiresAuth: true, roles: ['ADMIN'] },
+          beforeEnter: authGuard,
           
         },
         {
@@ -32,6 +38,7 @@ const routes =createRouter({
           name: 'create-org',
           component: ()=>import('../src/views/admin/create-org.view.vue'),
           meta: { requiresAuth: true, roles: ['ADMIN'] },
+          beforeEnter: authGuard,
          
         },
         {
@@ -39,19 +46,26 @@ const routes =createRouter({
           name: 'user-table',
           component: ()=>import('../src/views/admin/admin-userTable.view.vue'),
           meta: { requiresAuth: true, roles: ['ADMIN'] },
+          beforeEnter: authGuard,
          
         },
         {
           path: 'client',
           name: 'client-home',
           component: ()=>import('../src/views/client/client-home.view.vue'),
-          meta: { requiresAuth: true, roles: ['CLIENT'] }
+          meta: { requiresAuth: true, roles: ['CLIENT'],
+          beforeEnter: authGuard,
+           }
+          
         },
         {
           path: 'client/tickets',
           name: 'client-tickets',
           component: ()=>import('../src/views/client/client-tickets.view.vue'),
-          meta: { requiresAuth: true, roles: ['CLIENT'] }
+          meta: { requiresAuth: true, roles: ['CLIENT'],
+          beforeEnter: authGuard,
+
+          }
         },
         {
           path: 'organization',
@@ -113,14 +127,20 @@ const routes =createRouter({
       ]
     },
 
+
+    {
+      path: '/unauthorized',
+      name: 'Unauthorized',
+      component: () => import('../src/views/error.view.vue'),
+      props: { errorCode: 403 } // Pasar el código de error 403 como prop
+    },
+
+
     {
       path: '/:pathMatch(.*)',
       name: 'Error',
       component: ()=>import('../src/views/error.view.vue'),
-      props: (route) => {
-        const errorCode = route.query.code ? parseInt(route.query.code as string) : 404;
-        return { errorCode };
-      }
+      props: { errorCode: 404 }
     }
 
   ],

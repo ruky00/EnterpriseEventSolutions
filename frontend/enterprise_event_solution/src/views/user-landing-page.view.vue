@@ -8,6 +8,13 @@
 
       <!-- Contenido principal -->
       <div :class="contentClass">
+        <div class="container">
+          <div class="row"> 
+            <router-link :to="`/user/${userType}`"><i class="bi bi-arrow-left"></i>
+            </router-link>
+          </div></div>
+       
+        
         <router-view />
       </div>
     </div>
@@ -17,6 +24,8 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import UserNavbar from '../components/user-nav-bar.component.vue';
+import store from '@/store';
+
 
 export default defineComponent({
   components: {
@@ -24,6 +33,7 @@ export default defineComponent({
   },
   setup() {
     const isNavbarTop = ref(false);
+    let userType = store.state.userRoles.toLowerCase();
 
     const contentClass = computed(() => ({
       'col-lg-10': !isNavbarTop.value,
@@ -37,9 +47,12 @@ export default defineComponent({
       isNavbarTop.value = window.innerWidth < 576; 
     });
 
+    
+
     return {
       isNavbarTop,
       contentClass,
+      userType
     };
   },
 });
@@ -77,5 +90,20 @@ export default defineComponent({
 .col-lg-10{
   padding-left: 1%;
 }
+.bi{
+  font-size: 2em;
+}
 
+.container{
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+}
+a{
+  color: var(--main-bg-org)
+}
+
+a:hover{
+  color: var(--main-bg-org-hover)
+}
 </style>

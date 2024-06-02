@@ -139,6 +139,7 @@ import { authService } from '@/services/auth.service';
         } catch (error) {
           console.error('Error fetching user information:', error);
         }
+        vistaPreviaImagenPerfil.value=user.value.image
       };
       
       const handleFileChange = (event: Event) => {
@@ -166,7 +167,7 @@ import { authService } from '@/services/auth.service';
           console.error('Error updating user information:', error);
         }
         seleccionado.value=false;
-
+        
       };
       
       const getLogo = ()=>{
