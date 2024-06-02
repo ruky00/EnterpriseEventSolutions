@@ -19,7 +19,8 @@ public class ConfirmationToken {
     private LocalDateTime expireAt;
     private LocalDateTime comfirmTime;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public long getTokenid() {

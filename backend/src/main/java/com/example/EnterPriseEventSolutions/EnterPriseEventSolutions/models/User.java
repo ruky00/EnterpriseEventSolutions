@@ -36,6 +36,9 @@ public class User {
     @JsonView(BasicInfo.class)
     private String email;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ConfirmationToken confirmationToken;
+
 
     @JsonView(PrivateInfo.class)
     private String encodedPassword;

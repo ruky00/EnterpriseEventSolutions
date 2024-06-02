@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,6 +57,9 @@ public class AdminRestController {
 
     @Autowired
     private ImageService imageService;
+
+    @Value("${app.base-url}")
+    private String baseUrl;
 
 //GET ALL USERS
     @Operation(summary = "Get Users")
@@ -143,7 +147,7 @@ public class AdminRestController {
             String token = UUID.randomUUID().toString();
             ConfirmationToken confirmationToken = new ConfirmationToken(token, LocalDateTime.now(), LocalDateTime.now().plusMinutes(15), user);
             confirmationTokenService.saveConfirmationToken(confirmationToken);
-            String link = "https://localhost:8443/api/users/confirm?token=" + token;
+            String link = baseUrl + ":8443/api/users/confirm?token=" + token;
             emailService.sendOrg(user.getEmail(), registerService.buildEmailOrg(user.getUsername(), link, user.getEmail()));
             URI location = fromCurrentRequest().path("/organizers/{id}")
                     .buildAndExpand(user.getId()).toUri();

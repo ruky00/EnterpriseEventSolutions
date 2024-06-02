@@ -128,7 +128,7 @@ public class DataBaseInitializer {
             userRepository.save(organizer3);
 
             User organizer4 = new User("EventoPro", "eventopro@example.com", passwordEncoder.encode("pass")," EventoPro es una agencia de eventos líder en la organización y gestión de " +
-                    "todo tipo de eventos corporativos y sociales. " +
+                    "todo tipo de eventos corporativos y socialess. " +
                     "Desde conferencias y seminarios hasta fiestas y lanzamientos de productos, nos especializamos en crear experiencias memorables y exitosas para nuestros clientes. " +
                     "\nNuestro equipo experimentado y creativo se encarga de cada detalle, asegurando que cada evento sea único, " +
                     "impactante y exitoso. Con EventoPro, tu evento está en buenas manos.");
