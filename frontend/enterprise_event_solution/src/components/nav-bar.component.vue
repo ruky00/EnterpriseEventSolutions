@@ -13,7 +13,7 @@
           <router-link style="text-decoration: none; color: inherit;" to="/"><i class="bi bi-house-door"></i> Home</router-link>
         </li>
         <li class="nav-item">
-         <router-link style="text-decoration: none; color: inherit;" to="/about"><i class="bi bi-person-raised-hand"></i> About us</router-link>
+         <a style="text-decoration: none; color: inherit;" @click="scroll"><i class="bi bi-person-raised-hand"></i> About us</a>
         </li>
         <li class="nav-item">
           <router-link style="text-decoration: none; color: inherit;" to="/login"><i class="bi bi-person-circle"></i> Log in</router-link>
@@ -63,8 +63,16 @@ export default({
       };
     });
 
+    const scroll= ()=> {
+      const element = document.getElementById('presentation');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
     return {
       isTransparent,
+      scroll
     };
   },
 })

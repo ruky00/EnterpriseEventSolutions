@@ -8,7 +8,7 @@
     </div>
     <div class="row main-content1" id="get-started-button"><router-link to="/login"><button class="btn btn-primary" type="button">Get started</button></router-link></div>
   </div>
-  <div class="container-fluid presentation">
+  <div class="container-fluid presentation" id="presentation">
     <div class="row presentation">
       <div class="col-4"><img src="https://enterpriseeventsolutions.s3.eu-west-2.amazonaws.com/localImages/carlosFernandez.png" alt="Carlos Fernandez Lopez"></div>
       <div class="col-8"><p><b>Who created this services...?</b>, as a DFP, I've launched <b>Enterprise Event Solutions</b>, a one-click platform where companies effortlessly manage employee attendance for their crucial meetings and large-scale events. 

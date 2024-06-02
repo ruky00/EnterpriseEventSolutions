@@ -26,13 +26,6 @@
               </router-link>
             </li>
             <li class="nav-item" v-if="user?.role == 'CLIENT'">
-              <a
-                href="#submenu1"
-                data-bs-toggle="collapse"
-                class="nav-link"
-              >
-                Novedades
-              </a>
               <ul class="collapse" id="submenu1">
                 <li>
                   <router-link :to="{ name: 'client-home' }" class="nav-link" exact-active-class="active-link">
@@ -112,9 +105,6 @@
                       <router-link :to="{ name: 'client-home' }" class="nav-link px-0" exact-active-class="active-link">
                         <i class="bi bi-buildings"><span class="d-none d-sm-inline"> Empresas</span></i>
                       </router-link>
-                    </li>
-                    <li>
-                      <a href="#" class="nav-link px-0"><i class="bi bi-calendar-event"><span class="d-none d-sm-inline"> Eventos</span></i></a>
                     </li>
                   </ul>
                 </li>
