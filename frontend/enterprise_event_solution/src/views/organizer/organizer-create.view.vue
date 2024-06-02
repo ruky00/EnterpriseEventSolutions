@@ -49,6 +49,16 @@
             required
           />
         </div>
+        <div class="form-group ">
+          <label for="description" class="form-label">Password (Optional):</label>
+          <input
+            id="password"
+            v-model="evento.encodedPassword"
+            class="form-control"
+            placeholder="Event password if necesary"
+            
+          />
+        </div>
         <div class="form-group">
           <label for="date" class="form-label">Date:</label>
           <input type="date" id="date" v-model="evento.date" class="form-control" required />
