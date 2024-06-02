@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,9 @@ public class OrganizerRestController {
     @Autowired
     private EventService eventService;
 
+
+     @Autowired
+     private PasswordEncoder passwordEncoder;
 
     //GET ORG EVENTS
     @Operation(summary = "Get org's events")
@@ -96,6 +100,10 @@ public class OrganizerRestController {
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
         event.setOrganization(user);
+        if (event.getEncodedPassword()!=null){
+           event.setEncodedPassword(passwordEncoder.encode(event.getEncodedPassword()));
+            event.setPrivateEvent(true);
+        }
         eventService.saveEvent(event);
         try {
             return new ResponseEntity<>(event,HttpStatus.CREATED);

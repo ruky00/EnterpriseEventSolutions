@@ -67,9 +67,18 @@ public class DataBaseInitializer {
                     "multidisciplinaria y su contribución al desarrollo social y económico del país.");
             Resource resource = new ClassPathResource("static/images/urjc.jpg" );
             byte[] imageBytes = StreamUtils.copyToByteArray(resource.getInputStream());
+
             MultipartFile multipartFile1 = new MockMultipartFile("urjc.jpg", "urjc.jpg", "image/jpeg", imageBytes);
+
             String imageName1Saved = imageService.createImage(multipartFile1, "profileImage", organizer1.getUsername());
+
             organizer1.setImage(imageName1Saved);
+
+            resource = new ClassPathResource("static/images/Logo_URJC.png" );
+            imageBytes = StreamUtils.copyToByteArray(resource.getInputStream());
+            MultipartFile logoFile1 = new MockMultipartFile("Logo_URJC.png","Logo_URJC.png","image/png", imageBytes);
+            String logoSaved1 = imageService.createImage(logoFile1,"logoImage", organizer1.getUsername());
+            organizer1.setLogo(logoSaved1);
             organizer1.setEnable(true);
             userRepository.save(organizer1);
 
@@ -81,21 +90,39 @@ public class DataBaseInitializer {
                     "Sus servicios ayudan a las empresas a garantizar la precisión financiera, cumplir con las leyes fiscales y alcanzar sus objetivos estratégicos. KPMG: Un socio confiable para el éxito empresarial.");
             Resource resource1 = new ClassPathResource("static/images/kpmg.jpg" );
             byte[] imageBytes1 = StreamUtils.copyToByteArray(resource1.getInputStream());
-            MultipartFile multipartFile2 = new MockMultipartFile("kpmj.jpg", "kpmg.jpg", "image/jpeg", imageBytes1);
+            MultipartFile multipartFile2 = new MockMultipartFile("kpmg.jpg", "kpmg.jpg", "image/jpeg", imageBytes1);
             String imageName2Saved = imageService.createImage(multipartFile2, "profileImage", organizer2.getUsername());
             organizer2.setImage(imageName2Saved);
+
+            resource1 = new ClassPathResource("static/images/kpmg_logo.png" );
+            imageBytes1 = StreamUtils.copyToByteArray(resource1.getInputStream());
+
+            MultipartFile logoFile2 = new MockMultipartFile("kpmg_logo.png","kpmg_logo.png","image/png", imageBytes1);
+            String logoSaved2 = imageService.createImage(logoFile2,"logoImage", organizer2.getUsername());
+            organizer2.setLogo(logoSaved2);
+
             organizer2.setEnable(true);
             userRepository.save(organizer2);
 
 
-            // Crear más organizadores
-            User organizer3 = new User("EmpresaX", "empresaX@example.com", passwordEncoder.encode("pass"),"EmpresaX es una empresa innovadora dedicada al desarrollo de " +
+            User organizer3 = new User("UFV", "empresaX@example.com", passwordEncoder.encode("pass"),"EmpresaX es una empresa innovadora dedicada al desarrollo de " +
                     "soluciones tecnológicas para el sector de la salud.\n Nuestro equipo multidisciplinario de expertos en tecnología y salud trabaja para crear productos y servicios que mejoren la calidad de " +
                     "vida de las personas y transformen la industria de la salud. " +
                     "Estamos comprometidos con la innovación, la excelencia y el impacto positivo en la sociedad.");
             organizer3.setEnable(true);
 
-            organizer3.setImage(imageName2Saved);
+            Resource resource3 = new ClassPathResource("static/images/ufv.jpg" );
+            byte[] imageBytes3 = StreamUtils.copyToByteArray(resource3.getInputStream());
+            MultipartFile multipartFile3 = new MockMultipartFile("ufv.jpg", "ufv.jpg", "image/jpeg", imageBytes3);
+            String imageName3Saved = imageService.createImage(multipartFile3, "profileImage", organizer3.getUsername());
+            organizer3.setImage(imageName3Saved);
+
+            resource3 = new ClassPathResource("static/images/ufv_logo.jpg" );
+            imageBytes3 = StreamUtils.copyToByteArray(resource3.getInputStream());
+            MultipartFile logoFile3 = new MockMultipartFile("ufv_logo.png","ufv_logo.png","image/png", imageBytes3);
+            String logoSaved3 = imageService.createImage(logoFile3,"logoImage", organizer3.getUsername());
+            organizer3.setLogo(logoSaved3);
+
             userRepository.save(organizer3);
             organizer3.setCreateDateTime(LocalDateTime.of(2024, 2, 10, 0, 0));
             userRepository.save(organizer3);
@@ -107,13 +134,25 @@ public class DataBaseInitializer {
                     "impactante y exitoso. Con EventoPro, tu evento está en buenas manos.");
             organizer4.setEnable(true);
 
-            organizer4.setImage(imageName2Saved);
+            Resource resource4 = new ClassPathResource("static/images/accenture.jpg" );
+            byte[] imageBytes4 = StreamUtils.copyToByteArray(resource4.getInputStream());
+            MultipartFile multipartFile4 = new MockMultipartFile("accenture.jpg", "accenture.jpg", "image/jpeg", imageBytes4);
+            String imageName4Saved = imageService.createImage(multipartFile4, "profileImage", organizer4.getUsername());
+            organizer4.setImage(imageName4Saved);
+
+            resource4 = new ClassPathResource("static/images/accenture_logo.png" );
+            imageBytes4 = StreamUtils.copyToByteArray(resource4.getInputStream());
+            MultipartFile logoFile4 = new MockMultipartFile("accenture_logo.png","accenture_logo.png","image/png", imageBytes4);
+            String logoSaved4 = imageService.createImage(logoFile4,"logoImage", organizer4.getUsername());
+            organizer4.setLogo(logoSaved4);
+
+
+            organizer4.setLogo(logoSaved4);
             userRepository.save(organizer4);
             organizer4.setCreateDateTime(LocalDateTime.of(2024, 1, 5, 0, 0));
             userRepository.save(organizer4);
 
 
-            // Crear más organizadores
             User organizer5 = new User("TechGenius", "techgenius@example.com", passwordEncoder.encode("pass"),"TechGenius es una empresa líder en innovación tecnológica, especializada en el desarrollo " +
                     "de soluciones inteligentes para empresas de todos los tamaños. Con un equipo de expertos en tecnología y un enfoque " +
                     "centrado en la calidad y la excelencia, estamos comprometidos en ofrecer productos y servicios que impulsen el éxito y " +
@@ -122,27 +161,6 @@ public class DataBaseInitializer {
             userRepository.save(organizer5);
             organizer5.setCreateDateTime(LocalDateTime.of(2024, 10, 10, 0, 0)); // Cambio de fecha de creación
             userRepository.save(organizer5);
-
-
-
-            User organizer6 = new User("EcoSolutions", "ecosolutions@example.com", passwordEncoder.encode("pass"),"EcoSolutions es una empresa comprometida con la sostenibilidad y el cuidado del medio " +
-                    "ambiente. Nuestro objetivo es ofrecer soluciones ecoamigables para empresas y comunidades, ayudando a reducir su " +
-                    "huella de carbono y promoviendo prácticas empresariales responsables. Trabajamos en estrecha colaboración con nuestros " +
-                    "clientes para implementar estrategias sostenibles y crear un mundo mejor para las generaciones futuras.");
-            organizer6.setEnable(true);
-            userRepository.save(organizer6);
-            organizer6.setCreateDateTime(LocalDateTime.of(2024, 11, 15, 0, 0)); // Cambio de fecha de creación
-            userRepository.save(organizer6);
-
-            User organizer7 = new User("CreativityWorks", "creativityworks@example.com", passwordEncoder.encode("pass"),"CreativityWorks es una agencia creativa especializada en diseño y marketing digital. " +
-                    "Nuestro equipo de diseñadores, desarrolladores y estrategas trabaja para crear experiencias digitales únicas y " +
-                    "efectivas que ayuden a las marcas a destacarse en un mercado cada vez más competitivo. Nos apasiona la creatividad y " +
-                    "la innovación, y estamos comprometidos en ofrecer soluciones creativas que impulsen el éxito de nuestros clientes.");
-            organizer7.setEnable(true);
-            userRepository.save(organizer7);
-            organizer7.setCreateDateTime(LocalDateTime.of(2024, 12, 20, 0, 0)); // Cambio de fecha de creación
-            userRepository.save(organizer7);
-
 
 
             User client4 = new User("Laura", "jose@example.com", passwordEncoder.encode("pass"));
