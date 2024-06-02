@@ -9,6 +9,7 @@
         <event_cards
         :evento="evento"
         :is-org="true"
+        :emitReloadEvents="emitReloadEvents"
         >
         </event_cards>
         </div>
@@ -53,6 +54,10 @@ export  default {
     };
       onMounted(loadEvents);
 
+      const emitReloadEvents = () => {
+      loadEvents();
+    };
+
         const deleteEvent = async(id: number)=>{
             await EventService.prototype.deleteEvent(id),
             await loadEvents()
@@ -63,7 +68,8 @@ export  default {
             eventos,
             router,
             deleteEvent,
-            user
+            user,
+            emitReloadEvents
         }
     },
 
