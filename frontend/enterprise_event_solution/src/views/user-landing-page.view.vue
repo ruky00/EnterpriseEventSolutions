@@ -73,4 +73,9 @@ export default defineComponent({
   height: 100vh;
   overflow-y: auto;
 }
+
+.col-lg-10{
+  padding-left: 1%;
+}
+
 </style>
