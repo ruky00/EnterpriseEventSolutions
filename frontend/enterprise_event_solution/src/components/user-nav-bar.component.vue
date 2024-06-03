@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Barra de navegación superior en pantallas pequeñas -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none" style="padding: 0;     z-index: 1000">
+    <nav class="navbar navbar-dark bg-dark d-lg-none d-sm-block" style="padding: 0; z-index: 1000">
       <div class="container-fluid">
         
         <h1 class="navbar-brand" href="#">Hi, {{ user?.username }}</h1>
@@ -160,7 +160,7 @@
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { User } from '@/models/User';
-import { ref, computed } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { authService } from '@/services/auth.service';
 
 export default {
@@ -170,6 +170,7 @@ export default {
     const router = useRouter();
     const store = useStore();
     const user = ref<User | null>(store.state.user);
+    const isSmallScreen = ref(window.innerWidth <= 992);
 
     const getUserImage = () => {
       if (user.value && user.value!.image) {
@@ -182,16 +183,24 @@ export default {
     const logout = async () => {
       try {
         await authService.prototype.logout();
-        store.dispatch('logout')
+        store.dispatch('logout');
         router.push('/');
       } catch (error) {
         console.log('Error al cerrar sesión');
       }
     };
 
-    // Computed property para determinar si la pantalla es pequeña
-    const isSmallScreen = computed(() => {
-      return window.innerWidth < 992; // 992px es el punto de ruptura lg de Bootstrap
+    const checkScreenSize = () => {
+      isSmallScreen.value = window.innerWidth <= 992;
+    };
+
+    onMounted(() => {
+      checkScreenSize(); // Llama a checkScreenSize() en el montaje inicial
+      window.addEventListener('resize', checkScreenSize); // Agrega un observador de cambio de tamaño de ventana
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', checkScreenSize); // Elimina el observador de cambio de tamaño de ventana al desmontar el componente
     });
 
     store.watch(
@@ -207,10 +216,12 @@ export default {
       user,
       getUserImage,
       logout,
-      isSmallScreen
+      isSmallScreen,
+      
     };
-  },
-};
+  }
+
+}
 </script>
 
 <style scoped>

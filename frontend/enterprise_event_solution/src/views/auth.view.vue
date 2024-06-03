@@ -137,6 +137,7 @@ article {
   padding-bottom: 20%;
   padding-top: 10%;
   background: var(--main-bg-dark);
+
 }
 
 .container {
@@ -396,4 +397,7 @@ form .error-mensaje {
     z-index: 10;
   }
 }
+
+
+
 </style>
