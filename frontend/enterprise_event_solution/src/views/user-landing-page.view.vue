@@ -37,7 +37,7 @@ export default defineComponent({
       'col-md-12': !isNavbarTop.value,
       'col-sm-12': !isNavbarTop.value,
       'col-12': !isNavbarTop.value,
-      'sticky-content': isNavbarTop.value, // Aplica la clase 'sticky-content' si la barra de navegación está en la parte superior
+      'sticky-content': !isNavbarTop.value, // Aplica la clase 'sticky-content' si la barra de navegación está en la parte superior
     }));
 
     const handleResize = () => {

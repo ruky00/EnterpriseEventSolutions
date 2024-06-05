@@ -1,7 +1,8 @@
 <template>
-<canvas id="myChart2" height="50%" width="100%">
+  <div class="chart-container"><canvas id="myChart2" height="50%" width="100%">
 
-</canvas>
+</canvas></div>
+
  
 
 
@@ -57,19 +58,11 @@ export default {
           layout: {
             padding: 10,
           },
-          animations: {
-            tension: {
-              duration: 15000,
-              easing: 'easeInSine',
-              from: 0.7,
-              to: 0,
-              loop: true,
-            },
-          },
+         
           scales: {
             y: { // Define min and max for consistent scale
               min: 0,
-              max: 10,
+              max: 20,
             },
           },
           responsive: true,
@@ -104,6 +97,15 @@ export default {
 </script>
 
 <style scoped>
+  .chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
 
 </style>

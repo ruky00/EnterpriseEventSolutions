@@ -8,7 +8,7 @@
     </div>
     <div class="row main-content1" id="get-started-button"><router-link to="/login"><button class="btn btn-primary" type="button">Get started</button></router-link></div>
   </div>
-  <div class="container-fluid presentation" id="presentation">
+  <div class="container-fluid presentation">
     <div class="row presentation">
       <div class="col-4"><img src="https://enterpriseeventsolutions.s3.eu-west-2.amazonaws.com/localImages/carlosFernandez.png" alt="Carlos Fernandez Lopez"></div>
       <div class="col-8"><p><b>Who created this services...?</b>, as a DFP, I've launched <b>Enterprise Event Solutions</b>, a one-click platform where companies effortlessly manage employee attendance for their crucial meetings and large-scale events. 
@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="container-fluid description">
-        <div class="row">
+        <div class="row description">
           <div class="col-8"><p><b>Welcome to Enterprise Event Solutions!</b> We're your go-to platform for seamless event management. 
 <b>Companies</b> can create a company profile, effortlessly upload their events, and manage attendance effortlessly. On the flip side, Users can explore these events, secure their spot, and purchase 
 tickets hassle-free. <b>Experience the simplicity of event coordination with us!</b>"</p></div>
@@ -114,6 +114,10 @@ h1{
   display: flex;
   flex-direction: column;
 }
+.row .description{
+  display: flex;
+  flex-direction: column;
+}
 
 .col-8{
  display: flex;
@@ -207,6 +211,7 @@ li{
   b{
     font-size: 27px;
   }
+  
 }
 
 </style>

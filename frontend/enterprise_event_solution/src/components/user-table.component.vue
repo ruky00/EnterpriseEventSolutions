@@ -10,41 +10,43 @@
       <input type="text" v-model="searchQuery" placeholder="Buscar por nombre">
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th v-for="header in headers" :key="header.text" :class="{ sortable: header.sortable }" @click="sortUsers(header.text)">
-            {{ header.text }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in paginatedUsers" :key="user.id">
-          <td v-for="header in headers" :key="header.text">
-            <!-- Si el accessor es 'username' y el rol es 'ORGANIZATION', mostrar un router-link -->
-            <template v-if="header.accessor === 'username' && user.role === 'ORGANIZATION'">
-              <router-link :to="{ name: 'user-info', params: { id: user.id }}">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th v-for="header in headers" :key="header.text" :class="{ sortable: header.sortable }" @click="sortUsers(header.text)">
+              {{ header.text }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in paginatedUsers" :key="user.id">
+            <td v-for="header in headers" :key="header.text">
+              <!-- Si el accessor es 'username' y el rol es 'ORGANIZATION', mostrar un router-link -->
+              <template v-if="header.accessor === 'username' && user.role === 'ORGANIZATION'">
+                <router-link :to="{ name: 'user-info', params: { id: user.id }}">
+                  {{ user[header.accessor] }}
+                </router-link>
+              </template>
+              <!-- Si no, solo mostrar el valor -->
+              <template v-else>
                 {{ user[header.accessor] }}
-              </router-link>
-            </template>
-            <!-- Si no, solo mostrar el valor -->
-            <template v-else>
-              {{ user[header.accessor] }}
-            </template>
-          </td>
-          <td>
-            <div v-for="action in rowActions" :key="action.icon">
-              <button @click="deleteUser(user)" class="actionButton">
-                <i class="fas fa-fw" :class="action.icon"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-        <tr v-if="!paginatedUsers.length">
-          <td :colspan="headers.length">{{ emptyText }}</td>
-        </tr>
-      </tbody>
-    </table>
+              </template>
+            </td>
+            <td>
+              <div v-for="action in rowActions" :key="action.icon">
+                <button @click="deleteUser(user)" class="actionButton">
+                  <i class="fas fa-fw" :class="action.icon"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr v-if="!paginatedUsers.length">
+            <td :colspan="headers.length">{{ emptyText }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div v-if="pagination" class="pagination">
       <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
@@ -246,31 +248,36 @@
 </script>
 
 <style scoped>
-.actionButton{
+.actionButton {
   border-style: none;
   background-color: transparent;
   margin-left: 30%;
   margin-top: 20%;
   color: var(--main-bg-light);
   transition: ease 0.3s;
-
 }
 .actionButton:hover {
   color: var(--main-bg-org);
 }
 
-
 .user-table {
   margin: 20px auto;
   width: 80%;
   border-radius: 10px;
-  box-shadow: #b1b1b1 0px 10px 15px -1px,  #b1b1b1 0px -10px 10px 0px; 
+  box-shadow: #b1b1b1 0px 10px 15px -1px, #b1b1b1 0px -10px 10px 0px;
   padding-top: 10px;
+}
+
+/* Wrap table in a scrollable container */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Style the entire table element */
 table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 /* Style the table header */
@@ -301,20 +308,16 @@ tbody tr:nth-child(even) {
 /* Style the filters section */
 .filters {
   display: flex; /* Arrange filters horizontally */
+  flex-wrap: wrap;
+  gap: 10px; /* Add gap between filters */
   margin-bottom: 15px;
 }
 
-.filters select {
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
+.filters select,
 .filters input[type="text"] {
   padding: 5px 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  margin-left: 10px; /* Add some spacing between filters */
 }
 
 /* Style the pagination section */
@@ -343,6 +346,7 @@ tbody tr:nth-child(even) {
   text-align: center;
   margin-top: 20px;
 }
+
 .overlay {
   position: fixed;
   top: 0;
@@ -383,4 +387,21 @@ tbody tr:nth-child(even) {
   background-color: #eee;
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .user-table {
+    width: 95%;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters select,
+  .filters input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
 </style>

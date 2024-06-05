@@ -1,33 +1,31 @@
 <template>
     <h1>Dashboard</h1>
-    <div class="flex-container">
-        <div class="row">
-            <div class="col-6">
-                <div class="row"><h3>Usuarios Registrados por mes</h3></div>
-                <div class="row">
-                    <UserLinechart></UserLinechart>
-                </div>
-            </div>
-                
-            <div class="col-6">
-                <div class="row"><h3>Tipos de Usuarios</h3></div>
-                <div class="row"><RoleLineChart></RoleLineChart></div>    
-            </div>
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-md-6 mb-4 shadow-box">
+          <h3>Usuarios Registrados por mes</h3>
+          <UserLinechart></UserLinechart>
         </div>
-        <div class="row">
-            <div class="col-8">
-                <div class="row"><h3>Eventos registrados al Mes</h3></div>
-                <div class="row"><EventLineChart></EventLineChart></div>   
-            </div>
-            <div class="col-4">
-                <h3>Crear Organizador</h3>
-                <p>Añade organizaciones desde aquí para que puedan añadir nuevos eventos.</p>
-                <router-link :to="{ name:'create-org'}"><button>Añadir Organizador</button></router-link>
-            </div>
+        <div class="col-md-6 mb-4 shadow-box">
+          <h3>Tipos de Usuarios</h3>
+          <RoleLineChart></RoleLineChart>
         </div>
-
+      </div>
+      <div class="row">
+        <div class="col-md-8 mb-4 shadow-box">
+          <h3>Eventos registrados al Mes</h3>
+          <EventLineChart></EventLineChart>
+        </div>
+        <div class="col-md-4 shadow-box">
+          <h3>Crear Organizador</h3>
+          <p>Añade organizaciones desde aquí para que puedan añadir nuevos eventos.</p>
+          <router-link :to="{ name:'create-org'}">
+            <button>Añadir Organizador</button>
+          </router-link>
+        </div>
+      </div>
     </div>
-</template>
+  </template>
 
 <script lang="ts">
 import UserLinechart from "../../components/user-month.component.vue";
@@ -53,71 +51,56 @@ export default ({
 
 
 <style scoped>
-
-p, h1{
+p, h1 {
   text-align: left;
   font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
   margin-top: 1%;
 }
 
- .flex-container{
-    margin-left: 1%;
-    margin-right: 2%;
- }
- .row{
-    padding-top: 3%;
-    margin-right: 30px;
-    display: flex;
-    justify-content: space-between;
- }
- .col-6{
-    border-radius: 20px;
-    box-shadow: #b1b1b1 0px 10px 15px -3px,  #b1b1b1 0px -15px 10px 0px;
-    margin-left: 0px;
- }
- .col-8{ 
-    border-radius: 20px;
-    box-shadow: #b1b1b1 0px 10px 15px -3px,  #b1b1b1 0px -15px 10px 0px;
-    margin-left: 0%;
-    
-    height: 20%;
- }
- h3{
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: 1200px;
+}
 
-    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
- }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
 
- .col-4{
-   
-    height: 37vh;
-    border-radius: 15px;
-    box-shadow: #b1b1b1 0px 10px 15px -23px,  #b1b1b1 0px -15px 10px 0px;
-    background: #f7b679;
-    border-width: 5px;
- }
+.col-md-6, .col-md-8, .col-md-4 {
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 20px; /* Add bottom margin for separation */
+}
 
- .col-4 h3{
-    color: black;
-    margin-top: 8%;
- }
+h3 {
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+}
 
- .col-4  p{
-    color: black;
-    font-weight: 500;
- }
+button {
+  border-radius: 15px;
+  background-color: var(--main-bg-light);
+  margin-top: 10%;
+  cursor: pointer;
+  transition: 0.4s;
+}
 
- button{
-    border-radius: 15px;
-    background-color: var(--main-bg-light);
-    margin-top: 10%;
-    cursor: pointer;
-    transition: 0.4s;
+button:hover {
+  background-color: var(--main-bg-dark);
+  color: white;
+  transition: 0.4s;
+}
 
- }
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
 
- button:hover{
-    background-color: var(--main-bg-dark);
-    color:white;
-    transition: 0.4s;
- }
+.shadow-box {
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 8px 15px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 20px;
+}
 </style>

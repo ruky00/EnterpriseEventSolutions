@@ -1,9 +1,9 @@
 <template>
-    <canvas id="myChart1" height="50%" width="100%">
+  <div class="chart-container"> <canvas id="myChart1" height="50%" width="100%">
     
     </canvas>
      
-    
+    </div>
     
     </template>
     
@@ -107,7 +107,16 @@
     };
     </script>
     
-    <style scoped>
-    
-    
-    </style>
+<style scoped>
+  .chart-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+</style>

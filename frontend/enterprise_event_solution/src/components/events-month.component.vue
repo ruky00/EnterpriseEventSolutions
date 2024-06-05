@@ -1,11 +1,6 @@
 <template>
-    <canvas id="myChart3" height="20%" width="90%">
-    
-    </canvas>
-     
-    
-    
-    </template>
+   <div class="chart-container"><canvas id="myChart3" height="20%" width="90%"></canvas></div> 
+</template>
     
     <script lang="ts">
     import { AdminService } from '@/services/admin.service';
@@ -57,19 +52,11 @@
               layout: {
                 padding: 10,
               },
-              animations: {
-                tension: {
-                  duration: 15000,
-                  easing: 'easeInSine',
-                  from: 0.7,
-                  to: 0,
-                  loop: true,
-                },
-              },
+             
               scales: {
                 y: { // Define min and max for consistent scale
                   min: 0,
-                  max: 15,
+                  max: 20,
                 },
               },
               responsive: true,
@@ -103,7 +90,16 @@
     };
     </script>
     
-    <style scoped>
-    
-    
-    </style>
+<style scoped>
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+</style>
