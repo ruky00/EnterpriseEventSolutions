@@ -7,29 +7,17 @@ on:
       - completed
 
 jobs:
-  build-and-push:
-    runs-on: self-hosted
-
-    env:
-      EMAIL_SERVICE: ${{ secrets.EMAIL_SERVICE }}
-      EMAIL_TFG: ${{ secrets.EMAIL_TFG }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  deploy:
+    runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        
-      - name: Pull docker Image
-        run: sudo docker pull ruky00/evsglobal
-        
-      - name: Delete old docker container
-        run: sudo docker-compose down
-        
-     
-      - name: Relanzar contenedor con la nueva imagen
-        run: sudo docker-compose up -d
-
-      
+      - name: Execute deployment script on EC2
+        uses: easingthemes/ssh-deploy@v5.0.3
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.EC2_HOST }}
+          REMOTE_USER: ${{ secrets.EC2_USER }}
           
+          SCRIPT_AFTER: |
+            cd EnterpriseEventSolutions
+            sudo ./cd.sh
