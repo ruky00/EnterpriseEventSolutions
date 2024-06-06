@@ -50,7 +50,7 @@
               </router-link>
             </li>
             <li class="nav-item" v-if="user?.role == 'ORGANIZATION'">
-              <router-link :to="{ name: 'organization-home' }" class="nav-link" exact-active-class="active-link">
+              <router-link :to="{ name: 'organization-stats' }" class="nav-link" exact-active-class="active-link">
                 Estadísticas
               </router-link>
             </li>

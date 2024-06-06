@@ -23,10 +23,10 @@
       <form class="sign-up" @submit.prevent="registerUser">
         <h2>Create User</h2>
         <div>Use your email for registration</div>
-        <input v-model="user.username" type="text" placeholder="Name" />
-        <input v-model="user.email" type="email" placeholder="Email" :class="{ 'error-border': registerError !== '' }" />
+        <input v-model="user.username" type="text" placeholder="Name" required/>
+        <input v-model="user.email" type="email" placeholder="Email" :class="{ 'error-border': registerError !== '' }" required />
         <div v-if="registerError !== ''" class="error-mensaje">{{ registerError }}</div>
-        <input v-model="user.encodedPassword" type="password" placeholder="Password" />
+        <input v-model="user.encodedPassword" type="password" placeholder="Password"  required />
         <button v-if="seleccionado" class="btn btn-primary" type="button" disabled>
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           Enviando confirmación...
@@ -99,10 +99,12 @@ export default {
       } catch (error: unknown) {
         if (isAxiosError(error) && error.response && error.response.data && error.response.data.message) {
           registerError.value = "Correo en uso";
+
         } else if (error instanceof Error) {
           registerError.value = error.message;
         } else {
           registerError.value = "Error al registrar";
+          
         }
       }
       seleccionado.value=false;
@@ -274,7 +276,7 @@ a {
 button {
   border-radius: 20px;
   border: 1px solid var(--main-bg-dark);
-  background-color: var(--main-bg-org-hover);
+  background-color: var(--main-bg-org);
   color: var(--main-bg-ultra);
   font-size: 1rem;
   font-weight: bold;
@@ -282,12 +284,17 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.1s ease-in;
+  transition: transform 0.6s ease-out;
 }
 
 
 button:active {
-  transform: scale(0.9);
+  transform: scale(1.1);
+}
+
+button:hover{
+  background-color: var(--main-bg-org-hover);
+  
 }
 
 button:focus {

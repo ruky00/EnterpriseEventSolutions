@@ -34,6 +34,7 @@
         };
     
         const createChartConfig = (): ChartConfiguration => {
+          const maxDataValue = usersRole.value.length > 0 ? Math.max(...usersRole.value) : 0;
           return {
             type: 'bar',
             data: {
@@ -42,12 +43,12 @@
                 label: 'Usuarios registrados al mes',
                 data: usersRole.value,
                 backgroundColor: [
-                '#15616D',
-                '#FFECD1'
+                '#537bc4',
+                '#acc236',
                 ],
                 borderColor: [
-                '#15616D',
-                '#FFECD1'
+                '#537bc4',
+                '#acc236',
                 ], // Use the reactive usersMonth
                 fill: false,
                 tension: 0.5,
@@ -71,13 +72,28 @@
                 },
               },
               scales: {
-                y:{ // Define min and max for consistent scale
-                  min: 0,
-                  max: 20,
+                y: {
+                beginAtZero: true,
+                suggestedMax: maxDataValue + 5
                 },
+                x: {
+              ticks: {
+                font: {
+                  family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
+                  size: 12,
+                  weight: 'bold',
+                  lineHeight: 1.2
+                },
+                color: '#15616D'
+              }
+            },
               },
               responsive: true,
               plugins: {
+                colors: {
+                  enabled: true,
+                
+               },
                 legend: {
                   display: false,
                   labels: {
