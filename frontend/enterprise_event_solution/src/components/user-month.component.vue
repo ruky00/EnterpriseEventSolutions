@@ -11,6 +11,8 @@
 <script lang="ts">
 import { AdminService } from '@/services/admin.service';
 import Chart, { ChartConfiguration } from 'chart.js/auto';
+import { Colors } from 'chart.js';
+
 import { onMounted, ref
  } from 'vue';
 
@@ -18,6 +20,7 @@ export default {
   name: 'UserLineChart',
 
  setup() {
+    
     const usersMonth = ref<number[]>([]); // Reactive array for user counts
 
     const labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -38,6 +41,9 @@ export default {
     };
 
     const createChartConfig = (): ChartConfiguration => {
+      Chart.register(Colors);
+      const maxDataValue = usersMonth.value.length > 0 ? Math.max(...usersMonth.value) : 0;
+
       return {
         type: 'line',
         data: {
@@ -45,8 +51,9 @@ export default {
           datasets: [{
             label: 'Usuarios registrados al mes',
             data: usersMonth.value, // Use the reactive usersMonth
-            fill: false,
-            borderColor: '#a85201',
+            fill: true,
+            borderColor: '#4dc9f6',
+            backgroundColor: '#4dc9f680',
             tension: 0.5,
             pointHoverBackgroundColor: '#15616D',
             pointHoverRadius: 8,
@@ -60,13 +67,25 @@ export default {
           },
          
           scales: {
-            y: { // Define min and max for consistent scale
-              min: 0,
-              max: 20,
+           y: {
+                beginAtZero: true,
+                suggestedMax: maxDataValue + 5
+                },
+                x: {
+              ticks: {
+                font: {
+                  family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
+                  size: 12,
+                  weight: 'bold',
+                  lineHeight: 1.2
+                },
+                color: '#407a8d'
+              }
             },
           },
           responsive: true,
           plugins: {
+
             legend: {
               display: false,
               labels: {

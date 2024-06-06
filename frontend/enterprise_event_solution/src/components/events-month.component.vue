@@ -32,6 +32,8 @@
         };
     
         const createChartConfig = (): ChartConfiguration => {
+          const maxDataValue = eventsMonth.value.length > 0 ? Math.max(...eventsMonth.value) : 0;
+
           return {
             type: 'line',
             data: {
@@ -39,8 +41,9 @@
               datasets: [{
                 label: 'Eventos registrados al mes',
                 data: eventsMonth.value, // Use the reactive usersMonth
-                fill: false,
-                 borderColor: '#15616D',
+                fill: true,
+                borderColor: '#FF6384',
+                backgroundColor: '#FFB1C1',
                 tension: 0.5,
                 pointHoverBackgroundColor: '#FF7D00',
                 pointHoverRadius: 8,
@@ -54,10 +57,21 @@
               },
              
               scales: {
-                y: { // Define min and max for consistent scale
-                  min: 0,
-                  max: 20,
+                y: {
+                beginAtZero: true,
+                suggestedMax: maxDataValue + 5
                 },
+                x: {
+              ticks: {
+                font: {
+                  family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
+                  size: 12,
+                  weight: 'bold',
+                  lineHeight: 1.2
+                },
+                color: '#15616D'
+              }
+            },
               },
               responsive: true,
               plugins: {

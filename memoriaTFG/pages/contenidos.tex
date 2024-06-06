@@ -272,7 +272,7 @@ por lo que he requerido la ayuda de videos y documentación de las herramientas 
 
 \section{Especificación de Requisitos}
 En esta sección se establecen las necesidades y expectativas a cumplir, así como los elementos clave que guían el diseño y la implementación de la aplicación.
-\newpage
+
 \subsection{Requisitos Funcionales}
 La Tabla \ref{tabla:RF} recoge las funcionalidades específicas que el sistema debe ofrecer.
 
@@ -332,6 +332,8 @@ La Tabla \ref{tabla:RF} recoge las funcionalidades específicas que el sistema d
     \textbf{RF-306} & Generación de entradas para eventos & Una vez adquirida la entrada, se generará un código QR para acceder al evento.\\
     \textbf{RF-307} & Manejo de Concurrencia & En caso de que dos usuarios intenten adquirir una entrada simultáneamente, se debe implementar 
     un sistema de colas para evitar incongruencias en la base de datos. \\
+    \textbf{RF-308} & Descarga de PDF de la Entrada & Los Clientes tienen que tener la opción de poder descargar la entrada en formato PDF para poder
+    compartirla si quisieran\\
     \end{longtable}
     \newpage
     \subsection{Requisitos No Funcionales}
@@ -363,6 +365,7 @@ La Tabla \ref{tabla:RF} recoge las funcionalidades específicas que el sistema d
          de datos. \\
         \textbf{RNF-005} & Rendimiento & El sistema debe responder a las solicitudes del usuario dentro de un tiempo aceptable, con tiempos de carga de página y
          operaciones de procesamiento mínimos. \\
+        \textbf{RNF-006} & Accesibilidad & Tiene que ser posible usar la aplicación de forma óptima en dispositivos móviles\\ 
     \end{longtable}
 
 \section{Pruebas}
@@ -604,6 +607,39 @@ A continuación, se muestran las PU correspondientes a los requsitos que no se h
         \item OK. La prueba fue existosa.
     \end{itemize}
 \end{itemize}
+\newpage
+\section{Flujo de la Aplicación}
+
+En esta sección se presenta el diagrama de flujo de la aplicación dividida en partes para su mejor comprensión.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{FlujoEVS1.png} 
+    \caption{Diagrama de Flujo Parte 1}
+    \label{fig:flujoEvs}
+\end{figure}
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{AdminFlujo.png} 
+    \caption{Diagrama de Flujo Parte 2}
+    \label{fig:flujoEvs1}
+\end{figure}
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Cliente.png} 
+    \caption{Diagrama de Flujo Parte 3}
+    \label{fig:flujoEvs2}
+\end{figure}
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Org.png} 
+    \caption{Diagrama de Flujo Parte 4}
+    \label{fig:flujoEvs3}
+\end{figure}
+
+
 
 \section{Estudio de Caso}
 Dado que Enterprise Event Solutions es una aplicación diseñada para usuarios comunes, se ha llevado a cabo un estudio para recopilar opiniones y percepciones
@@ -621,7 +657,7 @@ A la pregunta "¿Darías uso a esta aplicación?" se obtuvo una puntuación de 4
 Esta valoración sugiere una aceptación positiva y una disposición favorable hacia la aplicación, con solo un participante atípico que se desvió de la opinión
 general.
 
-\subsubsection{Desempeño}
+\subsection{Desempeño}
 
 De forma general, la evaluación de este aspecto es positiva, aunque es importante destacar algunos comentarios sobre la responsividad de la página.Este problema
 fue corregido tan pronto como se identificó el error.

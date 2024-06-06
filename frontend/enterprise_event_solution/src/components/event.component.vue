@@ -12,8 +12,11 @@
     </div>
     <div v-if="haveTicket()" class="row">
       <div class="col-2">
-        <button v-if="!seleccionado  && isPrivate" class="btn btn-primary" @click="openConfirmationBanner">Inscribirse</button>
-        <button v-if="!seleccionado && !isPrivate" class="btn btn-primary" @click="buyTicket">Inscribirse</button>
+        <button v-if="!seleccionado && !complete && isPrivate" class="btn btn-primary" @click="openConfirmationBanner">Inscribirse</button>
+        <button v-if="!seleccionado && !complete && !isPrivate" class="btn btn-primary" @click="buyTicket">Inscribirse</button>
+        <button v-if="!seleccionado && complete" class="btn btn-primary" type="button" disabled>
+          Evento Lleno
+        </button>
         <button v-if="seleccionado" class="btn btn-primary" type="button" disabled>
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           Adquiriendo Entrada...
@@ -73,6 +76,8 @@ export default {
       await getAllTickets();
     };
 
+    const complete = ref(false);
+
     const openConfirmationBanner = () => {
       showConfirmationBanner.value = true;
     };
@@ -124,6 +129,7 @@ export default {
     onMounted(async () => {
       await setEvent();
       formattedDate.value = dateFormatter.format(new Date(event.value.date));
+      complete.value = event.value.current_capacity >= event.value.max_capacity;
     });
 
     return {
@@ -142,7 +148,8 @@ export default {
       getAllTickets,
       seleccionado,
       showConfirmationBanner,
-      isPrivate
+      isPrivate,
+      complete
     };
   },
 };
@@ -243,7 +250,6 @@ p {
   background-color: #e7e5e5;
 }
 
-
 .confirmation-banner input {
   margin-bottom: 10px;
   padding: 5px;
@@ -252,7 +258,6 @@ p {
 }
 
 .confirmation-banner input:focus {
-
   outline: none;
   border-color: var(--main-bg-org);
 }

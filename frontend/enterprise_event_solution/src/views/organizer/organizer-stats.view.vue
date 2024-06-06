@@ -1,9 +1,9 @@
 <template>
-    <div>
-      <h1>Estadísticas de Eventos</h1>
-      <canvas id="barChart" height="50%" width="100%"></canvas>
-    </div>
-  </template>
+  <div class="chart-container">
+    <h1>Estadísticas de Eventos</h1>
+    <canvas id="barChart"></canvas>
+  </div>
+</template>
   
   <script lang="ts">
   import { defineComponent, onMounted, ref } from 'vue';
@@ -29,6 +29,8 @@
         };
 
       const createChartConfig = (): ChartConfiguration => {
+        const maxDataValue = eventStats.value.length > 0 ? Math.max(...eventStats.value) : 0;
+
         return {
           type: 'bar',
           data: {
@@ -78,9 +80,20 @@
             },
             scales: {
               y: {
-                min: 0,
-                max: 20
+                beginAtZero: true,
+                suggestedMax: maxDataValue + 5
+              },
+              x: {
+              ticks: {
+                font: {
+                  family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
+                  size: 14,
+                  weight: 'bold',
+                  lineHeight: 1.2
+                },
+                color: '#15616D'
               }
+            },
             },
             responsive: true,
             plugins: {
@@ -112,11 +125,22 @@
   });
   </script>
   
-  <style scoped>
-  p, h1 {
-    text-align: left;
-    font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
-    margin-top: 1%;
-  }
-  </style>
+<style scoped>
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 80%; /* Ajusta esta altura según tus necesidades */
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+p, h1 {
+  text-align: left;
+  font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 1%;
+}
+</style>
   
