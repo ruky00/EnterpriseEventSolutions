@@ -252,12 +252,35 @@ Amazon EC2 para desplegar la aplicación, garantizando así un rendimiento ópti
 Uno de los objetivos a cumplir era el Despliegue Continuo,es decir, cada vez que realizara un cambio sobre la aplicación se automatizara el proceso 
 de despliegue en la maquina EC2. 
 
-En un primer momento la idea era crear un \texttt{workflow} de Github para automatizar esta tarea pero debido a la poca potencia de la maquina fisica de Amazon, 
-en su versión gratuita, no fué posible ya que la RAM de este hardware alcanzaba el máximo de su capacidad simplemente al ejecutar el Runner configurado en el 
-repositorio de Github.
+Además, este proceso de despliegue automatizado implica una conexión mediante SSH a la instancia de EC2, desde donde se ejecutan los comandos necesarios
+para la gestión de contenedores Docker. En resumen, se utiliza GitHub Actions junto con un Runner de la Marketplace para automatizar el despliegue continuo
+de nuevas imágenes Docker en una instancia de EC2, asegurando así una actualización constante y sin interrupciones de la aplicación en producción.
 
-Por ello, opté por crear un script para que simplemente desde la consola de la EC2 pudiera hacer este proceso de la forma más rápida posible.
-
+\begin{lstlisting}[language=HTML, caption=Action de Automatización CD]
+    name: Despliegue en EC2
+    
+    on:
+      workflow_run:
+        workflows: ["Construir y Subir Imagen Docker"]
+        types:
+          - completed
+    
+    jobs:
+      deploy:
+        runs-on: ubuntu-latest
+        
+        steps:
+          - name: Execute deployment script on EC2
+            uses: easingthemes/ssh-deploy@v5.0.3
+            with:
+              SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+              REMOTE_HOST: ${{ secrets.EC2_HOST }}
+              REMOTE_USER: ${{ secrets.EC2_USER }}
+              
+              SCRIPT_AFTER: |
+                cd EnterpriseEventSolutions
+                sudo ./cd.sh
+    \end{lstlisting}
 \section{Problemas enfrentados}
 Durante la realización del proyecto ha habido que hacer frente a problemas derivados de la falta de conocimiento sobre las herramentas o tecnologias empleadas
 por lo que he requerido la ayuda de videos y documentación de las herramientas para poder solventarlo. A continuación hago un resumen de algunos de estos problemas junto con la referencia a sus solución:
@@ -276,10 +299,10 @@ En esta sección se establecen las necesidades y expectativas a cumplir, así co
 \subsection{Requisitos Funcionales}
 La Tabla \ref{tabla:RF} recoge las funcionalidades específicas que el sistema debe ofrecer.
 
-\begin{longtable}{ p{2.5cm} p{4cm} p{9cm}  }    
+\begin{longtable}{ p{2.5cm} p{4cm} p{9cm}  }
+    \caption{Requisitos  Funcionales} \label{tabla:RF} \\
     \hline
     \endfirsthead
-    
     \multicolumn{3}{c}%
     {{\bfseries \tablename\ \thetable{}: Continuación de la tabla anterior}} \\
     \hline
