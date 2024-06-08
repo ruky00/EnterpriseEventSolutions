@@ -1,4 +1,5 @@
-import { createStore, Commit } from 'vuex';
+import { Commit, createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate'; // Importa createPersistedState
 import { authService } from './services/auth.service';
 import { User } from "./models/User";
 
@@ -22,7 +23,7 @@ export default createStore({
     },
     setUserRoles(state: State, roles: string) {
       console.log('Mutation: setUserRoles', roles);
-      state.userRoles =  roles // Add new roles to existing list
+      state.userRoles =  roles; // Add new roles to existing list
     },
     setUser(state: State, user: User | null) {
       state.user = user;
@@ -38,7 +39,7 @@ export default createStore({
       console.log('requiredRoles:', requiredRoles);
       console.log('state.userRoles:', state.userRoles);
       if (state.userRoles) {
-      return requiredRoles.includes(state.userRoles);
+        return requiredRoles.includes(state.userRoles);
       }
     },
   },
@@ -47,7 +48,7 @@ export default createStore({
       try {
         const loginAccepted = await authService.prototype.login(user);
         const  userData = await authService.prototype.getUserInfoFromServer();
-        console.log(userData)
+        console.log(userData);
         if (!loginAccepted || !userData) throw new Error("Error en la autenticación");
         commit('setAuthentication', true);
         commit('setUserRoles',userData.role);
@@ -63,7 +64,7 @@ export default createStore({
       try{
       // Lógica de cierre de sesión
       commit('setAuthentication', false);
-      commit('setUserRoles', []);
+      commit('setUserRoles', '');
       commit('setUser', null);
       
       // Limpiar el token JWT si lo estás utilizando
@@ -79,4 +80,5 @@ export default createStore({
       commit('updateUser', newUser);
     }
   },
+  plugins: [createPersistedState()] // Agrega el plugin createPersistedState
 });

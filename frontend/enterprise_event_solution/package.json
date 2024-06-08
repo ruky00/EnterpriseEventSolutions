@@ -25,7 +25,8 @@
     "vue-cli-plugin-webpack-bundle-analyzer": "^4.0.0",
     "vue-resource": "^1.5.3",
     "vue-router": "^4.2.5",
-    "vuex": "^4.1.0"
+    "vuex": "^4.1.0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

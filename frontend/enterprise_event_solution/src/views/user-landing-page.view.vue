@@ -63,6 +63,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+@import "../assets/styles.css";
 .container-fluid {
   padding: 0; /* Quita el padding superior e inferior */
 }
@@ -104,10 +105,10 @@ export default defineComponent({
   margin: 0px;
 }
 a{
-  color: var(--main-bg-org)
+  color: var(--main-bg-org) !important
 }
 
 a:hover{
-  color: var(--main-bg-org-hover)
+  color: var(--main-bg-org-hover) !important
 }
 </style>

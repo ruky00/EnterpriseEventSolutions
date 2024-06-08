@@ -42,6 +42,7 @@ export  default {
       const user = ref<User | null>(store.state.user);
     const loadEvents = async () => {
       try {
+        console.log(store.state.isAuthenticated)
         const eventData = await EventService.prototype.getMyEvents();
         if (eventData) {
           eventos.value = eventData;
