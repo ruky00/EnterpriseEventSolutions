@@ -1,6 +1,5 @@
 package com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.controllers;
 
-
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.Ticket;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
@@ -37,10 +36,10 @@ public class ClientRestController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Ticked buyed",
+                    description = "Ticket bought",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= User.class)
+                            schema = @Schema(implementation = Ticket.class)
                     )}
             ),
             @ApiResponse(
@@ -55,29 +54,30 @@ public class ClientRestController {
             )
     })
     @PostMapping("/tickets/")
-    public ResponseEntity<Ticket>  buyTicket(HttpServletRequest request, @RequestParam Long id,@RequestBody(required = false)  String password){
+    public ResponseEntity<Ticket> buyTicket(HttpServletRequest request, @RequestParam Long id, @RequestBody(required = false) String password) {
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
         String passwordSent;
         try {
-            if (password == null){passwordSent="";}else{passwordSent=password;}
-            Ticket ticket = ticketService.createTicket(user,id,passwordSent);
-            if(ticket!=null)
-            return new ResponseEntity<>(ticket,HttpStatus.CREATED);
-
-        }catch (Exception e){return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);}
+            passwordSent = (password == null) ? "" : password;
+            Ticket ticket = ticketService.createTicket(user, id, passwordSent);
+            if (ticket != null)
+                return new ResponseEntity<>(ticket, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+        }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     //GET MY TICKETS
-    @Operation(summary = "Get my ticket")
+    @Operation(summary = "Get my tickets")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Get Tickets",
                     content = {@Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation= User.class)
+                            schema = @Schema(implementation = Ticket.class)
                     )}
             ),
             @ApiResponse(
@@ -92,31 +92,61 @@ public class ClientRestController {
             )
     })
     @GetMapping("/tickets")
-    public ResponseEntity<List<Ticket>> getMyTickets(HttpServletRequest request){
+    public ResponseEntity<List<Ticket>> getMyTickets(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         User user = userService.findByEmail(principal.getName()).orElseThrow();
         List<Ticket> tickets = user.getTickets();
-        return new ResponseEntity<>(tickets,HttpStatus.OK);
-
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
 
+    //GET TICKET BY ID
+    @Operation(summary = "Get ticket by ID")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Ticket Found",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Ticket.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content
+            )
+    })
     @GetMapping("/tickets/{id}")
-    public ResponseEntity<Optional<Ticket>> getTicketById(@PathVariable long id){
+    public ResponseEntity<Optional<Ticket>> getTicketById(@PathVariable long id) {
         try {
             Ticket ticket = ticketService.findById(id).orElseThrow();
-            return new ResponseEntity(ticket, HttpStatus.OK);
-        }catch (Exception e) {
+            return new ResponseEntity<>(Optional.of(ticket), HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-
-
+    //GET ORGANIZERS
+    @Operation(summary = "Get list of organizers")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Organizers found",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)
+                    )}
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not Found",
+                    content = @Content
+            )
+    })
     @JsonView(User.OrgInfo.class)
     @GetMapping("/organizers")
-    public ResponseEntity<List<User>> getCompanies(){
+    public ResponseEntity<List<User>> getCompanies() {
         List<User> companies = userService.findAllByRole(UserTipeEnum.ORGANIZATION);
-        return new ResponseEntity<>(companies,HttpStatus.OK);
+        return new ResponseEntity<>(companies, HttpStatus.OK);
     }
-
 }

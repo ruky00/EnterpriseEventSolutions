@@ -101,7 +101,7 @@ public class DataBaseInitializer {
             String logoSaved2 = imageService.createImage(logoFile2,"logoImage", organizer2.getUsername());
             organizer2.setLogo(logoSaved2);
 
-            organizer2.setEnable(true);
+            organizer2.setEnable(false);
             userRepository.save(organizer2);
 
 

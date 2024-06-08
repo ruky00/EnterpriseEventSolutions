@@ -5,10 +5,13 @@ import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.User
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.models.UserTipeEnum;
 import com.example.EnterPriseEventSolutions.EnterPriseEventSolutions.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 
@@ -85,7 +88,19 @@ public class UserService {
 
         return eventCountByMonth;
     }
+
+    @Transactional
+    @Scheduled(fixedRate = 900000) // Ejecutar cada 15 minutos (15 * 60 * 1000)
+    public void deleteInactiveUsers() {
+        System.out.println("Borrando usuarios");
+        LocalDateTime fifteenMinutesAgo = LocalDateTime.now().minus(15, ChronoUnit.MINUTES);
+        List<User> inactiveUsers = userRepository.findByEnableFalseAndCreateDateTimeBefore(fifteenMinutesAgo);
+
+        for (User user : inactiveUsers) {
+            userRepository.delete(user);
+        }
     }
+}
 
 
 
