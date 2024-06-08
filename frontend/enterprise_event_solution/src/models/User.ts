@@ -6,5 +6,6 @@ export interface User{
     description?: string;
     role: string;
     image: string;
+    enable: boolean;
     logo?: string;
 }

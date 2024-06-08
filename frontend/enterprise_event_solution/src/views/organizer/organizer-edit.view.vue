@@ -50,7 +50,7 @@
         </div>
         <div class="form-group mb-3">
           <label for="date" class="form-label">Date:</label>
-          <input type="date" id="date" v-model="formattedDate" class="form-control" required />
+          <input type="date" id="date" v-model="evento.date" :min="minDate" class="form-control"/>
         </div>
         <button v-if="!seleccionado" type="submit" class="btn btn-primary create-event-button">Edit Event</button>
         <button v-else class="btn btn-primary" type="button" disabled>
@@ -74,7 +74,7 @@ export  default {
         const evento = ref({} as Event);
         const eventId  = ref(0);
         const seleccionado=ref(false)
-  
+        const minDate = ref(new Date().toISOString().split('T')[0]);
         onMounted(async () => {
             eventId.value = parseInt(router.currentRoute.value.params.id as string, 10)
             evento.value = await EventService.prototype.getEventById(eventId.value);
@@ -101,7 +101,9 @@ export  default {
             evento,
             updateEvent,
             seleccionado,
-            formattedDate
+            formattedDate,
+            dateObject,
+            minDate
         }
 
     }

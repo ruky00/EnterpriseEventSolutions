@@ -1,7 +1,7 @@
 En esta sección se entrará a describir con total detalle el contenido técnico de la aplicación. Partiendo desde un analisis de requisitos funcionales
 hasta no funcionales, pasando por las tecnologías usadas para la implemetación de estos. 
 
-\section{Tecnologias Empleadas}
+\section{Tecnologías Empleadas}
 
 \subsection{SpringBoot}
 Spring Boot\cite{spring-boot} es un framework Java que simplifica el desarrollo de aplicaciones web al eliminar la 
@@ -96,7 +96,7 @@ que será desglosado:
 \begin{itemize}
     \item \textbf{Tecnología}: \textbf{SpringBoot}
     \item \textbf{Descripción}: Utilizado por su gran versatilidad para manejar la lógica de negocio y control de la aplicación. Gracias a esto, el frontend
-    de la aplicación se sirve directamente desde el Servidor de Apache proporcionado por spring, es decir, tengo empaquetado el tanto el back como el front en la misma ip
+    de la aplicación se sirve directamente desde el Servidor de Apache proporcionado por Spring, es decir, tengo empaquetado el tanto el back como el front en la misma ip
     y en el mismo puerto.
 \end{itemize}
 
@@ -172,7 +172,7 @@ Pero también podemos hacer nuestras propias Querys sobre la base de datos:
     public int incrementCurrentCapacity(@Param("id") Long id);
 \end{lstlisting}
 
-\subsection{Contolador}
+\subsection{Controlador}
 La creación de controladores me ha permitido gestionar un sistema de endpoints que sirve como la interfaz principal 
 para la comunicación entre el cliente y el servidor. Estos controladores se encargan de recibir las solicitudes HTTPS de delegar el procesamiento a 
 los servicios correspondientes. Los servicios encapsulan la lógica de negocio y se comunican con los repositorios JPA para acceder a los datos de la 
@@ -198,7 +198,7 @@ EVS.
 \end{figure}
 
 \subsection{Vista}
-El frontend de Enterprise Event Solutions ha sido implementado en Vue.js. Especificamente en Vue3, que trae consigo algunos cambios con respecto a su versión
+El frontend de Enterprise Event Solutions ha sido implementado en Vue.js. Específicamente en Vue3, que trae consigo algunos cambios con respecto a su versión
 anterior Vue2. La utilización de este framework me ha permitido añadir tanto bibliotecas de componentes y gráficos (Bootstrap5 y Chart.js respectivamente)
 como relaciones entre los diferentes componentes basado en "props", permitiendo de esta manera diferentes comportamientos del componente dependiendo de
 que valores se le pasen en el componente padre.
@@ -282,12 +282,12 @@ de nuevas imágenes Docker en una instancia de EC2, asegurando así una actualiz
                 sudo ./cd.sh
     \end{lstlisting}
 \section{Problemas enfrentados}
-Durante la realización del proyecto ha habido que hacer frente a problemas derivados de la falta de conocimiento sobre las herramentas o tecnologias empleadas
+Durante la realización del proyecto ha habido que hacer frente a problemas derivados de la falta de conocimiento sobre las herramentas o tecnologías empleadas
 por lo que he requerido la ayuda de videos y documentación de las herramientas para poder solventarlo. A continuación hago un resumen de algunos de estos problemas junto con la referencia a sus solución:
 \begin{itemize}
-    \item  Empaquetado del Frontend erroneo (loading css chunk 323 failed)\cite{cssChunk}: Este error no desplegaba correctamente el front de la aplicación empaquetada.
+    \item  Empaquetado del Frontend erróneo (loading css chunk 323 failed)\cite{cssChunk}: Este error no desplegaba correctamente el front de la aplicación empaquetada.
      Solucioné el error eliminando un import de googleapies.
-    \item  Fallo al conectarse a la MySQL(Access denied for user 'root'@'localhost')\cite{mysql}: El error venia de una mala utilización de las .properties de 
+    \item  Fallo al conectarse a la MySQL(Access denied for user 'root'@'localhost')\cite{mysql}: El error venía de una mala utilización de las .properties de 
      Spring 
 \end{itemize}
 
@@ -682,7 +682,7 @@ general.
 
 \subsection{Desempeño}
 
-De forma general, la evaluación de este aspecto es positiva, aunque es importante destacar algunos comentarios sobre la responsividad de la página.Este problema
+De forma general, la evaluación de este aspecto es positiva, aunque es importante destacar algunos comentarios sobre la responsividad de la página. Este problema
 fue corregido tan pronto como se identificó el error.
 
 \subsection{Diseño, Usabilidad y Accesibilidad}
