@@ -92,12 +92,16 @@ public class UserService {
     @Transactional
     @Scheduled(fixedRate = 900000) // Ejecutar cada 15 minutos (15 * 60 * 1000)
     public void deleteInactiveUsers() {
-        System.out.println("Borrando usuarios");
+
         LocalDateTime fifteenMinutesAgo = LocalDateTime.now().minus(15, ChronoUnit.MINUTES);
         List<User> inactiveUsers = userRepository.findByEnableFalseAndCreateDateTimeBefore(fifteenMinutesAgo);
-
+        if (inactiveUsers.size()>0){
         for (User user : inactiveUsers) {
+            System.out.println("Borrando usuarios");
             userRepository.delete(user);
+        }
+        }else{
+            System.out.println("No hay usuarios que borrar");
         }
     }
 }

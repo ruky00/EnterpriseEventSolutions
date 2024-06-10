@@ -10,34 +10,6 @@
 			"name": "CLIENT",
 			"item": [
 				{
-					"name": "GET TICKET",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:8443/api/clients/tickets/?id=5",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "8443",
-							"path": [
-								"api",
-								"clients",
-								"tickets",
-								""
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "GET ALL TICKETS",
 					"request": {
 						"method": "GET",
@@ -65,7 +37,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"ana@example.com\",\r\n    \"password\":\"pass\"\r\n}",
+							"raw": "{\r\n    \"username\":\"michel@example.com\",\r\n    \"password\":\"pass\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,6 +55,88 @@
 								"api",
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ORG",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/clients/organizers",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"clients",
+								"organizers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ORG BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8443/api/organizers/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"organizers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BUY TICKET",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"encodedPassword\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/clients/tickets/?id=14",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"clients",
+								"tickets",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "14"
+								}
 							]
 						}
 					},
@@ -121,7 +175,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\r\n}",
+							"raw": "{\r\n    \"name\": \"Concierto de Verano222\",\r\n    \"description\": \"Concierto al aire libr22222\",\r\n    \"max_capacity\": 100,\r\n    \"current_capacity\": 0,\r\n    \"price\": 25.99\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -151,7 +205,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:8443/api/organizers/events/7",
+							"raw": "https://localhost:8443/api/organizers/events/12",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -161,7 +215,7 @@
 								"api",
 								"organizers",
 								"events",
-								"7"
+								"12"
 							]
 						}
 					},
@@ -172,8 +226,17 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": 10,\r\n        \"name\": \"Concierto de Verano222\",\r\n        \"description\": \"Concierto al aire libr22222\",\r\n        \"max_capacity\": 233,\r\n        \"current_capacity\": 0,\r\n        \"price\": 25.99,\r\n        \"creationTime\": null,\r\n        \"updateDateTime\": null,\r\n        \"organization\": {\r\n            \"id\": 2,\r\n            \"name\": \"URJC\"\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "https://localhost:8443/api/organizers/events/3",
+							"raw": "https://localhost:8443/api/organizers/events/10",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -183,7 +246,7 @@
 								"api",
 								"organizers",
 								"events",
-								"3"
+								"10"
 							]
 						}
 					},
@@ -407,9 +470,15 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "somefile",
+									"key": "image",
 									"type": "file",
 									"src": "/C:/Users/ruky2/Downloads/urjc.jpg"
+								},
+								{
+									"key": "",
+									"type": "file",
+									"src": [],
+									"disabled": true
 								}
 							]
 						},
@@ -426,6 +495,47 @@
 								"organizers",
 								"10",
 								"images"
+							],
+							"query": [
+								{
+									"key": "file",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST LOGO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/ruky2/Downloads/ceuLogo.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://localhost:8443/api/admin/organizers/10/images/logo",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8443",
+							"path": [
+								"api",
+								"admin",
+								"organizers",
+								"10",
+								"images",
+								"logo"
 							]
 						}
 					},
@@ -505,6 +615,58 @@
 							"key": "org",
 							"value": "URJC"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE USER",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"UpdatedName\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8443/api/users/me/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"api",
+						"users",
+						"me",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGOUT",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8443/api/auth/logout",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8443",
+					"path": [
+						"api",
+						"auth",
+						"logout"
 					]
 				}
 			},
