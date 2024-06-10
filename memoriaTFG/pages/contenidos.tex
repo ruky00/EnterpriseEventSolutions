@@ -1,5 +1,5 @@
-En esta sección se entrará a describir con total detalle el contenido técnico de la aplicación. Partiendo desde un analisis de requisitos funcionales
-hasta no funcionales, pasando por las tecnologías usadas para la implemetación de estos. 
+En esta sección se entrará a describir con total detalle el contenido técnico de la aplicación. Partiendo desde las tecnologias usadas hasta los requisitos tanto funcionales como
+no funcionales de la aplicación.
 
 \section{Tecnologías Empleadas}
 
@@ -199,7 +199,7 @@ EVS.
 \end{figure}
 
 Durante la fase de desarrollo se hizo uso de Postman para realizar consultas a la API y verificar el correcto funcionamiento de esta. Además se generó la documentación de la
-misma con Swagger y en el repositorio de GitHub se encuentra una Colección de Postman para hacer uso de esta API.
+misma con Swagger y en el repositorio de GitHub se encuentra tanto una Colección de Postman para hacer uso de esta API como la documentación de esta.
 
 \begin{figure}[h]
     \centering
@@ -260,7 +260,7 @@ A continuación se muestra un diagrama con las Pantallas de la aplicación y sus
 Para mejorar la eficiencia y escalabilidad de la aplicación, he utilizado Amazon S3 para almacenar imágenes y reducir la carga en la base de datos, y 
 Amazon EC2 para desplegar la aplicación, garantizando así un rendimiento óptimo y una alta disponibilidad. 
 
-Uno de los objetivos a cumplir era el Despliegue Continuo,es decir, cada vez que realizara un cambio sobre la aplicación se automatizara el proceso 
+Uno de los objetivos a cumplir era el Despliegue Continuo, es decir, cada vez que realizara un cambio sobre la aplicación se automatizara el proceso 
 de despliegue en la maquina EC2. 
 
 Además, este proceso de despliegue automatizado implica una conexión mediante SSH a la instancia de EC2, desde donde se ejecutan los comandos necesarios
