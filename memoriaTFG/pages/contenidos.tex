@@ -190,11 +190,22 @@ una robusta capa de seguridad para la API.
 Además he implementado otras configuraciones para añadir una capa extra de seguridad a la aplicación como configuración CSRFH y Cors para limitar las url 
 que pueden hacer uso de los endpoints de mi app. Por supuesto he creado las configuraciones necesarias para manejar las tecnologias externas como S3, dentro de 
 EVS.
+\newpage
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{security.png} 
     \caption{Seguridad del backend}
     \label{fig:securityClasses}
+\end{figure}
+
+Durante la fase de desarrollo se hizo uso de Postman para realizar consultas a la API y verificar el correcto funcionamiento de esta. Además se generó la documentación de la
+misma con Swagger y en el repositorio de GitHub se encuentra una Colección de Postman para hacer uso de esta API.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{postman.png} 
+    \caption{Colección Postman}
+    \label{fig:postman}
 \end{figure}
 
 \subsection{Vista}
@@ -290,7 +301,6 @@ por lo que he requerido la ayuda de videos y documentación de las herramientas 
     \item  Fallo al conectarse a la MySQL(Access denied for user 'root'@'localhost')\cite{mysql}: El error venía de una mala utilización de las .properties de 
      Spring 
 \end{itemize}
-
 
 
 \section{Especificación de Requisitos}
