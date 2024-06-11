@@ -1,83 +1,4 @@
-En esta sección se entrará a describir con total detalle el contenido técnico de la aplicación. Partiendo desde las tecnologias usadas hasta los requisitos tanto funcionales como
-no funcionales de la aplicación.
 
-\section{Tecnologías Empleadas}
-
-\subsection{SpringBoot}
-Spring Boot\cite{spring-boot} es un framework Java que simplifica el desarrollo de aplicaciones web al eliminar la 
-complejidad de la configuración manual. Ofrece configuración automática, empaquetado de aplicaciones independientes y un inicio rápido integrado, 
-lo que permite a los desarrolladores crear aplicaciones de manera más rápida y eficiente, centrándose en la lógica de negocio en lugar de la configuración. 
-Genial para el desarrollo de aplicaciones \textit{CRUD}\footnote{\textit{CRUD} es un acrónimo en inglés que se refiere a las operaciones 
-básicas de manipulación de datos en aplicaciones informáticas: Create (Crear), Read (Leer), Update (Actualizar) y Delete (Eliminar).}.
-\subsection{Maven}
-Maven es una herramienta de gestión de proyectos Java que simplifica la estructuración, gestión de dependencias y automatización de la construcción. 
-Permite definir dependencias en un archivo de configuración (pom.xml), ejecutar fases de construcción estandarizadas y gestionar repositorios 
-centralizados de bibliotecas. Es ampliamente utilizado en el desarrollo Java por su integración con IDEs y su capacidad para proyectos multiproyecto, es decir,
-permite la gestión de múltiples proyectos en un solo repositorio, lo que facilita la colaboración entre desarrolladores y la gestión.
-\subsection{Vue.js}
-Vue.js\cite{vue} es un popular marco de trabajo de código abierto para construir interfaces de usuario interactivas en aplicaciones web de una sola página. 
-Se destaca por su enfoque centrado en el componente, su sintaxis declarativa y su eficiente sistema de reactividad. Vue.js facilita la construcción 
-de aplicaciones web complejas al fomentar la reutilización de componentes y ofrecer herramientas integradas para la manipulación del DOM y la gestión 
-del estado de la aplicación.
-
-\subsection{MySQL}
-MySQL es un sistema de gestión de bases de datos relacional de código abierto ampliamente utilizado en el desarrollo de 
-aplicaciones web y empresariales. Destaca por su escalabilidad, rendimiento, fiabilidad y facilidad de uso. Ofrece opciones 
-sólidas de seguridad y es compatible con una variedad de plataformas y lenguajes de programación. MySQL es una herramienta poderosa 
-para gestionar eficientemente grandes volúmenes de datos y garantizar la integridad y disponibilidad de la información.
-
-\subsection{IntelliJ}
-IntelliJ IDEA es un entorno de desarrollo integrado (IDE) altamente productivo desarrollado por JetBrains. 
-Diseñado para diversas tecnologías, ofrece una interfaz de usuario intuitiva y funciones avanzadas que mejoran la 
-productividad del desarrollador. Con soporte para múltiples lenguajes y marcos de trabajo, integración con herramientas de desarrollo y 
-características colaborativas, IntelliJ IDEA es una opción popular para el desarrollo de software en Java y otros lenguajes.
-
-\subsection{VSCode}
-Visual Studio Code (VSCode) es un IDE popular desarrollado por Microsoft, conocido por su versatilidad, rendimiento y comunidad activa.
- Ofrece características avanzadas y extensiones para diferentes lenguajes de programación. Es altamente personalizable y cuenta con una 
- amplia documentación disponible en su sitio web oficial.
-
-\subsection{AWS S3}
-AWS S3 es un servicio de almacenamiento en la nube ofrecido por Amazon Web Services. Destaca por su escalabilidad, durabilidad, seguridad y 
-facilidad de uso. Permite almacenar grandes cantidades de datos de forma segura y acceder a ellos de manera eficiente a través de una interfaz 
-intuitiva y una API robusta. Con una estructura de precios flexible, AWS S3 es una opción atractiva para empresas que buscan una solución de 
-almacenamiento en la nube rentable y confiable.
-
-\subsection{AWS EC2}
-AWS EC2 es un servicio de cómputo en la nube proporcionado por Amazon Web Services. Destaca por su escalabilidad, flexibilidad y seguridad. 
-Permite a los usuarios alquilar capacidad informática según sus necesidades, con opciones de pago por uso. Es fácil de usar y ofrece una variedad 
-de opciones de implementación. En resumen, EC2 es una solución eficiente y confiable para ejecutar aplicaciones y cargas de trabajo en la nube.
-
-\subsection{Docker}
-Docker\cite{Docker} es una plataforma de código abierto que permite crear, implementar y ejecutar aplicaciones en contenedores. Destaca por su portabilidad, 
-eficiencia y facilidad de uso. Con la tecnología de contenedores, Docker ofrece aislamiento de aplicaciones y escalabilidad, lo que simplifica el 
-desarrollo y la administración de aplicaciones en diferentes entornos. En resumen, Docker es una herramienta fundamental para la creación y gestión 
-eficiente de aplicaciones modernas.
-
-\newpage
-\section{Resumen de las tecnologias}
-La Tabla \ref{tabla:tecnologias_usos} recoge un resumen de las tecnologías empleadas para el desarrollo de Enterprise Event Solutions
-\begin{table}[h]
-\begin{tabular}{ p{3cm} l  }
-
-    \hline
-    Tecnologia& Uso \\
-    \hline
-    SpringBoot   & Framework \\
-    Maven &   Framework \\
-    Vue.js & Framework  \\
-    MySQL    & Tecnologia de BD \\
-    IntelliJ&   Entorno de Desarrollo  \\
-    VSCode& Entorno de Desarrollo \\
-    AWS S3& Tecnologia de de BD en la nube  \\
-    AWS EC2& Servidor web en la nube  \\
-    Docker& Crecion de imagenes comprimidas para despliegue  \\
-    \hline
-   \end{tabular}
-   \caption{Tecnologías y sus usos correspondientes}
-   \label{tabla:tecnologias_usos}
-\end{table}
-\newpage
 \section{Arquitectura}
 \textbf{Enterprise Event Solutions} es una aplicación \textbf{Fullstack} creada siguiendo un patrón de diseño MVC. A continuación, se muestra un plano general
 que será desglosado:
@@ -200,7 +121,7 @@ EVS.
 
 Durante la fase de desarrollo se hizo uso de Postman para realizar consultas a la API y verificar el correcto funcionamiento de esta. Además se generó la documentación de la
 misma con Swagger y en el repositorio de GitHub se encuentra tanto una Colección de Postman para hacer uso de esta API como la documentación de esta.
-
+\newpage
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{postman.png} 
@@ -256,6 +177,10 @@ A continuación se muestra un diagrama con las Pantallas de la aplicación y sus
 \end{figure}
 
 \newpage
+\subsection{Despliegue}
+Para desplegar la aplicación se ha utilizado Docker, creando una imagen de la aplicación y lanzandola junto con un contenedor de MySQL para la persitencia se puede ejecutar
+la aplicación sin enfrentarse a problemas de dependencias.
+
 \subsection{Cloud}
 Para mejorar la eficiencia y escalabilidad de la aplicación, he utilizado Amazon S3 para almacenar imágenes y reducir la carga en la base de datos, y 
 Amazon EC2 para desplegar la aplicación, garantizando así un rendimiento óptimo y una alta disponibilidad. 
@@ -301,6 +226,8 @@ por lo que he requerido la ayuda de videos y documentación de las herramientas 
     \item  Fallo al conectarse a la MySQL(Access denied for user 'root'@'localhost')\cite{mysql}: El error venía de una mala utilización de las .properties de 
      Spring 
 \end{itemize}
+
+
 
 
 \section{Especificación de Requisitos}
