@@ -17,6 +17,7 @@
               <th v-for="header in headers" :key="header.text" :class="{ sortable: header.sortable }" @click="sortUsers(header.text)">
                 {{ header.text }}
               </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
