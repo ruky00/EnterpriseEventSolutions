@@ -1,8 +1,11 @@
 
+\tutor{Faltan los requisitos aquí ...}
+
 \section{Arquitectura y Analisis}
 \textbf{Enterprise Event Solutions} es una aplicación \textbf{Fullstack} creada siguiendo un patrón de diseño MVC. A continuación, se muestra un plano general
 que será desglosado:
 
+\tutor{La figura de la arquitectura no es correcta. Te pasaré otras memorias para que veas como debería ser. No está mal dividirla en componentes, pero en tu caso, no es lo más adecuado. Cuando la cambies, deberás describirla mejor.}
 \section*{Arquitectura General}
 \begin{figure}[h]
     \centering
@@ -19,6 +22,7 @@ que será desglosado:
     \item \textbf{Descripción}: Utilizado por su gran versatilidad para manejar la lógica de negocio y control de la aplicación. Gracias a esto, el frontend
     de la aplicación se sirve directamente desde el Servidor de Apache proporcionado por Spring, es decir, tengo empaquetado el tanto el back como el front en la misma ip
     y en el mismo puerto.
+    \tutor{La justificación de las tecnologías va en la sección anterior, aquí todo esto sobra.}
 \end{itemize}
 
 \section*{Frontend (Vista)}
@@ -50,7 +54,7 @@ escalable. Con el soporte de \textbf{AWS} y \textbf{MySQL}, la aplicación está
 de usuario fluida.
 
 
-Cada uno de los componentes definidos en la Imagen \ref{fig:mvc_architecture} será desglosado en las próximas secciones para explicar detalladamente el contenido de 
+Cada uno de los componentes definidos en la Imagen\tutor{Usa Figura en lugar de Imagen} \ref{fig:mvc_architecture} será desglosado en las próximas secciones para explicar detalladamente el contenido de 
 la aplicación.
 
 \subsection{Modelo}
@@ -59,7 +63,7 @@ las interfaces proporcionadas por JPA \ref{sec:jpa}. Es el pilar fundamental en 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.2\textwidth]{EVSdiagra.png} 
-    \caption{Modelo E-R de la BD}
+    \caption{Modelo E-R de la BD\tutor{La Figura es correcta, pero se sale de los márgenes. Trata de colocar alguna de las tablas debajo con la herramienta que hayas utilizado.}}
     \label{fig:diagramaBD}
 \end{figure}
 
@@ -108,7 +112,7 @@ una robusta capa de seguridad para la API.
     \label{fig:class_architecture}
 \end{figure}
 
-Además he implementado otras configuraciones para añadir una capa extra de seguridad a la aplicación como configuración CSRFH y Cors para limitar las url 
+Además he implementado otras configuraciones para añadir una capa extra de seguridad a la aplicación como configuración CSRFH\tutor{Te sobra una H} y Cors \tutor{Mejor en mayúsculas, son siglas} para limitar las url 
 que pueden hacer uso de los endpoints de mi app. Por supuesto he creado las configuraciones necesarias para manejar las tecnologias externas como S3, dentro de 
 EVS.
 \newpage
@@ -125,7 +129,7 @@ misma con Swagger y en el repositorio de GitHub se encuentra tanto una Colecció
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{postman.png} 
-    \caption{Colección Postman}
+    \caption{Colección Postman\tutor{La figura es poco visible, apenas se lee nada. Salvo que la puedas mejorar, yo la eliminaba, no aporta mucho.}}
     \label{fig:postman}
 \end{figure}
 
@@ -167,6 +171,7 @@ del evento para garantizar la reactividad de los componetes de forma individual.
 
 \newpage
 A continuación se muestra un diagrama con las Pantallas de la aplicación y sus acceso en función del tipo de usuario.
+\tutor{Me temo que no aporta nada, no hay legibilidad alguna. Puedes cambiarlo por un par de capturas de pantalla relevantes o simplemente eliminarlo.}
 \begin{figure}[h]
     \centering
     \rotatebox{90}{
@@ -178,8 +183,8 @@ A continuación se muestra un diagrama con las Pantallas de la aplicación y sus
 
 \newpage
 \subsection{Despliegue}
-Para desplegar la aplicación se ha utilizado Docker, creando una imagen de la aplicación y lanzandola junto con un contenedor de MySQL para la persitencia se puede ejecutar
-la aplicación sin enfrentarse a problemas de dependencias.
+Para desplegar la aplicación se ha utilizado Docker, creando una imagen de la aplicación y lanzandola\tutor{lanzándola} junto con un contenedor de MySQL para la persitencia\tutor{persistencia} se puede ejecutar
+la aplicación sin enfrentarse a problemas de dependencias.\tutor{Hay una sección concreta para el despliegue, lo que te avisa que esto no debería estar aquí}
 
 \subsection{Cloud}
 Para mejorar la eficiencia y escalabilidad de la aplicación, he utilizado Amazon S3 para almacenar imágenes y reducir la carga en la base de datos, y 
@@ -263,6 +268,7 @@ por lo que he requerido la ayuda de videos y documentación de las herramientas 
 
 
 \section{Especificación de Requisitos}
+\tutor{Los requisitos no van aquí ... se supone que son de lo que parte tu aplicación, ¿qué sentido tiene contarlos lo último?}
 En esta sección se establecen las necesidades y expectativas a cumplir, así como los elementos clave que guían el diseño y la implementación de la aplicación.
 
 \subsection{Requisitos Funcionales}
