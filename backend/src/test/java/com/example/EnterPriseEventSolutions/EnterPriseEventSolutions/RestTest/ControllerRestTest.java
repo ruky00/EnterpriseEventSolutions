@@ -95,9 +95,6 @@ public class ControllerRestTest{
                     .with(user(client.getEmail()).password(client.getEncodedPassword())))
                     .andExpect(status().isCreated());
         }
-
-
-
         else{
             System.out.println("Going on");
         }

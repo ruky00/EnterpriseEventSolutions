@@ -68,7 +68,7 @@ public class TicketService {
             String formattedDate = dateFormat.format(event.getDate());
             saveTicket(ticket);
             String qrCodeData = "Identificador: " + ticket.getId() + ", Nombre del Evento: " + event.getName() + ", Fecha del evento: "+ formattedDate;
-            byte[] qrCodeBytes = qrCodeGenerator.generateQRCode(qrCodeData, 200, 200); // Ajusta el tamaño del QR según tus necesidades
+            byte[] qrCodeBytes = qrCodeGenerator.generateQRCode(qrCodeData, 200, 200);
             ticket.setQrCode(qrCodeBytes);
             saveTicket(ticket);
 
@@ -81,7 +81,7 @@ public class TicketService {
              String formattedDate = dateFormat.format(event.getDate());
              saveTicket(ticket);
              String qrCodeData = "Identificador: " + ticket.getId() + ", Nombre del Evento: " + event.getName() + ", Fecha del evento: "+ formattedDate;
-             byte[] qrCodeBytes = qrCodeGenerator.generateQRCode(qrCodeData, 200, 200); // Ajusta el tamaño del QR según tus necesidades
+             byte[] qrCodeBytes = qrCodeGenerator.generateQRCode(qrCodeData, 200, 200);
              ticket.setQrCode(qrCodeBytes);
              saveTicket(ticket);
              return ticket ;
