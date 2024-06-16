@@ -1,0 +1,108 @@
+\section{Requisitos}
+Se recomienda de disponer un sistema operativo Linux o en su defecto un subsistema Linux dentro de nuestro propio ordenador.
+    \begin{itemize}
+        \item  \textbf{Docker}:Para instalar Docker sigue las instrucciones de su página principal.\footnote{\href{https://docs.docker.com/get-docker/}{https://docs.docker.com/get-docker/}} 
+        \item  \textbf{npm y Node.js}Para el frontend es necesario estas dos programas. Se pueden instalar desde su sitio oficial.\footnote{\href{https://docs.npmjs.com/downloading-and-installing-node-js-and-npm}{https://docs.npmjs.com/downloading-and-installing-node-js-and-npm}} 
+    \end{itemize}
+\section{Lanzamiento en producción}
+Para lanzar la aplicación hay que seguir los siguientes pasos:
+\subsection{Clonar repositorio de Github}
+\begin{lstlisting}[language=Bash, caption=Script clonar repositorio, label=lst:clonarRepo]
+git clone https://github.com/ruky00/EnterpriseEventSolutions.git
+cd EnterpriseEventSolutions
+\end{lstlisting}
+
+\subsection{Construir imagen Docker}
+Ejecuta el siguiente comando:
+\begin{lstlisting}[language=Bash, caption=Crear imagen Docker, label=lst:constImagen]
+docker build -t evsglobal -f multistage-dockerfile.Dockerfile .
+\end{lstlisting}
+
+En caso de querer automatizar este proceso, hay un script .sh creado en la carpeta 'backend' que crea y sube al repositorio de DockerHub una nueva versión de la aplicación.
+
+\subsection{Lanzar aplicación en producción}
+w
+\subsubsection{Variables de entorno}
+Para poder hacer uso de la aplicación en un entorno local en producción hay que definir las variables de entorno de las tecnologías de apoyo para la aplicación, S3 y servicio de correo:
+\begin{itemize}
+    \item AWS\_ACCESS\_KEY\_ID: \${AWS\_ACCESS\_KEY\_ID}
+    \item AWS\_SECRET\_ACCESS\_KEY: \${AWS\_SECRET\_ACCESS\_KEY}
+    \item AWS\_REGION: \${AWS\_REGION}
+    \item EMAIL\_TFG: \${EMAIL\_TFG}
+    \item EMAIL\_SERVICE: \${EMAIL\_SERVICE}
+\end{itemize}
+
+\subsubsection{docker-compose}
+Finalmente se ejecuta comando 'docker-compose up' que lanzará las imagenes tanto de la base de datos MySQL como la imagen con la última versión de la aplicación.
+\begin{lstlisting}[language=Bash, caption=Lanzar contenedores Docker, label=lst:docker-compose]
+version: '3.8'
+services:
+
+  mysql:
+    image: mysql:8.0.28
+    container_name: evs1
+    environment:
+      - MYSQL_DATABASE=evs
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - "3306:3306"
+    restart: on-failure
+
+  app_prod:
+    image: ruky00/evsglobal
+    ports:
+      - "8443:8443"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://evs1:3306/evs
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=password
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - EMAIL_TFG=${EMAIL_TFG}
+      - EMAIL_SERVICE=${EMAIL_SERVICE}
+    depends_on:
+      - mysql
+    restart: on-failure
+
+
+\end{lstlisting}
+
+\subsubsection{Verificar que la aplicación funciona}
+Abre el navegador y accede a la dirección \href{https://localhost:8443}{https://localhost:8443}. En caso de que salte alguna advertencia de seguridad, desestímala y continua a la app.
+
+\section{Lanzar aplicación en desarrollo}
+En el caso de querer hacer uso de la aplicación sin necesidad de tener una cuenta de AWS ni un correo electrónico, se puede lanzar la aplicación con una versión en desarrollo que
+carece de las dependencias de S3 y de correo electrónico. 
+
+Además de esta forma se pueden realizar cambios en cada una de las secciones de la app sin tener que parar la totalidad de la aplicación. 
+
+\subsubsection{Ejecutar backend}
+Ejecuta los comandos \ref{lst:devBuild} para construir el ejecutable de la aplicación.
+\begin{lstlisting}[language=Bash, caption=Construir ejecutable, label=lst:devBuild]
+cd backend
+mvn run build
+\end{lstlisting}
+
+Una vez finalizada la ejecución de los test se creará un archivo .jar. Ejecuta el comando \ref{lst:devBuildJAr} para lanzar el backend.
+\begin{lstlisting}[language=Bash, caption=Lanzar ejecutable, label=lst:devBuildJAr]
+java -jar "-Dspring.profiles.active=dev" .\target\EnterPriseEventSolutions-0.0.1-SNAPSHOT.jar
+\end{lstlisting}
+
+\subsubsection{Ejecutar frontend}
+Por otro lado tenemos que lanzar el fortend. En primer lugar instalamos las dependencias.
+\begin{lstlisting}[language=Bash, caption=Instalar dependencias del frontend, label=lst:frontBuild]
+cd frotend/EnterPriseEventSolutions
+npm i
+\end{lstlisting}
+
+Y ejecutamos el comando \ref{lst:frontServe} para lanzar el front en desarollo y poder realizar cambios que se verán al momento.
+\begin{lstlisting}[language=Bash, caption=Lanzar frontend, label=lst:frontServe]
+npm run serve
+\end{lstlisting}
+
+\subsubsection{Verificar correcto funcionamiento}
+Abre el navegador y accede a la dirección \href{http://localhost:8080}{http://localhost:8080} que es donde esta alojado el frontend para verificar que el front funciona correctamente.
+y hacemos un post de un usuario nuevo para verificar la conexión con el backend.
+

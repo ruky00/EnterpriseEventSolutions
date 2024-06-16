@@ -45,7 +45,7 @@
 \usepackage{rotating}
 \usepackage{multirow}
 \usepackage{longtable}
-
+\usepackage{subfig}
 % Otros paquetes
 
 \usepackage{quotchap}
@@ -221,6 +221,45 @@ upquote=true,
 
 \newcommand\mypythoninline[1]{{\mypythonstylenormalinline\lstinline!#1!}}
 
+
+
+% Bash environment
+\lstnewenvironment{mybash}[1][]
+{
+\mybashstyle
+\lstset{#1}
+}
+{}
+
+\newcommand\mybashstylenormalinline{\lstset{
+language=Bash,
+basicstyle=\ttfamily\normalsize,
+otherkeywords={ls, cd, mkdir, rm, cp, mv, echo, sudo, chmod, chown, grep, awk, sed, docker-compose}, % Add Bash keywords here
+keywordstyle=\bfseries\ttfamily\color{myteal},
+commentstyle=\itshape\color{gray},
+stringstyle=\color{mydeepteal},
+emph={sudo, chmod, chown},       % Custom highlighting
+emphstyle=\ttb\color{mydeepteal}, % Custom highlighting style
+showstringspaces=false,
+backgroundcolor=\color{gray},
+rulecolor=\color{bg},
+breaklines=true,
+numbers=left,
+numbersep=5pt,
+numberstyle=\tiny,
+tabsize=4,
+xleftmargin=0em,
+frame=single,
+framesep=3pt,
+framextopmargin=0pt,
+framexbottommargin=0pt,
+framexleftmargin=0pt,
+framexrightmargin=0pt,
+fontadjust=true,
+upquote=true,
+}}
+
+\newcommand\mybashinline[1]{{\mybashstylenormalinline\lstinline!#1!}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -722,10 +761,22 @@ y demostrando ser una herramienta valiosa para las empresas en la optimización 
 
 
 % Primer apéndice
-\chapter{Este es el primer apéndice}
-\label{sec:apendice}
+\chapter{Estudio de Caso}
+\label{sec:apendice1}
 
 \input{pages/appendixes/apendice-1.tex}
+
+% Segundo apéndice
+\chapter{Lanzamiento en Local}
+\label{sec:apendice2}
+
+\input{pages/appendixes/apendice-2.tex}
+
+% Tercer apéndice
+\chapter{Enlace a Enterprise Event Solutions}
+\label{sec:apendice3}
+
+\input{pages/appendixes/apendice-3.tex}
 
 % Fin del documento
 \end{document}
