@@ -131,6 +131,7 @@ escalable. Con el soporte de \textbf{AWS} y \textbf{MySQL}, la aplicación está
 de usuario fluida.
 
 \subsection{Modelo}
+\tutor{A partir de aquí es implementación. Fíjate que que en tu sección de Diseño e implementación te quedas sin decir NADA de tu aplicación y te centras en el tema de concurrencia}
 La persistencia en Enterprise Event Solutions se sustenta en una serie de Entidades almacenadas en una base de datos con la que los servicios interactuan mediante
 las interfaces proporcionadas por JPA \ref{sec:jpa}. Es el pilar fundamental en el que se sustenta el modelo de negocio de la aplicación.
 \begin{figure}[h]
@@ -453,6 +454,7 @@ Se utiliza CountDownLatch para coordinar la ejecución simultánea de los hilos:
 hilos terminen. Cada hilo verifica el resultado de la solicitud HTTP esperando un código de estado HTTP 201 Created si la compra fue exitosa, o HTTP 409 Conflict si el evento
 está lleno. Finalmente, se verifica que la capacidad actual del evento se ajuste correctamente al máximo después de todas las operaciones concurrentes.
 
+\tutor{Trata de cambiar el color del comentario, ese verde chillón no se ve absolutamente nada. Si no puedes cambiar el color, trata de hacer que se numeren las lineas de código (en la plantilla original se mostraba cómo)}
 \myjavastyle
 \begin{lstlisting}[language=Java, caption=Función buyTicket, label=lst:testConcurrencia]
 @DisplayName("Concurrent Ticket Purchase Test")
@@ -775,6 +777,7 @@ A continuación, se muestran las PU correspondientes a los requsitos que no se h
 \section{Distribución y despliegue}
 En esta sección se describen los pasos y procesos seguidos para desplegar la aplicación web en producción.
 \subsection{Despliegue}
+\tutor{Docker se ha usado para empaquetar (distribución), AWS se ha usado para desplegar ese paquete}
 Para desplegar la aplicación se ha utilizado Docker. Se ha creado una imagen de la aplicación y se ha lanzado junto con un contenedor de MySQL para la persistencia de datos.
 Esto permite ejecutar la aplicación sin enfrentarse a problemas de dependencias.
 
@@ -890,20 +893,23 @@ Dado que Enterprise Event Solutions es una aplicación diseñada para usuarios c
  se utilizó Google Forms, y los resultados obtenidos se presentan en la sección de Apéndice.
 
 \subsection{Perfil de los Participantes}
+
+\tutor{El título es Perfil de los participantes, pero no se habla en ningún momento de dicho perfil (edad, manejo de tecnologías, etc ... si no tienes esta información, deja la sección como ``Participantes''}
 Debido a que la aplicaciones tiene diferentes tipos de usuarios he optado por seleccionar una serie de estos participantes para que interactuaran como organizadores,
 como clientes o como administradores. En total se ha evaluado a 10 Participantes.
 Cabe destacar que para la primera interacción con la aplicación se le ha requerido al Participante realizar una serie de pasos en la aplicación para 
 valorar posteriormente la \textbf{usabilidad} y \textbf{accesibilidad} de esta.
 
 \subsection{Valoración general}
+\tutor{En este tipo de experimentos, primero se definen TODAS las preguntas que se le va a realizar al usuario y después (en otra subsección), se muestran los resultados.}
 A la pregunta "¿Darías uso a esta aplicación?" se obtuvo una puntuación de 4.25 sobre 5, lo que indica un éxito generalizado de Enterprise Event Solutions.
 Esta valoración sugiere una aceptación positiva y una disposición favorable hacia la aplicación, con solo un participante atípico que se desvió de la opinión
-general.
+general.\tutor{Y qué dijo ese usuario? Porqué se desvió tanto? Probablemente su opinión es muy relevante}
 
 \subsection{Desempeño}
 
 De forma general, la evaluación de este aspecto es positiva, aunque es importante destacar algunos comentarios sobre la responsividad de la página. Este problema
-fue corregido tan pronto como se identificó el error.
+fue corregido tan pronto como se identificó el error.\tutor{La redacción es extraña. No comenzamos con un ``De forma general''. Mejor: Los usuarios detectaron problemas con la responsividad ...}
 
 \subsection{Diseño, Usabilidad y Accesibilidad}
 En las primeras versiones de la aplicación, se observó que la interfaz gráfica carecía de ciertas facilidades para la navegación, como elementos
@@ -913,5 +919,5 @@ Es importante destacar que estos comentarios se recopilaron a lo largo del ciclo
 Por lo tanto, considero que el contacto continuo con el usuario final es fundamental para lograr un producto refinado.
 
 
-En rasgos generales los Participantes consideran Enterprise Event Solutions una aplicación sencilla y no tienen ningún problema para entender ninguna de las
-funcionalidades.
+En rasgos generales los participantes consideran Enterprise Event Solutions una aplicación sencilla y no tienen ningún problema para entender ninguna de las
+funcionalidades.\tutor{``sencilla y fácil de entender.'' a veces nos adornamos mucho cuando podemos ser más concisos}
