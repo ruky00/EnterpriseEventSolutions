@@ -3,7 +3,9 @@ name: Construir y Subir Imagen Docker
 on:
   push:
     branches: [ main ]
-
+    paths:
+      - src/**
+      - pom.xml
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
