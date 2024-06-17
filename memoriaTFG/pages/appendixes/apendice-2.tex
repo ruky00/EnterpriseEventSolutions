@@ -82,7 +82,7 @@ Además de esta forma se pueden realizar cambios en cada una de las secciones de
 Ejecuta los comandos \ref{lst:devBuild} para construir el ejecutable de la aplicación.
 \begin{lstlisting}[language=Bash, caption=Construir ejecutable, label=lst:devBuild]
 cd backend
-mvn run build
+mvn package
 \end{lstlisting}
 
 Una vez finalizada la ejecución de los test se creará un archivo .jar. Ejecuta el comando \ref{lst:devBuildJAr} para lanzar el backend.
@@ -106,3 +106,11 @@ npm run serve
 Abre el navegador y accede a la dirección \href{http://localhost:8080}{http://localhost:8080} que es donde esta alojado el frontend para verificar que el front funciona correctamente.
 y hacemos un post de un usuario nuevo para verificar la conexión con el backend.
 
+
+\section{Usuarios de Prueba}
+Para acceder a la aplicación y probar las diferentes características de esta se tiene que hacer con una serie de usuarios con los permisos correspondientes.
+\begin{itemize}
+    \item Usuario Administrador: usuario: admin@admin.com contraseña:pass
+    \item Usuario Organización: usuario: inaki@example.com contraseña:pass
+    \item Usuario Cliente: usuario: michel@example.com contraseña:pass
+\end{itemize}
