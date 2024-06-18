@@ -94,7 +94,7 @@ Este docker-compose lanzará un contenedor con ambas imagenes y podras usarla. B
 1. Para ingresar en la app hay usuarios creados en la BD con los permisos necesarios para acceder a la aplicación web.
    
    - email: admin@admin.com, contraseña: pass    tipo: ADMIN
-   - email: patxi@example.com contraseña: pass    tipo: ORGANIZATION
+   - email: inaki@example.com contraseña: pass    tipo: ORGANIZATION
    - email: michel@example.com, contraseña: pass   tipo:  CLIENT
 
 ¡Ahora puedes navegar libremente por la página!
