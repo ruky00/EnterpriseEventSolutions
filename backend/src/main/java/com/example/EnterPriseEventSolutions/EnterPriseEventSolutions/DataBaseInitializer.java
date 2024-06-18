@@ -61,7 +61,7 @@ public class DataBaseInitializer {
             userRepository.save(admin);
 
             // Crear organizadores
-            User organizer1 = new User("URJC", "patxi@example.com", passwordEncoder.encode("pass"), "La Universidad Rey Juan Carlos (URJC) es " +
+            User organizer1 = new User("URJC", "inaki@example.com", passwordEncoder.encode("pass"), "La Universidad Rey Juan Carlos (URJC) es " +
                     "una institución académica de renombre en España, reconocida por su excelencia en la educación superior y la investigación. Fundada en 1996, la URJC se ha destacado " +
                     "por su enfoque innovador en la enseñanza, su compromiso con la investigación ç" +
                     "multidisciplinaria y su contribución al desarrollo social y económico del país.");

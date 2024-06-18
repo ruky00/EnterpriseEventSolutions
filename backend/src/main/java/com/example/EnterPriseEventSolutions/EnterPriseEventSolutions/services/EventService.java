@@ -53,7 +53,7 @@ public class EventService {
 
     }
 
-    @Transactional
+
     public Event checkIfFull(long id){
         Event event = eventExists(id);
 
