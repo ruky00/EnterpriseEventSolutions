@@ -1,10 +1,6 @@
 name: Continuous integration
 on:
   push:
-    branches: [ main ]
-    paths:
-      - src/**
-      - pom.xml  
 jobs:
   test:
     runs-on: ubuntu-latest
