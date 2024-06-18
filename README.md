@@ -64,30 +64,8 @@ Las diferentes tecnologías utilizadas para esta fase son:
 #### FULL STACK
 1. **PRODUCCIÓN (Para EC2)** Para lanzar la aplicación al completo con el front servido por Spring se ha creado una imagen especifica `ruky00/evsglobal` por lo que si, en el paso Nº 8 de Backend ponemos esta nueva imagen podremos hacer un despliegue total. (Recomendable solo en producción).
 
-2.  **DESARROLLO (Despliegue en local)** En caso de no disponer de los servicios back tales como S3 o Email, se podrá lanzar la app en modo dev. Las imagenes `evs1` y `frontevs1` encapsuladas en un `docker-compose` permitirá lanzar la app para trastear con ella.
-
-```
-version: '3.8'
-   services:
-
-  backend:
-   image: ruky00/evs1
-
-    environment:
-      - SPRING_PROFILES_ACTIVE=dev
-    ports:
-      - "8443:8443"
-    restart: on-failure 
-    
-  frontend:
-    image: ruky00/frontevs1
-    ports:
-      - "8080:8080"
-    depends_on:
-      - backend
-    restart: on-failure
-``` 
-Este docker-compose lanzará un contenedor con ambas imagenes y podras usarla. Busacando http://localhost:8080 accederiamos al front.
+2.  **DESARROLLO (Despliegue en local)** En caso de no disponer de los servicios back tales como S3 o Email, si ejecutamos `mvn package` generaremos un .jar que  ejecutando `java -jar "-Dspring.profiles.active=prod" .\target\EnterPriseEventSolutions-0.0.1-SNAPSHOT.jar` lanzará el backend en modo desarrollo. Para lanzar el front en \frontend\enterpriseeventsolutions ejecutamos `npm i` para instalar las dependencias de Vue y después ejecutamos npm run serve. 
+Busacando http://localhost:8080 accederiamos al front.
 
 ### USO DE LA APLICACIÓN
 
