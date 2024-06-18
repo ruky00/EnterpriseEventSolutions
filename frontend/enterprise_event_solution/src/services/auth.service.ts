@@ -55,7 +55,7 @@ public async logout() {
             throw new Error(`Error en la solicitud: ${response.status} - ${response.statusText}`);
         }
         const data = await response.json();
-        // AQUÍ PUEDES VER QUE SE PIDEN TUS EVENTOS Y FUNCIONA (SALE VACÍO PORQUE NO HAY NINGUNO)
+        
     } catch (error) {
         throw new Error();
     }
@@ -79,12 +79,12 @@ public async logout() {
     
           const datos = await respuesta.json();
 
-          // Almacenar la información del usuario en el almacenamiento local si se obtiene correctamente
-          return datos; // Devolver la información del usuario
+          
+          return datos; 
         } catch (error) {
-          // Manejar errores con elegancia para informar al usuario de manera adecuada
+          
           console.error('Error al obtener la información del usuario:', error);
-          // Puedes mostrar un mensaje de error al usuario o redirigir a una página de error
+          
           return null;
         }
       }

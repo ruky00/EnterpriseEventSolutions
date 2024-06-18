@@ -18,13 +18,13 @@
             const userData = await EventService.prototype.getStats();
             if (!userData) {
               console.error('Error al obtener los datos de usuarios.');
-              // Handle visualization of error or alternative mechanism (optional)
-              return; // Prevent issues if userData is unexpectedly undefined
+              
+              return; 
             }
-            eventStats.value = userData; // Update the array reactively
+            eventStats.value = userData; 
           } catch (error) {
             console.error('Error al obtener los datos de usuarios:', error);
-            // Handle visualization of error or alternative mechanism (optional)
+           
           }
         };
 
@@ -129,7 +129,7 @@
 .chart-container {
   position: relative;
   width: 100%;
-  height: 80%; /* Ajusta esta altura según tus necesidades */
+  height: 80%; 
 }
 
 canvas {

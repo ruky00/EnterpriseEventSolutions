@@ -23,7 +23,7 @@ export class AdminService{
             console.log(datos);
             return datos;
             } catch (err) {
-                console.error('Error al obtener los eventos', err);
+                console.error('Error al obtener los usuarios', err);
           // Puedes mostrar un mensaje de error al usuario o redirigir a una página de error
           return null;
             }
@@ -117,7 +117,7 @@ export class AdminService{
                 throw new Error(`Error al crear el evento: ${response.status} - ${response.statusText}`);
               }
             return data;
-        }catch(error){ console.error('Error al crear el evento:', error)}
+        }catch(error){ console.error('Error al añadir imagen:', error)}
     }
     public async postOrgLogo(image:FormData,id:number){
         try{
@@ -132,10 +132,10 @@ export class AdminService{
             });
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(`Error al crear el evento: ${response.status} - ${response.statusText}`);
+                throw new Error(`Error al añadir el logo: ${response.status} - ${response.statusText}`);
               }
             return data;
-        }catch(error){ console.error('Error al crear el evento:', error)}
+        }catch(error){ console.error('Error al añadir el logo:', error)}
     }
 
     public async getUsers(){
@@ -150,10 +150,10 @@ export class AdminService{
             });
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(`Error al crear el evento: ${response.status} - ${response.statusText}`);
+                throw new Error(`Error al obtener usuarios: ${response.status} - ${response.statusText}`);
               }
             return data;
-        }catch(error){ console.error('Error al crear el evento:', error)}
+        }catch(error){ console.error('Error al obtener usuarios:', error)}
     }
 
 

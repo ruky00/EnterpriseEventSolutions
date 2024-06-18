@@ -41,12 +41,12 @@ export default {
 
     onMounted(() => {
       const handleScroll = () => {
-        isTransparent.value = window.scrollY === 0; // Transparente en scroll Y = 0
+        isTransparent.value = window.scrollY === 0; 
       };
 
       window.addEventListener('scroll', handleScroll);
 
-      // Limpiar el detector de eventos al desmontar el componente
+     
       return () => {
         window.removeEventListener('scroll', handleScroll);
       };
@@ -112,7 +112,7 @@ router-link:focus {
 }
 
 .navbar-transparent {
-  background-color: transparent !important; /* Garantiza la transparencia absoluta */
+  background-color: transparent !important;
 }
 
 .navbar-toggler-icon {
@@ -125,7 +125,7 @@ router-link:focus {
 
 @media screen and (max-width: 992px) {
   .navbar-nav {
-    padding-bottom: 20px; /* Agregar padding hacia abajo en pantallas pequeñas */
+    padding-bottom: 20px; 
   }
 }
 </style>

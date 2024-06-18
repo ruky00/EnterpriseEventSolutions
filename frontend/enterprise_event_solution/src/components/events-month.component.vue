@@ -92,14 +92,14 @@
         };
     
         onMounted(async () => {
-          await getData(); // Fetch data first
-          const config = createChartConfig(); // Create config after data is ready
+          await getData(); 
+          const config = createChartConfig(); 
           const canvasTag = document.getElementById('myChart3') as HTMLCanvasElement;
           new Chart(canvasTag, config);
         });
     
-        return {}; // No need to return data, labels, or config directly
-                  // They are accessible within the component's setup scope
+        return {}; 
+                 
       },
     };
     </script>

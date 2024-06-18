@@ -1,5 +1,5 @@
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
-import store from '../store'; // Importa directamente tu store Vuex
+import store from '../store'; 
 
 export const authGuard = async (
   to: RouteLocationNormalized,

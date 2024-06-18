@@ -97,7 +97,7 @@ export default {
     const password = ref('');
     const confirmPassword = ref('');
     const seleccionado = ref(false);
-    const minDate = ref(new Date().toISOString().split('T')[0]); // Sets the minimum date to today
+    const minDate = ref(new Date().toISOString().split('T')[0]); 
 
     const createEvent = async () => {
       if (password.value !== confirmPassword.value) {

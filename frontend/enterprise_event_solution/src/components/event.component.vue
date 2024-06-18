@@ -266,6 +266,6 @@ p {
   margin-left: 10px;
   position: relative;
   display: inline-block;
-  font-size: 0.75em; /* Make the lock icon smaller */
+  font-size: 0.75em;
 }
 </style>

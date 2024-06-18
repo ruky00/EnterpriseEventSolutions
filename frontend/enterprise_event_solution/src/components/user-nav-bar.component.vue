@@ -176,7 +176,7 @@ export default {
       if (user.value && user.value!.image) {
         return user.value!.image;
       } else {
-        return 'https://github.com/mdo.png'; // URL de imagen predeterminada en caso de que el Blob no esté presente
+        return 'https://github.com/mdo.png'; 
       }
     };
 

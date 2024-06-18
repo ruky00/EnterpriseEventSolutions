@@ -73,7 +73,7 @@ p, h1 {
 .col-md-6, .col-md-8, .col-md-4 {
   padding: 20px;
   box-sizing: border-box;
-  margin-bottom: 20px; /* Add bottom margin for separation */
+  margin-bottom: 20px; 
 }
 
 h3 {

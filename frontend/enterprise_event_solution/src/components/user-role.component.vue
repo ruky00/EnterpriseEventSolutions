@@ -49,7 +49,7 @@
                 borderColor: [
                 '#537bc4',
                 '#acc236',
-                ], // Use the reactive usersMonth
+                ], 
                 fill: false,
                 tension: 0.5,
                 pointHoverBackgroundColor: '#15616D',
@@ -111,14 +111,14 @@
         };
     
         onMounted(async () => {
-          await getData(); // Fetch data first
-          const config = createChartConfig(); // Create config after data is ready
+          await getData();
+          const config = createChartConfig(); 
           const canvasTag = document.getElementById('myChart1') as HTMLCanvasElement;
           new Chart(canvasTag, config);
         });
     
-        return {}; // No need to return data, labels, or config directly
-                  // They are accessible within the component's setup scope
+        return {}; 
+                  
       },
     };
     </script>

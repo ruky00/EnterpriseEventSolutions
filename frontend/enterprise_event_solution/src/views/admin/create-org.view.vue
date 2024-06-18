@@ -99,22 +99,21 @@ export default{
         
 
         const handleFileChange1 = (event: Event) => {
-        const files = (event.target as HTMLInputElement).files; // Obtener los archivos seleccionados
+        const files = (event.target as HTMLInputElement).files; 
             if (files && files.length > 0) {
-                // Hacer algo con los archivos, como guardarlos en una variable de datos o procesarlos
-                vistaPreviaImagenPerfil.value=URL.createObjectURL(files[files.length-1]);//Mostrar la imagen en un img
-                newImage.append('image',files[files.length-1] ); // Puedes ver la información del archivo seleccionado en la consola
-                // Aquí puedes enviar el archivo al servidor o realizar cualquier otra acción necesaria
+               
+                vistaPreviaImagenPerfil.value=URL.createObjectURL(files[files.length-1]);
+                newImage.append('image',files[files.length-1] ); 
+               
             }
             };
         const handleFileChange2 = (event: Event) => {
-        const files2 = (event.target as HTMLInputElement).files; // Obtener los archivos seleccionados
+        const files2 = (event.target as HTMLInputElement).files; 
 
             if (files2 && files2.length > 0) {
-                // Hacer algo con los archivos, como guardarlos en una variable de datos o procesarlos
+                
                 vistaPreviaImagenLogo.value=URL.createObjectURL(files2[files2.length-1]);
-                newLogo.append('image',files2[files2.length-1] ); // Puedes ver la información del archivo seleccionado en la consola
-                // Aquí puedes enviar el archivo al servidor o realizar cualquier otra acción necesaria
+                newLogo.append('image',files2[files2.length-1] ); 
             }
             else{
                 console.log('No se ha subido imagen ')
@@ -298,11 +297,11 @@ input[type="email"] {
   width: 100%; 
 }
 
-/* Styles for focus state (when user clicks on input) */
+
 input[type="text"]:focus,
 input[type="email"]:focus {
-  outline: none; /* Removes default outline */
-  border-color: var(--main-bg-org); /* Orange border on focus */
+  outline: none; 
+  border-color: var(--main-bg-org); 
 }
 
 

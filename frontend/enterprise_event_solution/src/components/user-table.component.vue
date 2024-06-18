@@ -153,11 +153,11 @@
             });
           }
 
-          // If both filters pass or no filters applied, include the user
+         
           return true;
         });
 
-        // Apply sorting
+       
         
         return filteredByUsers;
       });
@@ -202,7 +202,7 @@
       try {
           if (selectedUserToDelete.value) {
             await AdminService.prototype.deleteUsers(selectedUserToDelete.value.id);
-            // Eliminación exitosa, ocultar el banner de confirmación
+            
             showConfirmationBanner.value = false;
             
           }
@@ -212,7 +212,7 @@
       };
 
       const cancelDeleteUser = () => {
-        // Limpiar el usuario seleccionado y ocultar el banner de confirmación
+       
         selectedUserToDelete.value = null;
         showConfirmationBanner.value = false;
       };
@@ -270,35 +270,34 @@
     padding-top: 10px;
   }
 
-  /* Wrap table in a scrollable container */
+ 
   .table-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Style the entire table element */
+ 
   table {
     width: 100%;
     border-collapse: collapse;
   }
 
-  /* Style the table header */
   thead th {
-    background-color: var(--main-bg-light); /* Dark blue background */
-    color: #fff; /* White text */
-    padding: 10px 15px; /* Add some padding */
+    background-color: var(--main-bg-light); 
+    color: #fff; 
+    padding: 10px 15px; 
     text-align: left;
     font-weight: bolder;
   }
 
-  /* Style regular table cells */
+  
   tbody th,
   tbody td {
     padding: 0px 10px;
     text-align: left;
   }
 
-  /* Style alternating background colors for readability */
+  
   tbody tr:nth-child(odd) {
     background-color: #fff;
   }
@@ -372,7 +371,7 @@
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1001; /* Asegúrate de que el banner esté sobre la capa de superposición */
+    z-index: 1001; 
   }
 
   .confirmation-banner p {
@@ -392,7 +391,7 @@
     background-color: #eee;
   }
 
-  /* Responsive adjustments */
+  
   @media (max-width: 768px) {
     .user-table {
       width: 95%;

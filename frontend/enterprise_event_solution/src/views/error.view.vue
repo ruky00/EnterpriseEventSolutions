@@ -29,25 +29,25 @@ export default {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f0f0f0; /* Color de fondo */
+    background-color: #f0f0f0; 
   }
   
   .error-code {
-    font-size: 8rem; /* Tamaño del número 404 */
-    color: var(--main-bg-org); /* Color del número */
+    font-size: 8rem; 
+    color: var(--main-bg-org); 
   }
   
   .error-message {
-    font-size: 2rem; /* Tamaño del mensaje */
-    margin-top: 1rem; /* Espacio entre el número y el mensaje */
+    font-size: 2rem; 
+    margin-top: 1rem;
   }
   
   .back-button {
-    margin-top: 2rem; /* Espacio entre el mensaje y el botón */
+    margin-top: 2rem; 
     padding: 1rem 2rem;
     font-size: 1.5rem;
-    background-color: #007bff; /* Color del botón */
-    color: #ffffff; /* Color del texto del botón */
+    background-color: #007bff; 
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -55,7 +55,7 @@ export default {
   }
   
   .back-button:hover {
-    background-color: #0056b3; /* Color del botón al pasar el mouse */
+    background-color: #0056b3;
   }
   </style>
   

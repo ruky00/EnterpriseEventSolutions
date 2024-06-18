@@ -145,10 +145,9 @@ import { authService } from '@/services/auth.service';
       const handleFileChange = (event: Event) => {
         const files = (event.target as HTMLInputElement).files; // Obtener los archivos seleccionados
             if (files && files.length > 0) {
-                // Hacer algo con los archivos, como guardarlos en una variable de datos o procesarlos
-                vistaPreviaImagenPerfil.value=URL.createObjectURL(files[files.length-1]);//Mostrar la imagen en un img
-                newImage.append('image',files[files.length-1] ); // Puedes ver la información del archivo seleccionado en la consola
-                // Aquí puedes enviar el archivo al servidor o realizar cualquier otra acción necesaria
+              
+                vistaPreviaImagenPerfil.value=URL.createObjectURL(files[files.length-1]);
+                newImage.append('image',files[files.length-1] );
             }
             };
 
@@ -156,11 +155,11 @@ import { authService } from '@/services/auth.service';
       const editUser = async () => {
         try {
           seleccionado.value=true
-          // Realiza la llamada al servicio para actualizar el usuario
+         
           user.value.encodedPassword = newPassword.value;
           await UserService.prototype.updateUser(user.value);
           await UserService.prototype.updateUserImage(newImage);
-          // Actualiza la información del usuario después de la edición
+          
           store.dispatch('updateUser', user.value);
           await fetchUser();
         } catch (error) {
@@ -175,7 +174,7 @@ import { authService } from '@/services/auth.service';
         
         return user.value.logo;
         } else {
-            return 'https://github.com/mdo.png'; // URL de imagen predeterminada en caso de que el Blob no esté presente
+            return 'https://github.com/mdo.png';
         }
       }
 

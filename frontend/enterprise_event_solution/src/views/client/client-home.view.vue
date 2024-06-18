@@ -80,26 +80,25 @@ h5{
 }
 
 .box {
-  flex-grow: 1; /* Hace que las cajas ocupen todo el ancho disponible */
-  height: 100%; /* Altura de cada caja */
-  margin: 0; /* Elimina el margen entre las cajas */
+  flex-grow: 1; 
+  height: 100%; 
+  margin: 0; 
   transition: all 0.5s ease;
   opacity: 1;
   background-repeat: no-repeat;
-  background-size: cover;/* Transición suave al hacer hover */
+  background-size: cover;
 }
 
-/* Cambia el tamaño y la opacidad al hacer hover */
 .box:hover {
-  transform: scale(1.2); /* Aumenta el tamaño al hacer hover */
-  opacity: 200; /* Reduce la opacidad al hacer hover */
+  transform: scale(1.2); 
+  opacity: 200; 
 }
 
 .card-img-top {
-    object-fit: cover; /* Preserve aspect ratio and cover the entire area */
-    height: 100%; /* Set the height to 100% of the container */
+    object-fit: cover; 
+    height: 100%; 
     width: auto;
-    max-height: 170px; /* Automatically adjust the width to maintain the aspect ratio */
+    max-height: 170px; 
   }
 
 

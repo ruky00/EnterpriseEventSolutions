@@ -148,7 +148,7 @@ export default {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 999; /* Asegúrate de que la flecha esté encima del contenido */
+  z-index: 999; 
 }
 
 article {
@@ -170,8 +170,8 @@ article {
 }
 
 .banner {
-  position: fixed; /* Cambiado a fixed para posicionarlo en la parte superior de la pantalla */
-  top: 0; /* Posición en la parte superior */
+  position: fixed; 
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--main-bg-org);

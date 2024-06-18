@@ -37,20 +37,20 @@ export default defineComponent({
       'col-md-12': !isNavbarTop.value,
       'col-sm-12': !isNavbarTop.value,
       'col-12': !isNavbarTop.value,
-      'sticky-content': !isNavbarTop.value, // Aplica la clase 'sticky-content' si la barra de navegación está en la parte superior
+      'sticky-content': !isNavbarTop.value, 
     }));
 
     const handleResize = () => {
-      isNavbarTop.value = window.innerWidth <= 992; // Establece isNavbarTop en true si el ancho de la pantalla es menor o igual a 992px
+      isNavbarTop.value = window.innerWidth <= 992;
     };
 
     onMounted(() => {
-      handleResize(); // Llama a handleResize() en el montaje inicial
-      window.addEventListener('resize', handleResize); // Agrega un observador de cambio de tamaño de ventana
+      handleResize();
+      window.addEventListener('resize', handleResize);
     });
 
     onBeforeUnmount(() => {
-      window.removeEventListener('resize', handleResize); // Elimina el observador de cambio de tamaño de ventana al desmontar el componente
+      window.removeEventListener('resize', handleResize);
     });
 
     return {
@@ -65,7 +65,7 @@ export default defineComponent({
 <style scoped>
 @import "../assets/styles.css";
 .container-fluid {
-  padding: 0; /* Quita el padding superior e inferior */
+  padding: 0; 
 }
 
 .row {
@@ -73,18 +73,17 @@ export default defineComponent({
   margin-left: 0;
 }
 
-/* Estilos adicionales para la barra de navegación lateral */
 .navbar-side .user-navbar-container {
-  position: relative; /* Restaurar la posición relativa */
+  position: relative; 
 }
 
-/* Estilos para la barra de navegación superior */
+
 .navbar-top .user-navbar-container {
-  position: static; /* Restaura la posición normal */
-  height: auto; /* Altura automática según el contenido */
+  position: static; 
+  height: auto; 
 }
 
-/* Estilos adicionales si es necesario */
+
 .sticky-content {
   position: sticky;
   top: 0;
