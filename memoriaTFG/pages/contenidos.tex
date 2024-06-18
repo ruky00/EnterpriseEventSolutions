@@ -97,7 +97,7 @@ La Tabla \ref{tabla:RF} recoge las funcionalidades específicas que el sistema d
         \textbf{RNF-006} & Accesibilidad & Tiene que ser posible usar la aplicación de forma óptima en dispositivos móviles\\ 
     \end{longtable}
 
-\section{Arquitectura y analisis}
+\section{Arquitectura y análisis}
 
 \textbf{Enterprise Event Solutions} es una aplicación \textbf{Fullstack} creada siguiendo un patrón de diseño MVC. A continuación, se muestra un plano general
 que será desglosado:
@@ -112,8 +112,6 @@ estas dockerizadas y desplegadas en un servicio de AWS EC2 y utilizando Elastic 
     \caption{Diagrama de Arquitectura de EVS}
     \label{fig:mvc_architecture}
 \end{figure}
-
-
 
 La figura \ref{fig:mvc_architecture} muestra el diagrama de arquitectura de EVS desplegado en la nube de AWS. La arquitectura está dividida en dos componentes principales: el backend y el frontend.
 
@@ -130,8 +128,39 @@ En resumen, esta arquitectura de EVS en AWS muestra una solución escalable y ef
 escalable. Con el soporte de \textbf{AWS} y \textbf{MySQL}, la aplicación está preparada para manejar grandes volúmenes de datos y ofrecer una experiencia 
 de usuario fluida.
 
+\newpage
+\section{Flujo de la Aplicación}
+
+En esta sección se presenta el diagrama de flujo de la aplicación dividida en partes para su mejor comprensión.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{FlujoGeneral.png} 
+    \caption{Diagrama de Flujo Parte 1}
+    \label{fig:flujoEvs}
+\end{figure}
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{AdminFlujo.png} 
+    \caption{Diagrama de Flujo Parte 2}
+    \label{fig:flujoEvs1}
+\end{figure}
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Cliente.png} 
+    \caption{Diagrama de Flujo Parte 3}
+    \label{fig:flujoEvs2}
+\end{figure}
+\newpage
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Org.png} 
+    \caption{Diagrama de Flujo Parte 4}
+    \label{fig:flujoEvs3}
+\end{figure}
+\section{Diseño e implementación}    
 \subsection{Modelo}
-\tutor{A partir de aquí es implementación. Fíjate que que en tu sección de Diseño e implementación te quedas sin decir NADA de tu aplicación y te centras en el tema de concurrencia}
 La persistencia en Enterprise Event Solutions se sustenta en una serie de Entidades almacenadas en una base de datos con la que los servicios interactuan mediante
 las interfaces proporcionadas por JPA \ref{sec:jpa}. Es el pilar fundamental en el que se sustenta el modelo de negocio de la aplicación.
 \begin{figure}[h]
@@ -159,7 +188,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 }
 \end{lstlisting}
 
-Como se puede observar, gracias a la gran potencia de Spring y de JPA, simplemente con crear una interfaz con metodos que creemos que vamos a necesitar en 
+Como se puede observar, gracias a la gran potencia de Spring y de JPA, simplemente con crear una interfaz con métodos que creemos que vamos a necesitar en 
 nuestros servicios, y sin la necesidad de añadir @Querys, podemos hacer consultas sobre la base de datos.
 
 Pero también podemos hacer nuestras propias Querys sobre la base de datos:
@@ -188,9 +217,9 @@ En la figura \ref{fig:class_architecture} se puede observar un desglose de las c
 \end{figure}
 
 Además he implementado otras configuraciones para añadir una capa extra de seguridad a la aplicación como configuración CSRF y CORS para limitar las url 
-que pueden hacer uso de los endpoints de la app. Por supuesto se han creado las configuraciones necesarias para manejar las tecnologias externas como S3, dentro de 
+que pueden hacer uso de los endpoints de la app. Por supuesto se han creado las configuraciones necesarias para manejar las tecnologías externas como S3, dentro de 
 EVS.
-\newpage
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{security.png} 
@@ -249,7 +278,7 @@ Un ejemplo del uso de estas props sería:
 En el código \ref{lst:padre}, se observa que se inserta en el template un componente con la información del evento. Por otro lado, en el código 
 \ref{lst:hijo}, se manejan estos valores que hemos pasado desde el componente padre. En este fragmento, si se le pasa \texttt{true} en la variable 
 \texttt{is-org}, el componente tendrá un comportamiento diferente a si se le pasa \texttt{false}. Ademas en la variable \texttt{evento} le pasamos la información
-del evento para garantizar la reactividad de los componetes de forma individual. De esta forma trabajamos con módulos y no con un elemento.
+del evento para garantizar la reactividad de los componentes de forma individual. De esta forma trabajamos con módulos y no con un elemento.
 
 \newpage
 En las figuras \ref{fig:eventosCli} y \ref{fig:orgMain}  se puede ver el mismo componente con Props diferentes.
@@ -267,39 +296,6 @@ En las figuras \ref{fig:eventosCli} y \ref{fig:orgMain}  se puede ver el mismo c
     \label{fig:orgMain}
 \end{figure}
 
-
-\newpage
-\section{Flujo de la Aplicación}
-
-En esta sección se presenta el diagrama de flujo de la aplicación dividida en partes para su mejor comprensión.
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{FlujoGeneral.png} 
-    \caption{Diagrama de Flujo Parte 1}
-    \label{fig:flujoEvs}
-\end{figure}
-\newpage
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.4\textwidth]{AdminFlujo.png} 
-    \caption{Diagrama de Flujo Parte 2}
-    \label{fig:flujoEvs1}
-\end{figure}
-\newpage
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Cliente.png} 
-    \caption{Diagrama de Flujo Parte 3}
-    \label{fig:flujoEvs2}
-\end{figure}
-\newpage
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{Org.png} 
-    \caption{Diagrama de Flujo Parte 4}
-    \label{fig:flujoEvs3}
-\end{figure}
-\section{Diseño e implementación}    
 
 \subsection{Concurrencia en los eventos}
 \label{sec:concurrencia}
@@ -329,7 +325,7 @@ En resumen, la utilización de @Transactional en JPA permite manejar de manera e
 asegura que cada transacción de adquisición de entradas se procese de forma segura y aislada, manteniendo la integridad de los datos y proporcionando una mejor experiencia de
 usuario.
 
-\subsection{Desarrollo de la función}
+\subsubsection{Desarrollo de la función}
 En este apartado se explicará de menor a mayor nivel la implementación de esta funcionalidad y finalmente se explicará el test desarrollado para probarla.
 
 \subsubsection*{Repositorio}
@@ -352,8 +348,7 @@ actual en uno. Primero, verifica la existencia del evento por su ID utilizando e
 eventRepository.incrementCurrentCapacity(id). Si la operación tiene éxito (devolviendo 1), devuelve el evento; de lo contrario, lanza una excepción indicando que el 
 evento está lleno. Este proceso garantiza la integridad de la transacción al manejar concurrencia y prevenir la sobreventa durante la gestión de entradas para eventos.
 \myjavastyle
-\begin{lstlisting}[language=Java, caption=Función incrementCurrentCapacity, label=lst:servicioEvento]
-    @Transactional
+\begin{lstlisting}[language=Java, caption=Función incrementCurrentCapacity, label=lst:servicioEvento] 
     public Event checkIfFull(long id){
         Event event = eventExists(id);
 
@@ -444,7 +439,7 @@ ticket, responde con HTTP 503 Service Unavailable. Si la contraseña para un eve
 \end{lstlisting}
 
 \subsubsection{Test asociado}
-Como se esperaba, se ha realizado una prueba que verifique el correcto funcionamiento de la gesión de la concurrencia en la adquisición de entradas. 
+Como se esperaba, se ha realizado una prueba que verifique el correcto funcionamiento de la gestión de la concurrencia en la adquisición de entradas. 
 
 El código \ref{lst:testConcurrencia} prueba concurrentemente la compra de tickets para un evento usando múltiples hilos. Primero, se crea un evento de prueba con una capacidad máxima y organizador
 específicos, guardado mediante eventService.saveEvent(testEvent). Se configura un número elevado de hilos (numberOfThreads) para simular solicitudes concurrentes de compra
@@ -454,7 +449,6 @@ Se utiliza CountDownLatch para coordinar la ejecución simultánea de los hilos:
 hilos terminen. Cada hilo verifica el resultado de la solicitud HTTP esperando un código de estado HTTP 201 Created si la compra fue exitosa, o HTTP 409 Conflict si el evento
 está lleno. Finalmente, se verifica que la capacidad actual del evento se ajuste correctamente al máximo después de todas las operaciones concurrentes.
 
-\tutor{Trata de cambiar el color del comentario, ese verde chillón no se ve absolutamente nada. Si no puedes cambiar el color, trata de hacer que se numeren las lineas de código (en la plantilla original se mostraba cómo)}
 \myjavastyle
 \begin{lstlisting}[language=Java, caption=Función buyTicket, label=lst:testConcurrencia]
 @DisplayName("Concurrent Ticket Purchase Test")
@@ -545,7 +539,7 @@ Se han realizado tanto pruebas REST como pruebas Unitarias. No se han realizado 
 Las pruebas REST son pruebas de software que validan la funcionalidad de las API RESTful, asegurando que los endpoints, métodos HTTP, respuestas y códigos de 
 estado funcionen correctamente.
 
-Para la realización de las pruebas REST se ha incluido tambien las pruebas de Integración. Cada vez que se realice un conjunto de test, se realiza la conexión con 
+Para la realización de las pruebas REST se ha incluido también las pruebas de Integración. Cada vez que se realice un conjunto de test, se realiza la conexión con 
 un contenedor Docker con una imagen MySQL de la misma versión que la utilizada en la aplicación para garantizar el correcto funcionamiento sobre esta Base de Datos.
 
 
@@ -705,7 +699,7 @@ Las pruebas unitarias se realizan para garantizar que partes específicas del c�
 Esto ayuda a detectar errores temprano, asegurar la calidad del código, facilitar la refactorización y proporcionar documentación sobre el comportamiento esperado del 
 código.
 
-A continuación, se muestran las PU correspondientes a los requsitos que no se han probado con pruebas REST para ampliar la covertura del código.
+A continuación, se muestran las PU correspondientes a los requisitos que no se han probado con pruebas REST para ampliar la cobertura del código.
 
 \begin{itemize}
     \item \textbf{Descripción de la prueba:} Verificar que todos los eventos de un organizador pueden ser obtenidos.
@@ -726,7 +720,7 @@ A continuación, se muestran las PU correspondientes a los requsitos que no se h
     \end{itemize}
     \item \textbf{Incidencias:}
     \begin{itemize}
-        \item OK. La prueba fue existosa.
+        \item OK. La prueba fue exitosa.
     \end{itemize}
 \end{itemize}
 
@@ -748,7 +742,7 @@ A continuación, se muestran las PU correspondientes a los requsitos que no se h
     \end{itemize}
     \item \textbf{Incidencias:}
     \begin{itemize}
-        \item OK. La prueba fue existosa.
+        \item OK. La prueba fue exitosa.
     \end{itemize}
 \end{itemize}
 
@@ -770,15 +764,14 @@ A continuación, se muestran las PU correspondientes a los requsitos que no se h
     \end{itemize}
     \item \textbf{Incidencias:}
     \begin{itemize}
-        \item OK. La prueba fue existosa.
+        \item OK. La prueba fue exitosa.
     \end{itemize}
 \end{itemize}
 
 \section{Distribución y despliegue}
 En esta sección se describen los pasos y procesos seguidos para desplegar la aplicación web en producción.
 \subsection{Despliegue}
-\tutor{Docker se ha usado para empaquetar (distribución), AWS se ha usado para desplegar ese paquete}
-Para desplegar la aplicación se ha utilizado Docker. Se ha creado una imagen de la aplicación y se ha lanzado junto con un contenedor de MySQL para la persistencia de datos.
+Para empaquetar la aplicación se ha utilizado Docker. Se ha creado una imagen de la aplicación y se ha lanzado junto con un contenedor de MySQL para la persistencia de datos.
 Esto permite ejecutar la aplicación sin enfrentarse a problemas de dependencias.
 
 \subsection{Cloud}
@@ -851,15 +844,15 @@ Dentro de la EC2 se ejecuta el código \ref{lst:autoCD}. Este código se encarga
     echo "Haciendo pull de la nueva imagen de Docker..."
     docker pull $IMAGE_NAME
 
-    # Detener el contenedor actual de la aplicacion
-    echo "Deteniendo el contenedor actual de la aplicacion..."
+    # Detener el contenedor actual de la aplicación
+    echo "Deteniendo el contenedor actual de la aplicación..."
     docker-compose stop $SERVICE_NAME
 
     # Eliminar el contenedor actual de la aplicacion
     echo "Eliminando el contenedor actual de la aplicacion..."
     docker-compose rm -f $SERVICE_NAME
 
-    # Iniciar el contenedor de la aplicacion nuevamente con la nueva versión de la imagen
+    # Iniciar el contenedor de la aplicación nuevamente con la nueva versión de la imagen
     echo "Iniciando el contenedor de la aplicación con la nueva version de la imagen..."
     docker-compose up -d $SERVICE_NAME
 
@@ -892,24 +885,40 @@ Dado que Enterprise Event Solutions es una aplicación diseñada para usuarios c
  sobre la aplicación. En este estudio se incluyen preguntas tanto antes como después del uso de la aplicación por parte de los usuarios. Para la recolección de datos, 
  se utilizó Google Forms, y los resultados obtenidos se presentan en la sección de Apéndice.
 
-\subsection{Perfil de los Participantes}
-
-\tutor{El título es Perfil de los participantes, pero no se habla en ningún momento de dicho perfil (edad, manejo de tecnologías, etc ... si no tienes esta información, deja la sección como ``Participantes''}
+\subsection{Participantes}
 Debido a que la aplicaciones tiene diferentes tipos de usuarios he optado por seleccionar una serie de estos participantes para que interactuaran como organizadores,
 como clientes o como administradores. En total se ha evaluado a 10 Participantes.
 Cabe destacar que para la primera interacción con la aplicación se le ha requerido al Participante realizar una serie de pasos en la aplicación para 
 valorar posteriormente la \textbf{usabilidad} y \textbf{accesibilidad} de esta.
 
 \subsection{Valoración general}
-\tutor{En este tipo de experimentos, primero se definen TODAS las preguntas que se le va a realizar al usuario y después (en otra subsección), se muestran los resultados.}
-A la pregunta "¿Darías uso a esta aplicación?" se obtuvo una puntuación de 4.25 sobre 5, lo que indica un éxito generalizado de Enterprise Event Solutions.
-Esta valoración sugiere una aceptación positiva y una disposición favorable hacia la aplicación, con solo un participante atípico que se desvió de la opinión
-general.\tutor{Y qué dijo ese usuario? Porqué se desvió tanto? Probablemente su opinión es muy relevante}
+En esta sección se desglosaran las preguntas y se expondrán los resultados.
+\subsubsection*{Preguntas}
+Para poder completar el estudio se han realizado las siguientes preguntas:
+\begin{enumerate}
+    \item Edad
+    \item Uso habitual de dispositivos electrónicos
+    \item ¿Sueles acudir a eventos de Empresas u Organizaciones?
+    \item ¿Sueles leer los correos que te envían empresas promocionando eventos? 
+    \item Como cliente ¿Cuál es tu opinión acerca de una aplicación que concentre la gestión de Eventos con la gestión de tus Entradas?
+    \item ¿Darías uso a esta aplicación?
+    \item Como Empresa ¿Cuál es tu opinión acerca de una aplicación que concentré la gestión tus Eventos con la gestión de la asistencia a estos?
+    \item ¿Darías uso a esta aplicación?
+    \item Después de haber probado la aplicación. ¿Con que asiduidad la usarías?
+    \item ¿Cuál es tu opinión general sobre Enterprise Event Solutions?
+\end{enumerate}
+\subsubsection*{Resultados}
+Los resultados del estudio de caso sobre la aplicación Enterprise Event Solutions son muy alentadores. La alta frecuencia de uso indicada por el \(80\%\)
+de los usuarios sugiere que la aplicación cumple efectivamente con sus expectativas y necesidades. Además, la opinión general extremadamente positiva, con un \(100\%\) 
+de los usuarios calificándola entre buena y excelente, refuerza la percepción de que Enterprise Event Solutions es una herramienta valiosa y bien recibida en su mercado objetivo. 
+Estos resultados no solo reflejan la eficacia y utilidad de la aplicación, sino que también indican un alto potencial para su adopción y recomendación futura por parte de los usuarios 
+satisfechos.
 
+En el apéndice \ref{sec:apen1} se pueden ver los resultados desglosados de las preguntas realizadas a los participantes durante el Estudio.
 \subsection{Desempeño}
 
-De forma general, la evaluación de este aspecto es positiva, aunque es importante destacar algunos comentarios sobre la responsividad de la página. Este problema
-fue corregido tan pronto como se identificó el error.\tutor{La redacción es extraña. No comenzamos con un ``De forma general''. Mejor: Los usuarios detectaron problemas con la responsividad ...}
+Los usuarios detectaron un problema con la responsividad de la página en dispositivos móviles. Este problema
+fue corregido tan pronto como se identificó el error.
 
 \subsection{Diseño, Usabilidad y Accesibilidad}
 En las primeras versiones de la aplicación, se observó que la interfaz gráfica carecía de ciertas facilidades para la navegación, como elementos
@@ -918,6 +927,4 @@ identificativos, códigos QR, flechas de navegación, spinners de carga y pantal
 Es importante destacar que estos comentarios se recopilaron a lo largo del ciclo de vida del proyecto, y no únicamente en su etapa final.
 Por lo tanto, considero que el contacto continuo con el usuario final es fundamental para lograr un producto refinado.
 
-
-En rasgos generales los participantes consideran Enterprise Event Solutions una aplicación sencilla y no tienen ningún problema para entender ninguna de las
-funcionalidades.\tutor{``sencilla y fácil de entender.'' a veces nos adornamos mucho cuando podemos ser más concisos}
+En rasgos generales los participantes consideran Enterprise Event Solutions una aplicación sencilla y fácil de entender.
