@@ -103,7 +103,7 @@ import { authService } from '@/services/auth.service';
       const router = useRouter();
       const isMe = ref(router.currentRoute.value.params.id === 'me');
       const newPassword = ref("")
-      const newImage = new FormData();
+      const newImage = ref(new FormData());
       const store = useStore();
       const eventos = ref([] as Array<Event>);
       const vistaPreviaImagenPerfil = ref('');
@@ -147,7 +147,7 @@ import { authService } from '@/services/auth.service';
             if (files && files.length > 0) {
               
                 vistaPreviaImagenPerfil.value=URL.createObjectURL(files[files.length-1]);
-                newImage.append('image',files[files.length-1] );
+                newImage.value.append('image',files[files.length-1] );
             }
             };
 
@@ -158,7 +158,7 @@ import { authService } from '@/services/auth.service';
          
           user.value.encodedPassword = newPassword.value;
           await UserService.prototype.updateUser(user.value);
-          await UserService.prototype.updateUserImage(newImage);
+          await UserService.prototype.updateUserImage(newImage.value);
           
           store.dispatch('updateUser', user.value);
           await fetchUser();

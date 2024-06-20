@@ -104,8 +104,10 @@ export default {
         alert('Passwords do not match');
         return;
       }
-
-      evento.value.encodedPassword = password.value;
+      if (password.value != '') {
+        evento.value.encodedPassword = password.value;
+      }
+      
       seleccionado.value = true;
       try {
         await EventService.prototype.createEvent(evento.value);

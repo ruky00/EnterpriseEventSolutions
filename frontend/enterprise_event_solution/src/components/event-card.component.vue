@@ -22,7 +22,7 @@
     </div>
     <div v-if="showConfirmationBanner" class="overlay">
       <div class="confirmation-banner">
-        <p>¿Estás seguro de que deseas eliminar al usuario?</p>
+        <p>¿Estás seguro de que deseas eliminar el evento?</p>
         <button @click="confirmDeleteEvent">Sí</button>
         <button @click="cancelDeleteEvent">No</button>
       </div>
