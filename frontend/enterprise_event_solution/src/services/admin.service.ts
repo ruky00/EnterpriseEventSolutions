@@ -53,30 +53,27 @@ export class AdminService{
     
     }
 
-    public async getEventsMonth(){
+    public async getEventsMonth() {
         try {
-            const response = await fetch(BASE_URL+'/users/graphics/events', {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Access-Control-Allow-Origin": "*",
-                },
-            });
-            if (!response.ok) {
-                throw new Error(`Error al obtener la información del usuario: ${response.status} - ${response.statusText}`);
-              }
-            const datos = await response.json();  
-            console.log(datos);
-            return datos;
-            } catch (err) {
-                console.error('Error al obtener la info del usuario', err);
-          // Puedes mostrar un mensaje de error al usuario o redirigir a una página de error
+          const response = await fetch(`${BASE_URL}/users/graphics/events`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`Error al obtener la información de eventos: ${response.status} - ${response.statusText}`);
+          }
+          const datos = await response.json();
+          console.log(datos);
+          return datos;
+        } catch (err) {
+          console.error('Error al obtener la información de eventos', err);
           return null;
-            }
-    
-    }
-
+        }
+      }
     public async postOrganizer(user: User){
         try {
             const response = await fetch(BASE_URL+'/organizers/', {

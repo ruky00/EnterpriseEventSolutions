@@ -32,64 +32,77 @@
         };
     
         const createChartConfig = (): ChartConfiguration => {
-          const maxDataValue = eventsMonth.value.length > 0 ? Math.max(...eventsMonth.value) : 0;
+  const maxDataValue = eventsMonth.value.length > 0 ? Math.max(...eventsMonth.value) : 0;
 
-          return {
-            type: 'line',
-            data: {
-              labels,
-              datasets: [{
-                label: 'Eventos registrados al mes',
-                data: eventsMonth.value, // Use the reactive usersMonth
-                fill: true,
-                borderColor: '#FF6384',
-                backgroundColor: '#FFB1C1',
-                tension: 0.5,
-                pointHoverBackgroundColor: '#FF7D00',
-                pointHoverRadius: 8,
-                borderWidth: 4,
-                showLine: true,
-              }],
+  return {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Eventos registrados al mes',
+        data: eventsMonth.value,
+        fill: true,
+        borderColor: '#FF6384',
+        backgroundColor: '#FFB1C1',
+        tension: 0.5,
+        pointHoverBackgroundColor: '#FF7D00',
+        pointHoverRadius: 8,
+        borderWidth: 4,
+        showLine: true,
+      }],
+    },
+    options: {
+      layout: {
+        padding: 10,
+      },
+      scales: {
+        y: {
+          beginAtZero: false, // Cambiado a false
+          suggestedMax: maxDataValue + (maxDataValue * 0.1), // Agrega un margen al valor máximo
+          title: {
+            display: true,
+            text: 'Eventos'
+          },
+          ticks: {
+            stepSize: Math.ceil(maxDataValue / 10), // Ajusta el tamaño del paso de las marcas
+            font: {
+              family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
+              size: 12,
+              weight: 'bold',
+              lineHeight: 1.2
             },
-            options: {
-              layout: {
-                padding: 10,
-              },
-             
-              scales: {
-                y: {
-                beginAtZero: true,
-                suggestedMax: maxDataValue + 5
-                },
-                x: {
-              ticks: {
-                font: {
-                  family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
-                  size: 12,
-                  weight: 'bold',
-                  lineHeight: 1.2
-                },
-                color: '#15616D'
-              }
+            color: '#15616D'
+          }
+        },
+        x: {
+          ticks: {
+            font: {
+              family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
+              size: 12,
+              weight: 'bold',
+              lineHeight: 1.2
             },
-              },
-              responsive: true,
-              plugins: {
-                legend: {
-                  display: false,
-                  labels: {
-                    font: {
-                      size: 20,
-                      family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
-                      weight: 'bold',
-                      lineHeight: 3,
-                    },
-                  },
-                },
-              },
+            color: '#15616D'
+          }
+        },
+      },
+      responsive: true,
+      plugins: {
+        legend: {
+          display: false,
+          labels: {
+            font: {
+              size: 20,
+              family: "'Franklin Gothic', 'Arial Narrow', Arial, sans-serif",
+              weight: 'bold',
+              lineHeight: 3,
             },
-          };
-        };
+          },
+        },
+      },
+    },
+  };
+};
     
         onMounted(async () => {
           await getData(); 
