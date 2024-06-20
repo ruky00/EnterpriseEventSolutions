@@ -71,7 +71,7 @@ export default defineComponent({
 
     const progressPercentage = computed(() => {
       if (props.evento?.current_capacity && props.evento?.max_capacity) {
-        return (props.evento.current_capacity / props.evento.max_capacity) * 100;
+        return Math.floor((props.evento.current_capacity / props.evento.max_capacity) * 100);
       }
       return 0;
     });
