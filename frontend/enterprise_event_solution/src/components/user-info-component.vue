@@ -86,36 +86,34 @@
   
   <script lang="ts">
   import { ref, onMounted, watch } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { User } from '../models/User';
-  import { UserService } from '@/services/user.service';
-  import event_cards from "../components/event-card.component.vue"
-  import { useStore } from 'vuex';
-  import {EventService} from '../services/event.service'
+import { useRouter } from 'vue-router';
+import { User } from '../models/User';
+import { UserService } from '@/services/user.service';
+import event_cards from "../components/event-card.component.vue";
+import { useStore } from 'vuex';
+import { EventService } from '../services/event.service';
 import { authService } from '@/services/auth.service';
 
+export default {
+  name: 'user_info',
+  components: { event_cards },
+  setup() {
+    const user = ref({} as User);
+    const router = useRouter();
+    const isMe = ref(router.currentRoute.value.params.id === 'me');
+    const newPassword = ref("");
+    const newImage = ref(new FormData());
+    const store = useStore();
+    const eventos = ref([] as Array<Event>);
+    const vistaPreviaImagenPerfil = ref('');
+    const seleccionado = ref(false);
 
-  export default {
-    name: 'user_info',
-    components:{event_cards},
-    setup() {
-      const user = ref({} as User);
-      const router = useRouter();
-      const isMe = ref(router.currentRoute.value.params.id === 'me');
-      const newPassword = ref("")
-      const newImage = ref(new FormData());
-      const store = useStore();
-      const eventos = ref([] as Array<Event>);
-      const vistaPreviaImagenPerfil = ref('');
-      const seleccionado = ref(false);
-
-      
-      const loadEvents = async () => {
+    const loadEvents = async () => {
       try {
         const eventData = await EventService.prototype.getEventsByOrg(user.value.username);
         if (eventData) {
-         eventos.value = eventData;
-          console.log(eventos.value)
+          eventos.value = eventData;
+          console.log(eventos.value);
         } else {
           console.error('No se pudieron obtener los eventos');
         }
@@ -124,80 +122,80 @@ import { authService } from '@/services/auth.service';
       }
     };
 
-      const fetchUser = async () => {
-        try {
-          if (isMe.value) {
-            const response = await authService.prototype.getUserInfoFromServer();
-            if(response){
+    const fetchUser = async () => {
+      try {
+        if (isMe.value) {
+          const response = await authService.prototype.getUserInfoFromServer();
+          if (response) {
             user.value = response;
-            }
-          } else {
-            const response = await UserService.prototype.getOrganizersById(parseInt(router.currentRoute.value.params.id as string, 10));
-            user.value = response;
-            loadEvents();
           }
-        } catch (error) {
-          console.error('Error fetching user information:', error);
-        }
-        vistaPreviaImagenPerfil.value=user.value.image
-      };
-      
-      const handleFileChange = (event: Event) => {
-        const files = (event.target as HTMLInputElement).files; // Obtener los archivos seleccionados
-            if (files && files.length > 0) {
-              
-                vistaPreviaImagenPerfil.value=URL.createObjectURL(files[files.length-1]);
-                newImage.value.append('image',files[files.length-1] );
-            }
-            };
-
-
-      const editUser = async () => {
-        try {
-          seleccionado.value=true
-         
-          user.value.encodedPassword = newPassword.value;
-          await UserService.prototype.updateUser(user.value);
-          await UserService.prototype.updateUserImage(newImage.value);
-          
-          store.dispatch('updateUser', user.value);
-          await fetchUser();
-        } catch (error) {
-          console.error('Error updating user information:', error);
-        }
-        seleccionado.value=false;
-        
-      };
-      
-      const getLogo = ()=>{
-        if (user.value.logo) {
-        
-        return user.value.logo;
         } else {
-            return 'https://github.com/mdo.png';
+          const response = await UserService.prototype.getOrganizersById(parseInt(router.currentRoute.value.params.id as string, 10));
+          user.value = response;
+          loadEvents();
         }
+      } catch (error) {
+        console.error('Error fetching user information:', error);
       }
+      vistaPreviaImagenPerfil.value = user.value.image;
+    };
 
-      onMounted(fetchUser);
+    const handleFileChange = (event: Event) => {
+      const files = (event.target as HTMLInputElement).files; // Obtener los archivos seleccionados
+      if (files && files.length > 0) {
+        newImage.value = new FormData(); // Reiniciar el FormData
+        vistaPreviaImagenPerfil.value = URL.createObjectURL(files[files.length - 1]);
+        newImage.value.append('image', files[files.length - 1]);
+      }
+    };
+
+    const editUser = async () => {
+      try {
+        seleccionado.value = true;
+
+        user.value.encodedPassword = newPassword.value;
+        await UserService.prototype.updateUser(user.value);
+        if (newImage.value.has('image')) { // Verificar si se seleccionó una nueva imagen
+          await UserService.prototype.updateUserImage(newImage.value);
+        }
+
+        store.dispatch('updateUser', user.value);
+        await fetchUser();
+      } catch (error) {
+        console.error('Error updating user information:', error);
+      }
+      seleccionado.value = false;
+    };
+    
+    const getLogo = () => {
+      if (user.value.logo) {
+        return user.value.logo;
+      } else {
+        return 'https://github.com/mdo.png';
+      }
+    };
+
+    onMounted(fetchUser);
 
     watch(() => router.currentRoute.value.params.id, () => {
       isMe.value = router.currentRoute.value.params.id === 'me';
       fetchUser();
     });
-      return {
-        user,
-        isMe,
-        editUser,
-        getLogo,
-        newPassword,
-        handleFileChange,
-        eventos,
-        newImage,
-        vistaPreviaImagenPerfil,
-        seleccionado
-      };
-    }
-  };
+
+    return {
+      user,
+      isMe,
+      editUser,
+      getLogo,
+      newPassword,
+      handleFileChange,
+      eventos,
+      newImage,
+      vistaPreviaImagenPerfil,
+      seleccionado
+    };
+  }
+};
   </script>
   
 <style scoped>
